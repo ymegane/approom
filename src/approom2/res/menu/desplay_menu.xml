@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/item_sort"
+        android:icon="@drawable/ic_action_sort"
+        android:showAsAction="ifRoom"
+        android:title="@string/sort">
+        <menu>
+            <item
+                android:id="@+id/item_sort_install"
+                android:title="@string/sort_install"/>
+            <item
+                android:id="@+id/item_sort_alpabet"
+                android:title="@string/sort_alpabet"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/item_appinfo"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:showAsAction="never"
+        android:title="@string/appinfo">
+    </item>
+
+</menu>

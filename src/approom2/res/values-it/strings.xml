@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">approom</string>
+    <string name="share">Quota</string>
+    <string name="show_detail">App Dettagli</string>
+    <string name="show_store">Aprire il Play Store</string>
+    <string name="sort_alpabet">Per nome</string>
+    <string name="sort_install">Ordine di installazione</string>
+    <string name="sort">Ordinamento</string>
+    <string name="loading">Caricamento</string>
+    <string name="error_store_uninstalled">Negozio di gioco non è installato</string>
+    <string name="error_opne_failed">Impossibile aprire</string>
+    <string name="select_type">Scegli il formato</string>
+    <string name="appinfo">Informazioni sull\&apos;applicazione</string>
+    <string name="version">approom v%s</string>
+    <string name="creater">created by &lt;a href=\"http://twitter.com/y_megane\"&gt;@y_megane&lt;/a&gt;</string>
+    <string name="oss">Open Source Software</string>
+    <string name="abs_name">・&lt;a href=\"https://github.com/JakeWharton/ActionBarSherlock\"&gt;ActionBarSherlock&lt;/a&gt;</string>
+    <string name="zxing_name">・&lt;a href=\"http://code.google.com/p/zxing/\"&gt;ZXing&lt;/a&gt;</string>
+    <string name="nfcfelica_name">・&lt;a href=\"http://code.google.com/p/nfc-felica/\"&gt;nfc-felica&lt;/a&gt;</string>
+    <string name="apache_license">&lt;a href=\"http://www.apache.org/licenses/\"&gt;Apache License Version 2.0&lt;/a&gt;</string>
+    <string name="touch_enable">È possibile inviare in contatto</string>
+
+</resources>
