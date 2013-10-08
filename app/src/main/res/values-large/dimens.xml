@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="grid_columnWidth">104dp</dimen>
+    <dimen name="grid_icon_size">72dp</dimen>
+    <dimen name="grid_text_size">18sp</dimen>
+    <dimen name="qr_size">300dp</dimen>
+
+</resources>

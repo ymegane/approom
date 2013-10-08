@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent" >
+    <android.support.wearable.view.BoxInsetLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ShareActivity">
+
+        <ImageView
+            android:id="@+id/imageQR"
+            android:layout_width="@dimen/qr_size"
+            android:layout_height="@dimen/qr_size"
+            android:layout_gravity="center"
+            app:layout_box="all"/>
+
+    </android.support.wearable.view.BoxInsetLayout>
+
+    <android.support.wearable.view.DismissOverlayView
+        android:id="@+id/dismiss_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>

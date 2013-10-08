@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="error_failed_get_appinfo">アプリ情報が取得できませんでした</string>
+    <string name="error_failed_connect_device">端末と接続できませんでした</string>
+</resources>

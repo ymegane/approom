@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="linktype">
+        <item >Web用リンク</item>
+        <item >アプリ用リンク</item>
+    </string-array>
+</resources>

@@ -1,0 +1,2 @@
+include ':app', ':wear', ':approom-commons'
+include ':nfc-felica-lib'

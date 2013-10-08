@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="設定">
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="key_include_system_app"
+        android:title="システムアプリを含める"/>
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:dependency="key_include_system_app"
+        android:key="key_include_disable_app"
+        android:title="無効アプリを含める"/>
+</PreferenceScreen>

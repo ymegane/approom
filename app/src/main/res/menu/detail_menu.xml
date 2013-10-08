@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:compat="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/item_detail"
+        android:icon="@drawable/ic_settings_24dp"
+        compat:showAsAction="ifRoom|withText"
+        android:title="@string/show_detail">
+    </item>
+    <item
+        android:id="@+id/item_store"
+        android:icon="@drawable/ic_play_shopping_bag_24dp"
+        compat:showAsAction="ifRoom|withText"
+        android:title="@string/show_store">
+    </item>
+
+</menu>
