@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AppRoom</string>
     <string name="share">Share</string>
     <string name="show_detail">App Detail</string>
     <string name="show_store">Open Play Store</string>

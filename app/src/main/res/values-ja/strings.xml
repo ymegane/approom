@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">あっぷるーむ</string>
     <string name="share">共有する</string>
     <string name="show_detail">アプリ詳細</string>
     <string name="show_store">Playストアを開く</string>
