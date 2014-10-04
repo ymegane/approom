@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId "org.ymegane.android.approom"
-        minSdkVersion 8
+        minSdkVersion 10
         targetSdkVersion 19
 
         versionCode 13
