@@ -154,8 +154,8 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         actionBar.setDisplayShowTitleEnabled(false);
 
-        ArrayAdapter<String> adapter 
-        = new ArrayAdapter<String>(getActivity(),
+        ArrayAdapter<String> adapter
+                = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, android.R.id.text1, getResources().getStringArray(R.array.linktype));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         actionBar.setListNavigationCallbacks(adapter, new ActionBar.OnNavigationListener() {

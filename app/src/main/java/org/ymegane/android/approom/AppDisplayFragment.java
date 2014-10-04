@@ -62,7 +62,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_applist, null);
         gridAppView = (GridView) v.findViewById(R.id.gridAppIcon);
         gridAppView.setOnItemClickListener(new ItemClickListener());
@@ -160,7 +160,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     private class ItemClickListener implements OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
-                long id) {
+                                long id) {
             AppInfo info = (AppInfo) gridAppView.getItemAtPosition(position);
             clickListener.onItemClick(info);
         }
@@ -215,7 +215,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
             TextView textZxingLicense = (TextView) view.findViewById(R.id.textZxingLicense);
             textZxingLicense.setText(Html.fromHtml(getString(R.string.apache_license)));
             textZxingLicense.setMovementMethod(movementmethod);
-            
+
             TextView textNfcFelica = (TextView) view.findViewById(R.id.textNfcFelica);
             textNfcFelica.setText(Html.fromHtml(getString(R.string.nfcfelica_name)));
             textNfcFelica.setMovementMethod(movementmethod);

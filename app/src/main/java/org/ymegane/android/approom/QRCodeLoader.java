@@ -18,7 +18,7 @@ public class QRCodeLoader extends AsyncTaskLoader<Bitmap> {
 
     /** エンコード設定 */
     private static final String ENCORD_NAME = "ISO-8859-1";
-   
+
     public QRCodeLoader(Context context, String target, int size) {
         super(context);
         this.target = target;

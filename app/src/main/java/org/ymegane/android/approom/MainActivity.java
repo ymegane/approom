@@ -157,7 +157,7 @@ public class MainActivity extends Activity implements OnAppInfoClickListener, IN
     public void onTagDiscovered(Intent intent, Parcelable nfcTag, AbstractNfcTagFragment fragment) {
         MyLog.d(TAG, "onTagDiscovered");
         if(fragment != null && fragment instanceof NfcFeliCaTagFragment) {
-            FeliCaLib.IDm idm = 
+            FeliCaLib.IDm idm =
                     new FeliCaLib.IDm(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID));
             PushStartBrowserSegment segment = new PushStartBrowserSegment(appDetailFragment.getCurrentUri(), null);
             try {

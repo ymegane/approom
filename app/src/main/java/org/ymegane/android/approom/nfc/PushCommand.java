@@ -10,6 +10,9 @@ import net.kazzz.felica.lib.FeliCaLib;
 import net.kazzz.felica.lib.FeliCaLib.CommandPacket;
 import net.kazzz.felica.lib.FeliCaLib.IDm;
 
+/**
+ * FelicaPushコマンドのNFC用実装
+ */
 public class PushCommand extends CommandPacket {
 
     public static final byte PUSH = (byte) 0xb0;

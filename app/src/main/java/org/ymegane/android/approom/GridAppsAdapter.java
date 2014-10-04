@@ -58,7 +58,7 @@ public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable
         holder.textAppName.setText(appData.appName);
 
         loadIcon(getContext(), appData, holder.imageAppIcon, loadingBitmap);
-        
+
         return convertView;
     }
 
@@ -70,7 +70,7 @@ public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable
     private class IconImageTask extends AsyncTask<AppInfo, Void, Drawable> {
         private final WeakReference<ImageView> mImageViewReference;
         AppInfo mAppInfo;
-        
+
         public IconImageTask(ImageView imageView) {
             mImageViewReference = new WeakReference<ImageView>(imageView);
         }

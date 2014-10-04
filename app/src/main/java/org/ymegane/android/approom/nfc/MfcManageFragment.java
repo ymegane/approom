@@ -42,9 +42,9 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
             // 端末が近接したことを検知しようとしたけど無理だった
             // 通常状態の端末では搬送波は出してないっぽい
             //if(!getRFSState()) {
-                //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(eventObserver.onPushRequest()));
-                //pushToSendIntent(intent);
-                //pushToSendBrowser(eventObserver.onPushRequest());
+            //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(eventObserver.onPushRequest()));
+            //pushToSendIntent(intent);
+            //pushToSendBrowser(eventObserver.onPushRequest());
             //}
             new FelicaPushTask().execute(eventObserver.onPushRequest());
             handler.sendEmptyMessageDelayed(0, 1000);
@@ -325,7 +325,7 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
             handleUnexpectedException(e);
         }
     }
- 
+
     /**
      * RFSの状態を取得します。
      */

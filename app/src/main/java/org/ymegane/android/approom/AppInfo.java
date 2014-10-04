@@ -8,15 +8,15 @@ import android.content.pm.ApplicationInfo;
  */
 public class AppInfo {
 
-	ApplicationInfo appInfo;
-	long lastModify;
-	String appName;
-	String packageName;
-	int iconResId;
-	boolean isStoped;
+    ApplicationInfo appInfo;
+    long lastModify;
+    String appName;
+    String packageName;
+    int iconResId;
+    boolean isStoped;
 
-	@Override
-	public String toString() {
-		return appName;
-	}
+    @Override
+    public String toString() {
+        return appName;
+    }
 }
