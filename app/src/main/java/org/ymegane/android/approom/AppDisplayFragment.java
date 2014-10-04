@@ -15,21 +15,26 @@ import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.text.method.MovementMethod;
+import android.util.SparseBooleanArray;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,10 +71,66 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
         View v = inflater.inflate(R.layout.fragment_applist, null);
         gridAppView = (GridView) v.findViewById(R.id.gridAppIcon);
         gridAppView.setOnItemClickListener(new ItemClickListener());
-        gridAppView.setOnItemLongClickListener(new ItemLongClickListener());
         //listAppView = (ListView) v.findViewById(R.id.listAppIcon);
         //listAppView.setOnItemClickListener(new ItemClickListener());
+        gridAppView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
+        gridAppView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+            ShareActionProvider shareActionProvider;
+            @Override
+            public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
+                int n = gridAppView.getCheckedItemCount();
 
+                if (n <= 0) {
+                    return;
+                }
+
+                actionMode.setSubtitle(String.valueOf(n) + "個のアプリを選択");
+
+                SparseBooleanArray checkedItems = gridAppView.getCheckedItemPositions();
+                StringBuilder appListStr = new StringBuilder();
+
+                for (int pos=0; pos<checkedItems.size(); pos++) {
+                    if (checkedItems.get(pos)) {
+                        AppInfo appInfo = (AppInfo) gridAppView.getItemAtPosition(pos);
+                        appListStr.append(appInfo.appName).append(":").append(AppLinkBase.LINK_HTTP_DETAIL).append(appInfo.packageName).append("\n");
+                    }
+                }
+
+                shareActionProvider.setShareIntent(createShareIntent(appListStr.toString()));
+            }
+
+            @Override
+            public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+                actionMode.setTitle("アプリを共有");
+
+                shareActionProvider = new ShareActionProvider(getActivity());
+                menu.add(getString(R.string.share)).setIcon(android.R.drawable.ic_menu_share)
+                        .setActionProvider(shareActionProvider)
+                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+                return true;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+                return true;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode actionMode) {
+            }
+
+            private Intent createShareIntent(String string) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, string);
+                return intent;
+            }
+        });
         return v;
     }
 
@@ -163,16 +224,6 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
                                 long id) {
             AppInfo info = (AppInfo) gridAppView.getItemAtPosition(position);
             clickListener.onItemClick(info);
-        }
-    }
-
-    private class ItemLongClickListener implements OnItemLongClickListener {
-
-        @Override
-        public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-            AppInfo info = (AppInfo) gridAppView.getItemAtPosition(arg2);
-            Toast.makeText(getActivity(), info.appName, Toast.LENGTH_SHORT).show();
-            return true;
         }
     }
 

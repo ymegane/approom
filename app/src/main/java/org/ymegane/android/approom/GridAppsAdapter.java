@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 /**
  * グリッド表示時のアダプター
@@ -41,30 +40,23 @@ public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
-
+        GridAppItemView itemView = (GridAppItemView) convertView;
         if(convertView == null) {
-            convertView = inflater.inflate(R.layout.adapter_grid_app_item, null);
-            holder = new ViewHolder();
-            holder.imageAppIcon = (ImageView) convertView.findViewById(R.id.imageAppIcon);
-            holder.textAppName = (TextView) convertView.findViewById(R.id.textAppName);
-            convertView.setTag(holder);
-        }else {
-            holder = (ViewHolder) convertView.getTag();
+            itemView = (GridAppItemView) inflater.inflate(R.layout.adapter_grid_app_item, null);
         }
 
         AppInfo appData = getItem(position);
 
-        holder.textAppName.setText(appData.appName);
+        itemView.textAppName.setText(appData.appName);
+        loadIcon(getContext(), appData, itemView.imageIcon, loadingBitmap);
 
-        loadIcon(getContext(), appData, holder.imageAppIcon, loadingBitmap);
+        if (itemView.isChecked()) {
+            itemView.setBackgroundColor(R.drawable.grid_item_selected);
+        } else {
+            itemView.setBackgroundResource(0);
+        }
 
-        return convertView;
-    }
-
-    private static class ViewHolder {
-        ImageView imageAppIcon;
-        TextView textAppName;
+        return itemView;
     }
 
     private class IconImageTask extends AsyncTask<AppInfo, Void, Drawable> {
@@ -86,11 +78,11 @@ public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable
 
         @Override
         protected void onPostExecute(Drawable result) {
-            if(mImageViewReference != null && result != null) {
+            if(result != null) {
                 ImageView imageVIew = mImageViewReference.get();
                 if(imageVIew != null) {
                     IconImageTask task = getIconImageTask(imageVIew);
-                    if(this == task && imageVIew != null) {
+                    if(this == task) {
                         imageVIew.setImageDrawable(result);
                     }
                 }

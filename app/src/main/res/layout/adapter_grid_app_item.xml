@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<org.ymegane.android.approom.GridAppItemView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/grid_columnWidth"
     android:layout_height="@dimen/grid_columnWidth" >
 
@@ -32,4 +32,4 @@
         android:textColor="#FFF"
         android:textSize="@dimen/grid_text_size" />
 
-</RelativeLayout>
+</org.ymegane.android.approom.GridAppItemView>

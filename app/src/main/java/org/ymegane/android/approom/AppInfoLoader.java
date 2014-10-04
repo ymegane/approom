@@ -75,13 +75,11 @@ public class AppInfoLoader extends AsyncTaskLoader<List<AppInfo>> {
                 if(appInfo.publicSourceDir != null){
                     File file = new File(appInfo.publicSourceDir);
 
-                    if(file != null){
-                        try{
-                            // 最終更新日時
-                            lastMod = file.lastModified();
-                        }catch (SecurityException e) {
-                            MyLog.e(TAG, "Access Error", e);
-                        }
+                    try{
+                        // 最終更新日時
+                        lastMod = file.lastModified();
+                    }catch (SecurityException e) {
+                        MyLog.e(TAG, "Access Error", e);
                     }
                 }
                 appData.packageName = appInfo.packageName;
