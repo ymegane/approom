@@ -20,6 +20,9 @@ import net.kazzz.nfc.NfcTag;
 import net.kazzz.util.ArrayUtil;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -28,10 +31,6 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Build;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 
 /**
  * NFCTagにアクセスするView無しフラグメントクラスのルートを提供します
@@ -100,7 +99,7 @@ public abstract class AbstractNfcTagFragment extends Fragment {
      * @param activity このフラグメントを管理するアクティビティをセット
      * @param tag このフラグメントを一意の識別するタグ名をセット
      */
-    public AbstractNfcTagFragment(FragmentActivity activity, String tag) {
+    public AbstractNfcTagFragment(Activity activity, String tag) {
         super();
         this.registerFragment(activity, tag);
     }
@@ -109,10 +108,10 @@ public abstract class AbstractNfcTagFragment extends Fragment {
      * @param activity このフラグメントを管理するアクティビティをセット
      * @param tag フラグメントを識別するタグをセット
      */
-    protected void registerFragment(FragmentActivity activity, String tag) {
+    protected void registerFragment(Activity activity, String tag) {
         this.unRegisterFragment(activity, tag);
-        FragmentManager fm = activity.getSupportFragmentManager();
-        FragmentTransaction  trans = fm.beginTransaction();
+        FragmentManager fm = activity.getFragmentManager();
+        FragmentTransaction trans = fm.beginTransaction();
         {
             trans.add(this, tag);
         }
@@ -124,8 +123,8 @@ public abstract class AbstractNfcTagFragment extends Fragment {
      * @param activity このフラグメントを管理するアクティビティをセット
      * @param tag フラグメントを識別するタグをセット
      */
-    protected void unRegisterFragment(FragmentActivity activity, String tag) {
-        FragmentManager fm = activity.getSupportFragmentManager();
+    protected void unRegisterFragment(Activity activity, String tag) {
+        FragmentManager fm = activity.getFragmentManager();
         Fragment fragment = fm.findFragmentByTag(tag);
         if ( fragment != null ) {
             FragmentTransaction  trans = fm.beginTransaction();

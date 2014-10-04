@@ -14,12 +14,13 @@ import org.ymegane.android.approom.nfc.MfcManageFragment;
 import org.ymegane.android.approom.util.CommonUtil;
 import org.ymegane.android.approom.util.MyLog;
 
-import com.actionbarsherlock.app.SherlockDialogFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.felicanetworks.mfc.PushStartBrowserSegment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.app.WallpaperManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,9 +32,8 @@ import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.FragmentTransaction;
 
-public class MainActivity extends SherlockFragmentActivity implements OnAppInfoClickListener, INfcTagListener, OnCreateNdefMessageListener, AppDetailFragment.OnAppDetailEventObserver, MfcManageFragment.OnPushRequestEventObserver {
+public class MainActivity extends Activity implements OnAppInfoClickListener, INfcTagListener, OnCreateNdefMessageListener, AppDetailFragment.OnAppDetailEventObserver, MfcManageFragment.OnPushRequestEventObserver {
     private static final String TAG = "MainActivity";
 
     private static final String ACTION_INTERCEPT = "com.adamrocker.android.simeji.ACTION_INTERCEPT";
@@ -49,10 +49,10 @@ public class MainActivity extends SherlockFragmentActivity implements OnAppInfoC
         Drawable d = wallpaper.getFastDrawable().mutate();
         getWindow().setBackgroundDrawable(d);
 
-        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_background));
+        getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_background));
         if(savedInstanceState == null) {
             AppDisplayFragment fragment = new AppDisplayFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.add(R.id.layout_maincontent, fragment, AppDisplayFragment.TAG);
             ft.commit();
         }
@@ -87,9 +87,9 @@ public class MainActivity extends SherlockFragmentActivity implements OnAppInfoC
             args.putString("packageName", info.appInfo.packageName);
             LinkSelectDialog dialog = new LinkSelectDialog();
             dialog.setArguments(args);
-            dialog.show(getSupportFragmentManager(), "LinkSelectDialog");
+            dialog.show(getFragmentManager(), "LinkSelectDialog");
         }else {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
             // NFC/Felicaのイベント管理Fragment
             boolean isTouch = addIcCardFragments(ft);
             appDetailFragment = AppDetailFragment.newInsance(info.appInfo, isTouch);
@@ -129,7 +129,7 @@ public class MainActivity extends SherlockFragmentActivity implements OnAppInfoC
         return false;
     }
 
-    public static class LinkSelectDialog extends SherlockDialogFragment implements OnClickListener {
+    public static class LinkSelectDialog extends DialogFragment implements OnClickListener {
         private String[] linkItems;
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {

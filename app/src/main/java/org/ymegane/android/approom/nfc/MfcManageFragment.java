@@ -13,6 +13,7 @@ import com.felicanetworks.mfc.PushIntentSegment;
 import com.felicanetworks.mfc.PushStartBrowserSegment;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -21,7 +22,6 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 /**

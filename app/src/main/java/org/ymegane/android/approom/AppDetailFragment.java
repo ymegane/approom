@@ -4,10 +4,14 @@ import java.util.ArrayList;
 
 import org.ymegane.android.approom.preference.AppPrefs;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.LoaderManager;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.Loader;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -16,28 +20,24 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.widget.ShareActionProvider;
 
 /**
  * アプリ詳細表示
  */
-public class AppDetailFragment extends SherlockFragment implements LoaderCallbacks<Bitmap> {
+public class AppDetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Bitmap> {
     public static final String TAG = "AppDetailFragment";
 
     public static final String KEY_APPINFO = "key_appinfo";
@@ -149,15 +149,15 @@ public class AppDetailFragment extends SherlockFragment implements LoaderCallbac
     private void initActionBar() {
         final ArrayList<String> linkList = createLinkArray();
 
-        ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+        ActionBar actionBar = getActivity().getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         actionBar.setDisplayShowTitleEnabled(false);
 
         ArrayAdapter<String> adapter 
         = new ArrayAdapter<String>(getActivity(),
-                R.layout.sherlock_spinner_item, android.R.id.text1, getResources().getStringArray(R.array.linktype));
-        adapter.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
+                android.R.layout.simple_spinner_item, android.R.id.text1, getResources().getStringArray(R.array.linktype));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         actionBar.setListNavigationCallbacks(adapter, new ActionBar.OnNavigationListener() {
             @Override
             public boolean onNavigationItemSelected(int itemPosition, long itemId) {

@@ -2,14 +2,14 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <style
         name="MySherlock"
-        parent="Theme.Sherlock">
+        parent="@android:style/Theme.Holo">
         <item
             name="android:actionBarStyle">@style/MyActionBar</item>
         <item
             name="android:windowIsTranslucent">true</item>
     </style>
     <!-- style for the action bar backgrounds -->
-    <style name="MyActionBar" parent="@style/Widget.Sherlock.ActionBar">
+    <style name="MyActionBar" parent="@android:style/Widget.ActionBar">
         <item name="android:background">@drawable/actionbar_background</item>
     </style>
 </resources>

@@ -8,11 +8,9 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
+import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v4.content.AsyncTaskLoader;
-import android.util.DisplayMetrics;
-import android.view.WindowManager;
 
 public class QRCodeLoader extends AsyncTaskLoader<Bitmap> {
     private String target;

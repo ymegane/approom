@@ -6,19 +6,24 @@ import org.ymegane.android.approom.preference.AppPrefs;
 import org.ymegane.android.approom.util.CommonUtil;
 import org.ymegane.android.approom.util.MyLog;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.LoaderManager;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Loader;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.Loader;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.text.method.MovementMethod;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,17 +33,10 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockDialogFragment;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-
 /**
  * アプリ一覧表示Fragment
  */
-public class AppDisplayFragment extends SherlockFragment implements LoaderCallbacks<List<AppInfo>>{
+public class AppDisplayFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<AppInfo>> {
     public static final String TAG = "AppListFragment";
 
     private GridView gridAppView;
@@ -82,12 +80,12 @@ public class AppDisplayFragment extends SherlockFragment implements LoaderCallba
         initActoinBar();
 
         // 読み込み開始
-        LoaderManager loaderMng = getSherlockActivity().getSupportLoaderManager();
+        LoaderManager loaderMng = getLoaderManager();
         loaderMng.initLoader(0, null, this);
     }
 
     private void initActoinBar() {
-        ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+        ActionBar actionBar = getActivity().getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(false);
@@ -126,12 +124,12 @@ public class AppDisplayFragment extends SherlockFragment implements LoaderCallba
     }
 
     @Override
-    public void onLoadFinished(Loader<List<AppInfo>> arg0, List<AppInfo> arg1) {
+    public void onLoadFinished(Loader<List<AppInfo>> listLoader, List<AppInfo> appInfos) {
         if(getView() != null) {
             getView().findViewById(R.id.linearLayout1).setVisibility(View.GONE);
         }
-        if(arg1 != null && !arg1.isEmpty()) {
-            adapter = new GridAppsAdapter(getActivity(), arg1);
+        if(appInfos != null && !appInfos.isEmpty()) {
+            adapter = new GridAppsAdapter(getActivity(), appInfos);
             gridAppView.setAdapter(adapter);
         }
         //listAppView.setAdapter(adapter);
@@ -187,7 +185,7 @@ public class AppDisplayFragment extends SherlockFragment implements LoaderCallba
         void onItemClick(AppInfo info);
     }
 
-    public static class AppInfoDialog extends SherlockDialogFragment implements OnClickListener {
+    public static class AppInfoDialog extends DialogFragment implements OnClickListener {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_appinfo, null);
