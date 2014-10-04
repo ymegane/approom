@@ -56,6 +56,7 @@ public class AppDetailFragment extends SherlockFragment implements LoaderCallbac
 
     private OnAppDetailEventObserver eventListener;
     private String packageName;
+    private String appName;
     private String currentUri;
 
     public static AppDetailFragment newInsance(ApplicationInfo appInfo, boolean isTouch) {
@@ -91,11 +92,12 @@ public class AppDetailFragment extends SherlockFragment implements LoaderCallbac
 
         Bundle args = getArguments();
         appInfo = args.getParcelable(KEY_APPINFO);
+        appName = appInfo.loadLabel(packageMng).toString();
         packageName = appInfo.packageName;
 
         View view = getView();
         TextView textAppName = (TextView) view.findViewById(R.id.textAppName);
-        textAppName.setText(appInfo.loadLabel(packageMng));
+        textAppName.setText(appName);
         textAppName.requestFocus();
 
         Drawable icon = appInfo.loadIcon(packageMng);
@@ -145,7 +147,7 @@ public class AppDetailFragment extends SherlockFragment implements LoaderCallbac
     }
 
     private void initActionBar() {
-        final ArrayList<String> linkList = createLinkArray(packageName);
+        final ArrayList<String> linkList = createLinkArray();
 
         ActionBar actionBar = getSherlockActivity().getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -187,7 +189,7 @@ public class AppDetailFragment extends SherlockFragment implements LoaderCallbac
     private Intent createShareIntent() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, currentUri);
+        intent.putExtra(Intent.EXTRA_TEXT, appName + ":" + currentUri);
         return intent;
     }
 
@@ -220,7 +222,7 @@ public class AppDetailFragment extends SherlockFragment implements LoaderCallbac
         return super.onOptionsItemSelected(item);
     }
 
-    private ArrayList<String> createLinkArray(String packageName) {
+    private ArrayList<String> createLinkArray() {
         ArrayList<String> array = new ArrayList<String>(4);
 
         array.add(AppLinkBase.LINK_HTTP_DETAIL + packageName);
