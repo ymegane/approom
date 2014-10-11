@@ -12,6 +12,7 @@ import org.ymegane.android.approom.nfc.PushCommand;
 import org.ymegane.android.approom.nfc.AndroidBeamFragment.OnCreateNdefMessageListener;
 import org.ymegane.android.approom.nfc.MfcManageFragment;
 import org.ymegane.android.approom.util.CommonUtil;
+import org.ymegane.android.approom.util.IconCache;
 import org.ymegane.android.approom.util.MyLog;
 
 import com.felicanetworks.mfc.PushStartBrowserSegment;
@@ -71,6 +72,7 @@ public class MainActivity extends Activity implements OnAppInfoClickListener, IN
     @Override
     protected void onDestroy() {
         isDestory = true;
+        IconCache.getInstance().clear();
         super.onDestroy();
     }
 

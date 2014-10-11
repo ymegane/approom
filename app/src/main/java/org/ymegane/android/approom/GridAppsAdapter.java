@@ -19,6 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 
+import org.ymegane.android.approom.util.IconCache;
+
 /**
  * グリッド表示時のアダプター
  * @author y
@@ -31,15 +33,12 @@ public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable
     private PackageManager packageMng;
     private Bitmap loadingBitmap;
 
-    private final HashMap<String, Drawable> iconMap;
-
     public GridAppsAdapter(Context context, List<AppInfo> objects) {
         super(context, -1, objects);
         packageMng = context.getPackageManager();
         inflater = LayoutInflater.from(context);
 
         loadingBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_gray);
-        iconMap  = new HashMap<String, Drawable>();
     }
 
     @Override
@@ -83,7 +82,7 @@ public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable
         @Override
         protected void onPostExecute(Drawable result) {
             if(result != null) {
-               // iconMap.put(mAppInfo.packageName, result);
+                IconCache.getInstance().putBitmap(mAppInfo.packageName, ((BitmapDrawable)result).getBitmap());
                 ImageView imageVIew = mImageViewReference.get();
                 if(imageVIew != null) {
                     IconImageTask task = getIconImageTask(imageVIew);
@@ -127,8 +126,9 @@ public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable
     public void loadIcon(Context context, AppInfo appINfo, ImageView imageView, Bitmap loadingBitmap) {
         // 同じタスクが走っていないか、同じ ImageView で古いタスクが走っていないかチェック
         if (cancelPotentialWork(appINfo, imageView)) {
-            if (iconMap.containsKey(appINfo.packageName)) {
-                imageView.setImageDrawable(iconMap.get(appINfo.packageName));
+            Bitmap cacheIcon = IconCache.getInstance().getBitmap(appINfo.packageName);
+            if (cacheIcon != null) {
+                imageView.setImageBitmap(cacheIcon);
                 return;
             }
             final IconImageTask task = new IconImageTask(imageView);
