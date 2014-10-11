@@ -44,6 +44,9 @@ import android.widget.Toast;
 public class AppDisplayFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<AppInfo>> {
     public static final String TAG = "AppListFragment";
 
+    private ViewGroup rootView;
+
+    private View contentView;
     private GridView gridAppView;
     private GridAppsAdapter adapter;
     //private ListView listAppView;
@@ -68,8 +71,9 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_applist, null);
-        gridAppView = (GridView) v.findViewById(R.id.gridAppIcon);
+        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_applist, null);
+        contentView = rootView.findViewById(R.id.linearLayout1);
+        gridAppView = (GridView) rootView.findViewById(R.id.gridAppIcon);
         gridAppView.setOnItemClickListener(new ItemClickListener());
         //listAppView = (ListView) v.findViewById(R.id.listAppIcon);
         //listAppView.setOnItemClickListener(new ItemClickListener());
@@ -84,7 +88,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
                     return;
                 }
 
-                actionMode.setSubtitle(String.valueOf(n) + "個のアプリを選択");
+                actionMode.setSubtitle(getString(R.string.action_mode_subtitle_share, n));
 
                 SparseBooleanArray checkedItems = gridAppView.getCheckedItemPositions();
                 StringBuilder appListStr = new StringBuilder();
@@ -96,17 +100,18 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
                     }
                 }
 
-                shareActionProvider.setShareIntent(createShareIntent(appListStr.toString()));
+                shareActionProvider.setShareIntent(CommonUtil.createShareIntent(appListStr.toString()));
             }
 
             @Override
             public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-                actionMode.setTitle("アプリを共有");
+                actionMode.setTitle(R.string.action_mode_title_share);
 
                 shareActionProvider = new ShareActionProvider(getActivity());
                 menu.add(getString(R.string.share)).setIcon(android.R.drawable.ic_menu_share)
                         .setActionProvider(shareActionProvider)
-                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+                        .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+
                 return true;
             }
 
@@ -117,35 +122,29 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
 
             @Override
             public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-                return true;
+                return false;
             }
 
             @Override
             public void onDestroyActionMode(ActionMode actionMode) {
             }
-
-            private Intent createShareIntent(String string) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, string);
-                return intent;
-            }
         });
-        return v;
+
+        // 読み込み開始
+        LoaderManager loaderMng = getLoaderManager();
+        loaderMng.initLoader(0, null, this);
+
+        return rootView;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        initActoinBar();
-
-        // 読み込み開始
-        LoaderManager loaderMng = getLoaderManager();
-        loaderMng.initLoader(0, null, this);
+        initActionBar();
     }
 
-    private void initActoinBar() {
+    private void initActionBar() {
         ActionBar actionBar = getActivity().getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
@@ -180,14 +179,14 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     @Override
     public Loader<List<AppInfo>> onCreateLoader(int arg0, Bundle arg1) {
         // アプリ一覧の読み込み
-        getView().findViewById(R.id.linearLayout1).setVisibility(View.VISIBLE);
+        contentView.setVisibility(View.VISIBLE);
         return new AppInfoLoader(getActivity());
     }
 
     @Override
     public void onLoadFinished(Loader<List<AppInfo>> listLoader, List<AppInfo> appInfos) {
         if(getView() != null) {
-            getView().findViewById(R.id.linearLayout1).setVisibility(View.GONE);
+            contentView.setVisibility(View.GONE);
         }
         if(appInfos != null && !appInfos.isEmpty()) {
             adapter = new GridAppsAdapter(getActivity(), appInfos);

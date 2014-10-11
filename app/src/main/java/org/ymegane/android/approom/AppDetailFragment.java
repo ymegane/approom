@@ -3,6 +3,7 @@ package org.ymegane.android.approom;
 import java.util.ArrayList;
 
 import org.ymegane.android.approom.preference.AppPrefs;
+import org.ymegane.android.approom.util.CommonUtil;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -164,7 +165,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
                 if(itemPosition < linkList.size()) {
                     AppPrefs.newInstance(getActivity()).saveLinkType(itemPosition);
                     currentUri = linkList.get(itemPosition);
-                    shareActionProvider.setShareIntent(createShareIntent());
+                    shareActionProvider.setShareIntent(CommonUtil.createShareIntent(appName + ":" + currentUri));
                     textLinkUri.setText(currentUri);
                     Bundle arg = new Bundle();
                     arg.putString("currentUri", currentUri);
@@ -184,13 +185,6 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
         inflater.inflate(R.menu.detail_menu, menu);
         shareActionProvider = (ShareActionProvider) menu.findItem(R.id.item_share).getActionProvider();
         super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    private Intent createShareIntent() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, appName + ":" + currentUri);
-        return intent;
     }
 
     @Override

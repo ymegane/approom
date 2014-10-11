@@ -1,6 +1,7 @@
 package org.ymegane.android.approom.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -54,5 +55,12 @@ public class CommonUtil {
         if ((appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == ApplicationInfo.FLAG_DEBUGGABLE)
             return true;
         return false;
+    }
+
+    public static Intent createShareIntent(String string) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, string);
+        return intent;
     }
 }

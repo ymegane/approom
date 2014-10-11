@@ -20,4 +20,8 @@
     <string name="nfcfelica_name">・&lt;a href=&quot;http://code.google.com/p/nfc-felica/&quot;&gt;nfc-felica&lt;/a&gt;</string>
     <string name="apache_license">&lt;a href=&quot;http://www.apache.org/licenses/&quot;&gt;Apache License Version 2.0&lt;/a&gt;</string>
     <string name="touch_enable">タッチで送信できます</string>
+
+    <string name="action_mode_title_share">アプリを共有</string>
+    <string name="action_mode_subtitle_share">選択中:%d</string>
+
 </resources>

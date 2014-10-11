@@ -19,4 +19,8 @@
     <string name="nfcfelica_name">・&lt;a href=&quot;http://code.google.com/p/nfc-felica/&quot;&gt;nfc-felica&lt;/a&gt;</string>
     <string name="apache_license">&lt;a href=&quot;http://www.apache.org/licenses/&quot;&gt;Apache License Version 2.0&lt;/a&gt;</string>
     <string name="touch_enable">You can send in touch</string>
+
+    <string name="action_mode_title_share">Share apps</string>
+    <string name="action_mode_subtitle_share">selected:%d</string>
+
 </resources>

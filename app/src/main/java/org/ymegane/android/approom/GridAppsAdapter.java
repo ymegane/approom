@@ -1,6 +1,7 @@
 package org.ymegane.android.approom;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -30,12 +31,15 @@ public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable
     private PackageManager packageMng;
     private Bitmap loadingBitmap;
 
+    private final HashMap<String, Drawable> iconMap;
+
     public GridAppsAdapter(Context context, List<AppInfo> objects) {
         super(context, -1, objects);
         packageMng = context.getPackageManager();
         inflater = LayoutInflater.from(context);
 
         loadingBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_gray);
+        iconMap  = new HashMap<String, Drawable>();
     }
 
     @Override
@@ -79,6 +83,7 @@ public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable
         @Override
         protected void onPostExecute(Drawable result) {
             if(result != null) {
+               // iconMap.put(mAppInfo.packageName, result);
                 ImageView imageVIew = mImageViewReference.get();
                 if(imageVIew != null) {
                     IconImageTask task = getIconImageTask(imageVIew);
@@ -122,6 +127,10 @@ public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable
     public void loadIcon(Context context, AppInfo appINfo, ImageView imageView, Bitmap loadingBitmap) {
         // 同じタスクが走っていないか、同じ ImageView で古いタスクが走っていないかチェック
         if (cancelPotentialWork(appINfo, imageView)) {
+            if (iconMap.containsKey(appINfo.packageName)) {
+                imageView.setImageDrawable(iconMap.get(appINfo.packageName));
+                return;
+            }
             final IconImageTask task = new IconImageTask(imageView);
             final AsyncDrawable asyncDrawable = new AsyncDrawable(context.getResources(), loadingBitmap, task);
             imageView.setImageDrawable(asyncDrawable);
