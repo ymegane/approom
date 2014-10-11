@@ -43,11 +43,13 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
 
     private ViewGroup rootView;
 
-    private View contentView;
+    private View layoutProgress;
     private GridView gridAppView;
     private GridAppsAdapter adapter;
     //private ListView listAppView;
     private OnAppInfoClickListener clickListener;
+
+    private List<AppInfo> appInfoList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,7 +71,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_applist, null);
-        contentView = rootView.findViewById(R.id.linearLayout1);
+        layoutProgress = rootView.findViewById(R.id.layoutProgress);
         gridAppView = (GridView) rootView.findViewById(R.id.gridAppIcon);
         gridAppView.setOnItemClickListener(new ItemClickListener());
         //listAppView = (ListView) v.findViewById(R.id.listAppIcon);
@@ -128,8 +130,13 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
         });
 
         // 読み込み開始
-        LoaderManager loaderMng = getLoaderManager();
-        loaderMng.initLoader(0, null, this);
+        if (appInfoList != null) {
+            layoutProgress.setVisibility(View.GONE);
+            setGridAdapter(appInfoList);
+        } else {
+            LoaderManager loaderMng = getLoaderManager();
+            loaderMng.initLoader(0, null, this);
+        }
 
         return rootView;
     }
@@ -183,7 +190,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     @Override
     public Loader<List<AppInfo>> onCreateLoader(int arg0, Bundle arg1) {
         // アプリ一覧の読み込み
-        contentView.setVisibility(View.VISIBLE);
+        layoutProgress.setVisibility(View.VISIBLE);
         return new AppInfoLoader(getActivity());
     }
 
@@ -194,18 +201,23 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
         View view = getView();
         getLoaderManager().destroyLoader(0);
         if(view != null) {
-            contentView.setVisibility(View.GONE);
+            layoutProgress.setVisibility(View.GONE);
         }
         if(appInfos != null) {
-            adapter = new GridAppsAdapter(getActivity(), appInfos);
-            gridAppView.setAdapter(adapter);
-            // スクロール位置を復元
-            gridAppView.setSelection(lastGridPosition);
+            appInfoList = appInfos;
+            setGridAdapter(appInfoList);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<List<AppInfo>> arg0) {
+    }
+
+    private void setGridAdapter(List<AppInfo> appInfoList) {
+        adapter = new GridAppsAdapter(getActivity(), appInfoList);
+        gridAppView.setAdapter(adapter);
+        // スクロール位置を復元
+        gridAppView.setSelection(lastGridPosition);
     }
 
     /**
