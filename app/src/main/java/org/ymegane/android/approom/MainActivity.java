@@ -110,19 +110,23 @@ public class MainActivity extends Activity implements OnAppInfoClickListener, IN
     private boolean addIcCardFragments(FragmentTransaction ft) {
         // NFCをサポートしてるぞぉぉぉ
         if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC)) {
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
-                nfcFelicaFragment = new NfcFeliCaTagFragment();
-                ft.add(nfcFelicaFragment, "NfcFeliCaTagFragment");
-                //インテントから起動された際の処理
-                Intent intent = getIntent();
-                this.onNewIntent(intent);
+            NfcAdapter adapter = NfcAdapter.getDefaultAdapter(this);
+            if (adapter != null && adapter.isEnabled()) { // 有効な場合
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
+                    nfcFelicaFragment = new NfcFeliCaTagFragment();
+                    ft.add(nfcFelicaFragment, "NfcFeliCaTagFragment");
+                    //インテントから起動された際の処理
+                    Intent intent = getIntent();
+                    this.onNewIntent(intent);
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                    beamFragment = AndroidBeamFragment.newInstance();
+                    ft.add(beamFragment, "AndroidBeamFragment");
+                }
+                return true;
             }
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                beamFragment = AndroidBeamFragment.newInstance();
-                ft.add(beamFragment, "AndroidBeamFragment");
-            }
-            return true;
-        } else if(MfcManageFragment.isEnalbeFelica(this)) {
+        }
+        if(MfcManageFragment.isEnalbeFelica(this)) {
             mfcFragment = new MfcManageFragment();
             ft.add(mfcFragment, MfcManageFragment.TAG);
             return true;
