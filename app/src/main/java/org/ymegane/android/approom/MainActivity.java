@@ -86,6 +86,7 @@ public class MainActivity extends Activity implements OnAppInfoClickListener, IN
 
         if(action != null && action.contains(ACTION_INTERCEPT)){
             Bundle args = new Bundle();
+            args.putString("appName", info.appName);
             args.putString("packageName", info.appInfo.packageName);
             LinkSelectDialog dialog = new LinkSelectDialog();
             dialog.setArguments(args);
@@ -101,6 +102,12 @@ public class MainActivity extends Activity implements OnAppInfoClickListener, IN
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
             ft.commit();
         }
+    }
+
+    @Override
+    public boolean isMashroom() {
+        String action = getIntent().getAction();
+        return action != null && action.contains(ACTION_INTERCEPT);
     }
 
     private NfcFeliCaTagFragment nfcFelicaFragment;
@@ -139,10 +146,11 @@ public class MainActivity extends Activity implements OnAppInfoClickListener, IN
         private String[] linkItems;
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
+            String appName = getArguments().getString("appName");
             String packageName = getArguments().getString("packageName");
             linkItems = new String[]{
-                    AppLinkBase.LINK_HTTP_DETAIL + packageName,
-                    AppLinkBase.LINK_MARKET_DETAIL + packageName};
+                    appName + ":" + AppLinkBase.LINK_HTTP_DETAIL + packageName,
+                    appName + ":" + AppLinkBase.LINK_MARKET_DETAIL + packageName};
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.select_type);
