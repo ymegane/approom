@@ -271,14 +271,6 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
             textDev.setText(Html.fromHtml(getString(R.string.creater)));
             textDev.setMovementMethod(movementmethod);
 
-            TextView textAbs = (TextView) view.findViewById(R.id.textABS);
-            textAbs.setText(Html.fromHtml(getString(R.string.abs_name)));
-            textAbs.setMovementMethod(movementmethod);
-
-            TextView textAbsLicense = (TextView) view.findViewById(R.id.textAbsLicense);
-            textAbsLicense.setText(Html.fromHtml(getString(R.string.apache_license)));
-            textAbsLicense.setMovementMethod(movementmethod);
-
             TextView textZxing = (TextView) view.findViewById(R.id.textZxing);
             textZxing.setText(Html.fromHtml(getString(R.string.zxing_name)));
             textZxing.setMovementMethod(movementmethod);
