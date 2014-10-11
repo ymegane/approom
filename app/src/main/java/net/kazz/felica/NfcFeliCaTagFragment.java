@@ -44,6 +44,7 @@ public class NfcFeliCaTagFragment extends AbstractNfcTagFragment {
     public static final String TAG = "NfcFeliCaTagFragment";
 
     public NfcFeliCaTagFragment() {
+        super();
         mTechList = new String[][]{ new String[] { NfcF.class.getName() }};
     }
 

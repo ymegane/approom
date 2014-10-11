@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/imageQr"
@@ -39,7 +39,12 @@
             android:ellipsize="marquee"
             android:gravity="center_vertical"
             android:singleLine="true"
+            android:shadowColor="#333"
+            android:shadowRadius="5"
+            android:shadowDx="0"
+            android:shadowDy="0"
             android:text="AppName"
+            android:textColor="@android:color/white"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
@@ -52,6 +57,11 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
+        android:textColor="@android:color/white"
+        android:shadowColor="#333"
+        android:shadowRadius="5"
+        android:shadowDx="0"
+        android:shadowDy="0"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView

@@ -33,6 +33,7 @@ import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.widget.ImageView;
 
 public class MainActivity extends Activity implements OnAppInfoClickListener, INfcTagListener, OnCreateNdefMessageListener, AppDetailFragment.OnAppDetailEventObserver, MfcManageFragment.OnPushRequestEventObserver {
     private static final String TAG = "MainActivity";
@@ -48,13 +49,12 @@ public class MainActivity extends Activity implements OnAppInfoClickListener, IN
 
         WallpaperManager wallpaper = WallpaperManager.getInstance(this);
         Drawable d = wallpaper.getFastDrawable().mutate();
-        getWindow().setBackgroundDrawable(d);
-
-        getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_background));
+        ImageView imageView = (ImageView) findViewById(R.id.imageWallpaper);
+        imageView.setImageDrawable(d);
         if(savedInstanceState == null) {
             AppDisplayFragment fragment = new AppDisplayFragment();
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(R.id.layout_maincontent, fragment, AppDisplayFragment.TAG);
+            ft.add(android.R.id.content, fragment, AppDisplayFragment.TAG);
             ft.commit();
         }
     }
@@ -96,7 +96,7 @@ public class MainActivity extends Activity implements OnAppInfoClickListener, IN
             boolean isTouch = addIcCardFragments(ft);
             appDetailFragment = AppDetailFragment.newInsance(info.appInfo, isTouch);
 
-            ft.replace(R.id.layout_maincontent, appDetailFragment, AppDetailFragment.TAG);
+            ft.replace(android.R.id.content, appDetailFragment, AppDetailFragment.TAG);
             ft.addToBackStack(AppDetailFragment.TAG);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
             ft.commit();
