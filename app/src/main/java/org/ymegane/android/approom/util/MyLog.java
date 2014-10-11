@@ -3,8 +3,10 @@ package org.ymegane.android.approom.util;
 import android.text.TextUtils;
 import android.util.Log;
 
+import org.ymegane.android.approom.BuildConfig;
+
 public class MyLog {
-    public static boolean IS_LOG_OUTPUT = false;
+    public static boolean IS_LOG_OUTPUT = BuildConfig.DEBUG;
 
     public MyLog() {
     }

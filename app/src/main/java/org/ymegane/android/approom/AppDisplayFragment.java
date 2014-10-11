@@ -15,7 +15,6 @@ import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.text.Html;
@@ -32,11 +31,9 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * アプリ一覧表示Fragment
@@ -152,6 +149,13 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
         setHasOptionsMenu(true);
     }
 
+    private int lastGridPosition;
+    @Override
+    public void onPause() {
+        super.onPause();
+        lastGridPosition = gridAppView.getFirstVisiblePosition();
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.desplay_menu, menu);
@@ -185,14 +189,19 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
 
     @Override
     public void onLoadFinished(Loader<List<AppInfo>> listLoader, List<AppInfo> appInfos) {
-        if(getView() != null) {
+        MyLog.d(TAG, "onLoadFinished");
+
+        View view = getView();
+        getLoaderManager().destroyLoader(0);
+        if(view != null) {
             contentView.setVisibility(View.GONE);
         }
-        if(appInfos != null && !appInfos.isEmpty()) {
+        if(appInfos != null) {
             adapter = new GridAppsAdapter(getActivity(), appInfos);
             gridAppView.setAdapter(adapter);
+            // スクロール位置を復元
+            gridAppView.setSelection(lastGridPosition);
         }
-        //listAppView.setAdapter(adapter);
     }
 
     @Override
