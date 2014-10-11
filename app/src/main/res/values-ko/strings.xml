@@ -4,7 +4,7 @@
     <string name="share">공유</string>
     <string name="show_detail">어플 정보</string>
     <string name="show_store">Play 상점을 열</string>
-    <string name="sort_alpabet">이름순</string>
+    <string name="sort_alphabet">이름순</string>
     <string name="sort_install">설치 순서</string>
     <string name="sort">정렬</string>
     <string name="loading">로드 중</string>
@@ -12,10 +12,9 @@
     <string name="error_opne_failed">열 수 없습니다</string>
     <string name="select_type">형식을 선택</string>
     <string name="appinfo">응용 프로그램에"</string>
-    <string name="version">approom v%s</string>
+    <string name="version">AppRoom v%s</string>
     <string name="creater">created by &lt;a href=\"http://twitter.com/y_megane\"&gt;@y_megane&lt;/a&gt;</string>
     <string name="oss">Open Source Software</string>
-    <string name="abs_name">・&lt;a href=\"https://github.com/JakeWharton/ActionBarSherlock\"&gt;ActionBarSherlock&lt;/a&gt;</string>
     <string name="zxing_name">・&lt;a href=\"http://code.google.com/p/zxing/\"&gt;ZXing&lt;/a&gt;</string>
     <string name="nfcfelica_name">・&lt;a href=\"http://code.google.com/p/nfc-felica/\"&gt;nfc-felica&lt;/a&gt;</string>
     <string name="apache_license">&lt;a href=\"http://www.apache.org/licenses/\"&gt;Apache License Version 2.0&lt;/a&gt;</string>

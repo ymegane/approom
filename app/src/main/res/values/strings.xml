@@ -3,7 +3,7 @@
     <string name="share">Share</string>
     <string name="show_detail">App Detail</string>
     <string name="show_store">Open Play Store</string>
-    <string name="sort_alpabet">A to Z</string>
+    <string name="sort_alphabet">Alphabetical</string>
     <string name="sort_install">Install</string>
     <string name="sort">Sort</string>
     <string name="loading">loading</string>
@@ -14,7 +14,6 @@
     <string name="version">AppRoom v%s</string>
     <string name="creater">created by &lt;a href=&quot;http://twitter.com/y_megane&quot;&gt;@y_megane&lt;/a&gt;</string>
     <string name="oss">Open Source Software</string>
-    <string name="abs_name">・&lt;a href=&quot;https://github.com/JakeWharton/ActionBarSherlock&quot;&gt;ActionBarSherlock&lt;/a&gt;</string>
     <string name="zxing_name">・&lt;a href=&quot;http://code.google.com/p/zxing/&quot;&gt;ZXing&lt;/a&gt;</string>
     <string name="nfcfelica_name">・&lt;a href=&quot;http://code.google.com/p/nfc-felica/&quot;&gt;nfc-felica&lt;/a&gt;</string>
     <string name="apache_license">&lt;a href=&quot;http://www.apache.org/licenses/&quot;&gt;Apache License Version 2.0&lt;/a&gt;</string>

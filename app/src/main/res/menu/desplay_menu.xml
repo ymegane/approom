@@ -12,7 +12,7 @@
                 android:title="@string/sort_install"/>
             <item
                 android:id="@+id/item_sort_alpabet"
-                android:title="@string/sort_alpabet"/>
+                android:title="@string/sort_alphabet"/>
         </menu>
     </item>
     <item
