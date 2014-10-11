@@ -10,7 +10,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" android:theme="@style/MySherlock">
+        android:label="@string/app_name" android:theme="@style/MyTheme">
         <activity
             android:name="org.ymegane.android.approom.MainActivity"
             android:label="@string/app_name" android:screenOrientation="nosensor" android:configChanges="keyboardHidden|orientation">

@@ -16,6 +16,6 @@
 
 <resources>
     <drawable name="translucent_background">#90000000</drawable>
-    <drawable name="actionbar_background">#cc169fff</drawable>
-    <drawable name="grid_item_selected">#55169fff</drawable>
+    <drawable name="actionbar_background">#039be5</drawable>
+    <color name="grid_item_selected">#99ff8a65</color>
 </resources>

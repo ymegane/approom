@@ -43,7 +43,7 @@ public class GridAppItemView extends RelativeLayout implements Checkable {
     public void setChecked(boolean checked) {
         isChecked = checked;
         setBackgroundDrawable(checked ? getResources().getDrawable(
-                R.drawable.grid_item_selected) : null);
+                R.drawable.grid_item_select) : null);
     }
 
     @Override

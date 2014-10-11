@@ -8,28 +8,26 @@
         android:id="@+id/imageAppIcon"
         android:layout_width="@dimen/grid_icon_size"
         android:layout_height="@dimen/grid_icon_size"
+        android:layout_marginTop="12dp"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="17dp"
         android:contentDescription="Apps Icon" />
 
     <TextView
         android:id="@+id/textAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_below="@+id/imageAppIcon"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:paddingBottom="5dp"
         android:ellipsize="marquee"
         android:gravity="center_horizontal"
         android:maxLines="1"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="1"
         android:singleLine="true"
-        android:textColor="#FFF"
-        android:textSize="@dimen/grid_text_size" />
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/grid_text_size"
+        android:text="test"/>
 
 </org.ymegane.android.approom.GridAppItemView>

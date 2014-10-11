@@ -55,7 +55,7 @@ public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable
         loadIcon(getContext(), appData, itemView.imageIcon, loadingBitmap);
 
         if (itemView.isChecked()) {
-            itemView.setBackgroundColor(R.drawable.grid_item_selected);
+            itemView.setBackgroundResource(R.drawable.grid_item_select);
         } else {
             itemView.setBackgroundResource(0);
         }
