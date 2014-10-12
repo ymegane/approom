@@ -14,8 +14,6 @@ package net.kazzz;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.ymegane.android.approom.util.MyLog;
-
 import net.kazzz.nfc.NfcTag;
 import net.kazzz.util.ArrayUtil;
 import android.annotation.TargetApi;
@@ -31,6 +29,8 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Build;
 import android.os.Parcelable;
+
+import org.ymegane.android.approomcommns.util.MyLog;
 
 /**
  * NFCTagにアクセスするView無しフラグメントクラスのルートを提供します

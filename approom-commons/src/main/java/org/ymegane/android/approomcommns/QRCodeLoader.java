@@ -1,6 +1,8 @@
-package org.ymegane.android.approom;
+package org.ymegane.android.approomcommns;
 
-import java.util.Hashtable;
+import android.content.AsyncTaskLoader;
+import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -8,9 +10,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
-import android.content.AsyncTaskLoader;
-import android.content.Context;
-import android.graphics.Bitmap;
+import java.util.Hashtable;
 
 public class QRCodeLoader extends AsyncTaskLoader<Bitmap> {
     private String target;

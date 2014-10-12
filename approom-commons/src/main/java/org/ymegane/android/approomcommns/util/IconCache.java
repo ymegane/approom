@@ -1,4 +1,4 @@
-package org.ymegane.android.approom.util;
+package org.ymegane.android.approomcommns.util;
 
 import android.graphics.Bitmap;
 import android.util.LruCache;

@@ -11,9 +11,9 @@ import org.ymegane.android.approom.nfc.AndroidBeamFragment;
 import org.ymegane.android.approom.nfc.PushCommand;
 import org.ymegane.android.approom.nfc.AndroidBeamFragment.OnCreateNdefMessageListener;
 import org.ymegane.android.approom.nfc.MfcManageFragment;
-import org.ymegane.android.approom.util.CommonUtil;
-import org.ymegane.android.approom.util.IconCache;
-import org.ymegane.android.approom.util.MyLog;
+import org.ymegane.android.approomcommns.util.CommonUtil;
+import org.ymegane.android.approomcommns.util.IconCache;
+import org.ymegane.android.approomcommns.util.MyLog;
 
 import com.felicanetworks.mfc.PushStartBrowserSegment;
 

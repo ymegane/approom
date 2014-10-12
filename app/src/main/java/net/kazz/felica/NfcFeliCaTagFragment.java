@@ -12,8 +12,6 @@
 package net.kazz.felica;
 
 
-import org.ymegane.android.approom.util.MyLog;
-
 import net.kazzz.AbstractNfcTagFragment;
 import net.kazzz.felica.FeliCaException;
 import net.kazzz.felica.FeliCaLiteTag;
@@ -29,6 +27,8 @@ import android.annotation.TargetApi;
 import android.nfc.tech.NfcF;
 import android.os.Build;
 import android.support.v4.app.FragmentActivity;
+
+import org.ymegane.android.approomcommns.util.MyLog;
 
 /**
  * NfcでFeliCa(FeliCa Lite)Tagを読み込むためのフラグメントを提供します

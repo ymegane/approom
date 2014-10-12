@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.ymegane.android.approom.preference.AppPrefs;
-import org.ymegane.android.approom.util.MyLog;
+import org.ymegane.android.approomcommns.util.MyLog;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;

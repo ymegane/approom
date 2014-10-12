@@ -3,7 +3,8 @@ package org.ymegane.android.approom;
 import java.util.ArrayList;
 
 import org.ymegane.android.approom.preference.AppPrefs;
-import org.ymegane.android.approom.util.CommonUtil;
+import org.ymegane.android.approomcommns.QRCodeLoader;
+import org.ymegane.android.approomcommns.util.CommonUtil;
 
 import android.app.ActionBar;
 import android.app.Activity;

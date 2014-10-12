@@ -3,8 +3,6 @@ package org.ymegane.android.approom.nfc;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import org.ymegane.android.approom.util.MyLog;
-
 import com.felicanetworks.mfc.AppInfo;
 import com.felicanetworks.mfc.Felica;
 import com.felicanetworks.mfc.FelicaEventListener;
@@ -23,6 +21,8 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.widget.Toast;
+
+import org.ymegane.android.approomcommns.util.MyLog;
 
 /**
  * Felica Libraryを利用してPush送信を行うFragment

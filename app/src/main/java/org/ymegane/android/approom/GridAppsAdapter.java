@@ -19,7 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 
-import org.ymegane.android.approom.util.IconCache;
+import org.ymegane.android.approomcommns.util.IconCache;
 
 /**
  * グリッド表示時のアダプター
