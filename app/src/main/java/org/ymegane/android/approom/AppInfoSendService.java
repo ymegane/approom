@@ -6,6 +6,9 @@ import android.content.Intent;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.MessageApi;
+import com.google.android.gms.wearable.Node;
+import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 import com.google.gson.Gson;
 
@@ -46,7 +49,21 @@ public class AppInfoSendService extends IntentService {
             return;
         }
         List<AppInfo> appInfoList = AppInfoLoader.getAppInfo(getApplicationContext());
+        if (appInfoList.size() > 20) {
+            //appInfoList = appInfoList.subList(0, 20);
+        }
         String jsonStr = new Gson().toJson(appInfoList);
-        Wearable.MessageApi.sendMessage(googleApiClient, REQUEST_APP_INFO, RESET_PATH, jsonStr.getBytes());
+
+        NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes(googleApiClient).await();
+        if (nodes.getNodes().isEmpty()) {
+            MyLog.w(TAG, "Failed to connect.");
+            return;
+        }
+        for (Node node : nodes.getNodes()) {
+            MessageApi.SendMessageResult result1 = Wearable.MessageApi.sendMessage(googleApiClient, node.getId(), REQUEST_APP_INFO, jsonStr.getBytes()).await();
+            if (!result1.getStatus().isSuccess()) {
+                MyLog.w(TAG, "Failed to send.");
+            }
+        }
     }
 }
