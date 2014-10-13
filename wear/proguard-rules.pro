@@ -16,7 +16,17 @@
 #   public *;
 #}
 
-# Butter Knife
--dontwarn butterknife.internal.**
--keep class **$$ViewInjector { *; }
--keepnames class * { @butterknife.InjectView *;}
+#Otto
+-keepclassmembers class ** {
+    @com.squareup.otto.Subscribe public *;
+    @com.squareup.otto.Produce public *;
+}
+
+-keepclasseswithmembers  class com.google.zxing.** {
+    *;
+}
+
+-keep class android.support.wearable.view.WearableListView {
+  private void setScrollAnimator(int);
+  private void setScrollVertically(int);
+}
