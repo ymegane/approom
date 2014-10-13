@@ -1,5 +1,7 @@
 package org.ymegane.android.approom;
 
+import org.ymegane.android.approomcommns.AppInfo;
+
 import java.io.Serializable;
 import java.util.Comparator;
 

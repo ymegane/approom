@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.ymegane.android.approom.preference.AppPrefs;
+import org.ymegane.android.approomcommns.AppInfo;
 import org.ymegane.android.approomcommns.util.MyLog;
 
 import android.content.AsyncTaskLoader;
@@ -35,7 +36,11 @@ public class AppInfoLoader extends AsyncTaskLoader<List<AppInfo>> {
 
     @Override
     public List<AppInfo> loadInBackground() {
-        PackageManager packageMng = getContext().getPackageManager();
+        return getAppInfo(getContext());
+    }
+
+    static List<AppInfo> getAppInfo(Context context) {
+        PackageManager packageMng = context.getPackageManager();
 
         Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -91,7 +96,7 @@ public class AppInfoLoader extends AsyncTaskLoader<List<AppInfo>> {
             }
         }
 
-        int sortType = AppPrefs.newInstance(getContext()).getSortType();
+        int sortType = AppPrefs.newInstance(context).getSortType();
         // インストール日時でソート
         Collections.sort(appsList, new AppInstallComparator().setMode(sortType));
         return appsList;

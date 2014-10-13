@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 
+import org.ymegane.android.approomcommns.AppInfo;
 import org.ymegane.android.approomcommns.util.IconCache;
 
 /**
