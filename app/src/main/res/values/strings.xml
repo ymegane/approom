@@ -16,6 +16,8 @@
     <string name="oss">Open Source Software</string>
     <string name="zxing_name">・&lt;a href=&quot;http://code.google.com/p/zxing/&quot;&gt;ZXing&lt;/a&gt;</string>
     <string name="nfcfelica_name">・&lt;a href=&quot;http://code.google.com/p/nfc-felica/&quot;&gt;nfc-felica&lt;/a&gt;</string>
+    <string name="gson_name">・&lt;a href=&quot;https://code.google.com/p/google-gson/&quot;&gt;google-gson&lt;/a&gt;</string>
+    <string name="otto_name">・&lt;a href=&quot;http://square.github.io/otto/&quot;&gt;Otto&lt;/a&gt;</string>
     <string name="apache_license">&lt;a href=&quot;http://www.apache.org/licenses/&quot;&gt;Apache License Version 2.0&lt;/a&gt;</string>
     <string name="touch_enable">You can send in touch</string>
 

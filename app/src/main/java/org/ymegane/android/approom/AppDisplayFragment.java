@@ -289,6 +289,22 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
             textNfcFelicaLicense.setText(Html.fromHtml(getString(R.string.apache_license)));
             textNfcFelicaLicense.setMovementMethod(movementmethod);
 
+            TextView textGson = (TextView) view.findViewById(R.id.textGson);
+            textGson.setText(Html.fromHtml(getString(R.string.gson_name)));
+            textGson.setMovementMethod(movementmethod);
+
+            TextView textGsonLicense = (TextView) view.findViewById(R.id.textGsonLicense);
+            textGsonLicense.setText(Html.fromHtml(getString(R.string.apache_license)));
+            textGsonLicense.setMovementMethod(movementmethod);
+
+            TextView textOtto = (TextView) view.findViewById(R.id.textOtto);
+            textOtto.setText(Html.fromHtml(getString(R.string.otto_name)));
+            textOtto.setMovementMethod(movementmethod);
+
+            TextView textOttoL = (TextView) view.findViewById(R.id.textOttoLicense);
+            textOttoL.setText(Html.fromHtml(getString(R.string.apache_license)));
+            textOttoL.setMovementMethod(movementmethod);
+
             AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
             dialog.setIcon(android.R.drawable.ic_dialog_info);
             dialog.setTitle(R.string.appinfo);
