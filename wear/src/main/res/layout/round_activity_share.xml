@@ -5,6 +5,7 @@
     tools:context=".ShareActivity" tools:deviceIds="wear_square">
 
     <ImageView
+        android:padding="20dp"
         android:id="@+id/imageQR"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
