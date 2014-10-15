@@ -14,7 +14,7 @@ import org.ymegane.android.approomcommns.AppInfo;
 import org.ymegane.android.approomcommns.QRCodeLoader;
 
 /**
- * Created by y on 2014/10/13.
+ * 共有画面
  */
 public class ShareActivity extends Activity implements LoaderManager.LoaderCallbacks<Bitmap> {
 

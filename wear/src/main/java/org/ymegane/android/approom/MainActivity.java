@@ -19,11 +19,13 @@ import org.ymegane.android.approom.events.FailureAppInfoRequestEvent;
 import org.ymegane.android.approom.events.SuccessAppInfoReceiveEvent;
 import org.ymegane.android.approom.events.SuccessAppInfoRequestEvent;
 import org.ymegane.android.approomcommns.AppInfo;
+import org.ymegane.android.approomcommns.util.MyLog;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends Activity implements WearableListView.ClickListener {
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private ProgressBar mProgress;
     private WearableListView mListView;
@@ -87,7 +89,7 @@ public class MainActivity extends Activity implements WearableListView.ClickList
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(MainActivity.this, "アプリ情報が取得できませんでした", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.error_failed_get_appinfo, Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -98,7 +100,8 @@ public class MainActivity extends Activity implements WearableListView.ClickList
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(MainActivity.this, "アプリ情報を取得中", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "アプリ情報を取得中", Toast.LENGTH_SHORT).show();
+                MyLog.d(TAG, "アプリ情報を取得中");
             }
         });
     }
@@ -108,7 +111,7 @@ public class MainActivity extends Activity implements WearableListView.ClickList
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(MainActivity.this, "端末と接続できませんでした", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.error_failed_connect_device, Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
