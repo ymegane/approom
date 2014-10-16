@@ -184,6 +184,11 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
             case R.id.item_appinfo:
                 new AppInfoDialog().show(getFragmentManager(), "AppInfoDialog");
                 return true;
+            case R.id.item_setting:
+                if (clickListener != null) {
+                    clickListener.onOpenSetting();
+                }
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -256,6 +261,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     public interface OnAppInfoClickListener {
         void onItemClick(AppInfo info);
         boolean isMashroom();
+        void onOpenSetting();
     }
 
     public static class AppInfoDialog extends DialogFragment implements OnClickListener {

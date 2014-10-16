@@ -111,6 +111,15 @@ public class MainActivity extends Activity implements OnAppInfoClickListener, IN
         return action != null && action.contains(ACTION_INTERCEPT);
     }
 
+    @Override
+    public void onOpenSetting() {
+        DetailPreferenceFragment fragment = new DetailPreferenceFragment();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(android.R.id.content, fragment, "DetailPreferenceFragment");
+        ft.addToBackStack("DetailPreferenceFragment");
+        ft.commit();
+    }
+
     private NfcFeliCaTagFragment nfcFelicaFragment;
     private AndroidBeamFragment beamFragment;
     private MfcManageFragment mfcFragment;

@@ -10,6 +10,7 @@
     <string name="error_store_uninstalled">Not Such Google Play</string>
     <string name="error_opne_failed">Open Failed</string>
     <string name="select_type">Select Type</string>
+    <string name="setting">Setting</string>
     <string name="appinfo">About</string>
     <string name="version">AppRoom v%s</string>
     <string name="creater">created by &lt;a href=&quot;http://twitter.com/y_megane&quot;&gt;@y_megane&lt;/a&gt;</string>

@@ -23,6 +23,10 @@ public class AppPrefs {
 
     public static final String KEY_PREFS_SORTTYPE = "key_sort_type";
 
+    public static final String KEY_PREFS_INCLUDE_SYSTEM_APP = "key_include_system_app";
+
+    public static final String KEY_PREFS_INCLUDE_DISABLE_APP = "key_include_disable_app";
+
     public void saveSortType(int type) {
         setIntPref(KEY_PREFS_SORTTYPE, type);
     }
@@ -38,13 +42,21 @@ public class AppPrefs {
     public int getLinkType() {
         return getIntegerPref(KEY_PREFS_LINKTYPE_v2);
     }
-    
+
+    public boolean isIncludeSystemApp() {
+        return mDefSharedPref.getBoolean(KEY_PREFS_INCLUDE_SYSTEM_APP, false);
+    }
+
+    public boolean isIncludeDisableApp() {
+        return mDefSharedPref.getBoolean(KEY_PREFS_INCLUDE_DISABLE_APP, false);
+    }
+
     public final int getIntegerPref(String key){
         return mDefSharedPref.getInt(key, getintDefValue(key));
     }
 
     public final void setIntPref(String key, int value){
-        mDefSharedPref.edit().putInt(key, value).commit();
+        mDefSharedPref.edit().putInt(key, value).apply();
     }
 
     private static int getintDefValue(String key){

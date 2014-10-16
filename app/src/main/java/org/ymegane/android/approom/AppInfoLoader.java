@@ -50,19 +50,16 @@ public class AppInfoLoader extends AsyncTaskLoader<List<AppInfo>> {
 
         List<AppInfo> appsList = new ArrayList<AppInfo> ();
 
-        boolean isDownloadApp, isStop;
+        boolean isStop;
         long lastMod;
 
+        AppPrefs prefs = AppPrefs.newInstance(context);
+        boolean includeSystemApp = prefs.isIncludeSystemApp();
+        boolean includeDisableApp = prefs.isIncludeDisableApp();
+
         for (ApplicationInfo appInfo : installedAppList) {
-            isDownloadApp = false;
             isStop = false;
 
-            // ユーザーダウンロードアプリの場合
-            if ((appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
-                    || (appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
-                // Updated system app or Non-system app
-                isDownloadApp = true;
-            }
             // 停止状態のアプリの場合
             if ((appInfo.flags & ApplicationInfo.FLAG_STOPPED) == 0) {
                 // Non-system app
@@ -70,7 +67,7 @@ public class AppInfoLoader extends AsyncTaskLoader<List<AppInfo>> {
             }
 
             // システムアプリ以外
-            if (isDownloadApp) {
+            if (isAdd(appInfo, includeSystemApp, includeDisableApp)) {
                 AppInfo appData = new AppInfo();
                 appData.appInfo = appInfo;
 
@@ -100,5 +97,21 @@ public class AppInfoLoader extends AsyncTaskLoader<List<AppInfo>> {
         // インストール日時でソート
         Collections.sort(appsList, new AppInstallComparator().setMode(sortType));
         return appsList;
+    }
+
+    private static boolean isAdd(ApplicationInfo appInfo, boolean includeSystemApp, boolean includeDisableApp) {
+        // ユーザーダウンロードアプリの場合
+        if ((appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
+                || (appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+            // Updated system app or Non-system app
+            return true;
+        }
+        if (includeSystemApp) {
+            if (!includeDisableApp && !appInfo.enabled) {
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 }

@@ -16,6 +16,11 @@
         </menu>
     </item>
     <item
+        android:id="@+id/item_setting"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:showAsAction="never"
+        android:title="@string/setting"/>
+    <item
         android:id="@+id/item_appinfo"
         android:icon="@android:drawable/ic_menu_info_details"
         android:showAsAction="never"
