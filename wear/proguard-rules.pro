@@ -22,10 +22,16 @@
     @com.squareup.otto.Produce public *;
 }
 
--keepclasseswithmembers  class com.google.zxing.** {
+#Gson
+-keep class com.google.gson.** {
     *;
 }
 
+-keepattributes Signature
+
+-keep class org.ymegane.android.approomcommons.** {
+    *;
+}
 
 #GPS
 -keep class android.support.wearable.view.WearableListView {

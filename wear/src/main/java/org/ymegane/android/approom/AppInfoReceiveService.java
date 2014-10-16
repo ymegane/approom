@@ -22,8 +22,7 @@ public class AppInfoReceiveService extends WearableListenerService {
                 return;
             }
             String appJson = new String(messageEvent.getData());
-            Type listType = new TypeToken<List<AppInfo>>() {
-            }.getType();
+            Type listType = new TypeToken<List<AppInfo>>() {}.getType();
             List<AppInfo> appInfoList = new Gson().fromJson(appJson, listType);
             BusProvider.getInstance().post(new SuccessAppInfoReceiveEvent(appInfoList));
         }
