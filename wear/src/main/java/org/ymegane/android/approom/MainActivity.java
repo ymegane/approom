@@ -48,20 +48,14 @@ public class MainActivity extends Activity implements WearableListView.ClickList
         });
 
         MyLog.setOutputMode(BuildConfig.DEBUG);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
         BusProvider.getInstance().register(this);
     }
 
     @Override
-    protected void onPause() {
+    protected void onDestroy() {
         BusProvider.getInstance().unregister(this);
 
-        super.onPause();
+        super.onDestroy();
     }
 
     @Override
