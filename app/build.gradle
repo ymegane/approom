@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 dependencies {
     compile 'com.google.android.gms:play-services:6.1.11'
     compile 'com.android.support:support-v4:21.0.0'
+    compile "com.android.support:appcompat-v7:21.0.0"
     compile project(":nfc-felica-lib")
     compile project(":approom-commons")
     compile fileTree(dir: 'libs', include: '*.jar')
@@ -12,7 +13,7 @@ dependencies {
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.0"
+    buildToolsVersion "21.0.1"
 
     lintOptions {
         abortOnError false
