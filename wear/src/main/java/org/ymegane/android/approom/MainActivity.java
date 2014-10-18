@@ -46,6 +46,8 @@ public class MainActivity extends Activity implements WearableListView.ClickList
                 AppInfoRequestService.startAppInfoRequestService(getApplicationContext());
             }
         });
+
+        MyLog.setOutputMode(BuildConfig.DEBUG);
     }
 
     @Override
