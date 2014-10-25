@@ -18,11 +18,8 @@ import org.ymegane.android.approomcommns.util.MyLog;
 
 import com.felicanetworks.mfc.PushStartBrowserSegment;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.FragmentTransaction;
 import android.app.WallpaperManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,9 +31,12 @@ import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
 import android.widget.ImageView;
 
-public class MainActivity extends Activity implements OnAppInfoClickListener, INfcTagListener, OnCreateNdefMessageListener, AppDetailFragment.OnAppDetailEventObserver, MfcManageFragment.OnPushRequestEventObserver {
+public class MainActivity extends ActionBarActivity implements OnAppInfoClickListener, INfcTagListener, OnCreateNdefMessageListener, AppDetailFragment.OnAppDetailEventObserver, MfcManageFragment.OnPushRequestEventObserver {
     private static final String TAG = "MainActivity";
 
     private static final String ACTION_INTERCEPT = "com.adamrocker.android.simeji.ACTION_INTERCEPT";
@@ -46,6 +46,7 @@ public class MainActivity extends Activity implements OnAppInfoClickListener, IN
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Needs to be called before setting the content view
         setContentView(R.layout.main);
 
         WallpaperManager wallpaper = WallpaperManager.getInstance(this);
@@ -54,7 +55,7 @@ public class MainActivity extends Activity implements OnAppInfoClickListener, IN
         imageView.setImageDrawable(d);
         if(savedInstanceState == null) {
             AppDisplayFragment fragment = new AppDisplayFragment();
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(android.R.id.content, fragment, AppDisplayFragment.TAG);
             ft.commit();
         }
@@ -91,9 +92,9 @@ public class MainActivity extends Activity implements OnAppInfoClickListener, IN
             args.putString("packageName", info.appInfo.packageName);
             LinkSelectDialog dialog = new LinkSelectDialog();
             dialog.setArguments(args);
-            dialog.show(getFragmentManager(), "LinkSelectDialog");
+            dialog.show(getSupportFragmentManager(), "LinkSelectDialog");
         }else {
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             // NFC/Felicaのイベント管理Fragment
             boolean isTouch = addIcCardFragments(ft);
             appDetailFragment = AppDetailFragment.newInsance(info.appInfo, isTouch);
@@ -114,8 +115,8 @@ public class MainActivity extends Activity implements OnAppInfoClickListener, IN
     @Override
     public void onOpenSetting() {
         DetailPreferenceFragment fragment = new DetailPreferenceFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(android.R.id.content, fragment, "DetailPreferenceFragment");
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        //ft.replace(android.R.id.content, fragment, "DetailPreferenceFragment");
         ft.addToBackStack("DetailPreferenceFragment");
         ft.commit();
     }

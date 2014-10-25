@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:compat="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/item_share"
         android:icon="@drawable/ic_action_share"
-        android:showAsAction="ifRoom"
-        android:actionProviderClass="android.widget.ShareActionProvider"
+        compat:showAsAction="ifRoom"
+        compat:actionProviderClass="android.support.v7.widget.ShareActionProvider"
         android:title="@string/share">
     </item>
     <item
         android:id="@+id/item_detail"
         android:icon="@drawable/ic_menu_show_appinfo"
-        android:showAsAction="never"
+        compat:showAsAction="never"
         android:title="@string/show_detail">
     </item>
     <item
         android:id="@+id/item_store"
         android:icon="@drawable/ic_menu_show_store"
-        android:showAsAction="never"
+        compat:showAsAction="never"
         android:title="@string/show_store">
     </item>
 

@@ -6,14 +6,11 @@ import org.ymegane.android.approom.preference.AppPrefs;
 import org.ymegane.android.approomcommns.QRCodeLoader;
 import org.ymegane.android.approomcommns.util.CommonUtil;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.LoaderManager;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
-import android.content.Loader;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -22,6 +19,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,7 +35,6 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,6 +84,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
         super.onCreate(savedInstanceState);
 
         packageMng = getActivity().getPackageManager();
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -151,13 +155,13 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     private void initActionBar() {
         final ArrayList<String> linkList = createLinkArray();
 
-        ActionBar actionBar = getActivity().getActionBar();
+        ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         actionBar.setDisplayShowTitleEnabled(false);
 
-        ArrayAdapter<String> adapter
-                = new ArrayAdapter<String>(getActivity(),
+        ArrayAdapter adapter
+                = new ArrayAdapter<>(actionBar.getThemedContext(),
                 android.R.layout.simple_spinner_item, android.R.id.text1, getResources().getStringArray(R.array.linktype));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         actionBar.setListNavigationCallbacks(adapter, new ActionBar.OnNavigationListener() {
@@ -184,7 +188,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.detail_menu, menu);
-        shareActionProvider = (ShareActionProvider) menu.findItem(R.id.item_share).getActionProvider();
+        shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menu.findItem(R.id.item_share));
         super.onCreateOptionsMenu(menu, inflater);
     }
 

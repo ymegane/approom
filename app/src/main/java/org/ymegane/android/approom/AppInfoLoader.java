@@ -9,11 +9,11 @@ import org.ymegane.android.approom.preference.AppPrefs;
 import org.ymegane.android.approomcommns.AppInfo;
 import org.ymegane.android.approomcommns.util.MyLog;
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.support.v4.content.AsyncTaskLoader;
 
 /**
  * アプリ情報読み込みLoader

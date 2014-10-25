@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:compat="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/item_sort"
         android:icon="@drawable/ic_action_sort"
-        android:showAsAction="ifRoom"
+        compat:showAsAction="ifRoom"
         android:title="@string/sort">
         <menu>
             <item
@@ -18,12 +19,12 @@
     <item
         android:id="@+id/item_setting"
         android:icon="@android:drawable/ic_menu_preferences"
-        android:showAsAction="never"
+        compat:showAsAction="never"
         android:title="@string/setting"/>
     <item
         android:id="@+id/item_appinfo"
         android:icon="@android:drawable/ic_menu_info_details"
-        android:showAsAction="never"
+        compat:showAsAction="never"
         android:title="@string/appinfo">
     </item>
 

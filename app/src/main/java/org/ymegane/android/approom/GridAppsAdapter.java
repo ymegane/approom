@@ -1,7 +1,6 @@
 package org.ymegane.android.approom;
 
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -12,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,12 +34,35 @@ public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable
     private PackageManager packageMng;
     private Bitmap loadingBitmap;
 
+    private SparseBooleanArray checkedArray = new SparseBooleanArray();
+
     public GridAppsAdapter(Context context, List<AppInfo> objects) {
         super(context, -1, objects);
         packageMng = context.getPackageManager();
         inflater = LayoutInflater.from(context);
 
         loadingBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon_gray);
+    }
+
+    public void resetCheckedState() {
+        checkedArray.clear();
+    }
+
+    public void setCheckedState(int position, boolean checked) {
+        if (checked) {
+            checkedArray.put(position, true);
+        } else {
+            checkedArray.delete(position);
+        }
+    }
+
+    public void toggleCheckState(int position) {
+        boolean current = checkedArray.get(position);
+        setCheckedState(position, !current);
+    }
+
+    public SparseBooleanArray getCheckedStates() {
+        return checkedArray;
     }
 
     @Override
@@ -54,7 +77,7 @@ public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable
         itemView.textAppName.setText(appData.appName);
         loadIcon(getContext(), appData, itemView.imageIcon, loadingBitmap);
 
-        if (itemView.isChecked()) {
+        if (checkedArray.get(position)) {
             itemView.setBackgroundResource(R.drawable.grid_item_select);
         } else {
             itemView.setBackgroundResource(0);

@@ -7,33 +7,34 @@ import org.ymegane.android.approomcommns.AppInfo;
 import org.ymegane.android.approomcommns.util.CommonUtil;
 import org.ymegane.android.approomcommns.util.MyLog;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.LoaderManager;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.content.Loader;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.view.ActionMode;
+import android.support.v7.widget.ShareActionProvider;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.text.method.MovementMethod;
 import android.util.SparseBooleanArray;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
 /**
@@ -55,6 +56,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -68,6 +70,9 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
         }
     }
 
+    private ActionMode actionMode;
+    private ShareActionProvider shareActionProvider;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,57 +80,44 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
         layoutProgress = rootView.findViewById(R.id.layoutProgress);
         gridAppView = (GridView) rootView.findViewById(R.id.gridAppIcon);
         gridAppView.setOnItemClickListener(new ItemClickListener());
-        //listAppView = (ListView) v.findViewById(R.id.listAppIcon);
-        //listAppView.setOnItemClickListener(new ItemClickListener());
         if (!clickListener.isMashroom()) {
-            gridAppView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
-            gridAppView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
-                ShareActionProvider shareActionProvider;
+            gridAppView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
-                public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
-                    int n = gridAppView.getCheckedItemCount();
+                public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                    ((ActionBarActivity)getActivity()).startSupportActionMode(new android.support.v7.view.ActionMode.Callback() {
+                        @Override
+                        public boolean onCreateActionMode(android.support.v7.view.ActionMode actionMode, Menu menu) {
+                            AppDisplayFragment.this.actionMode = actionMode;
 
-                    if (n <= 0) {
-                        return;
-                    }
+                            actionMode.setTitle(R.string.action_mode_title_share);
 
-                    actionMode.setSubtitle(getString(R.string.action_mode_subtitle_share, n));
+                            shareActionProvider = new ShareActionProvider(((ActionBarActivity)getActivity()).getSupportActionBar().getThemedContext());
+                            MenuItem item = menu.add(getString(R.string.share)).setIcon(android.R.drawable.ic_menu_share);
+                            MenuItemCompat.setActionProvider(item, shareActionProvider);
+                            MenuItemCompat.setShowAsAction(item, MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                            return true;
+                        }
 
-                    SparseBooleanArray checkedItems = gridAppView.getCheckedItemPositions();
-                    StringBuilder appListStr = new StringBuilder();
-                    for (int idx=0; idx<checkedItems.size(); idx++) {
-                        int pos = checkedItems.keyAt(idx);
-                        AppInfo appInfo = (AppInfo) gridAppView.getItemAtPosition(pos);
-                        appListStr.append(appInfo.appName).append(":").append(AppLinkBase.LINK_HTTP_DETAIL).append(appInfo.packageName).append("\n\n");
-                    }
+                        @Override
+                        public boolean onPrepareActionMode(android.support.v7.view.ActionMode actionMode, Menu menu) {
+                            updateMultipleChoiceState(position);
+                            return true;
+                        }
 
-                    shareActionProvider.setShareIntent(CommonUtil.createShareIntent(appListStr.toString()));
-                }
+                        @Override
+                        public boolean onActionItemClicked(android.support.v7.view.ActionMode actionMode, MenuItem menuItem) {
+                            return false;
+                        }
 
-                @Override
-                public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-                    actionMode.setTitle(R.string.action_mode_title_share);
-
-                    shareActionProvider = new ShareActionProvider(getActivity());
-                    menu.add(getString(R.string.share)).setIcon(android.R.drawable.ic_menu_share)
-                            .setActionProvider(shareActionProvider)
-                            .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-
+                        @Override
+                        public void onDestroyActionMode(android.support.v7.view.ActionMode actionMode) {
+                            AppDisplayFragment.this.actionMode = null;
+                            shareActionProvider = null;
+                            adapter.resetCheckedState();
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
                     return true;
-                }
-
-                @Override
-                public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-                    return true;
-                }
-
-                @Override
-                public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-                    return false;
-                }
-
-                @Override
-                public void onDestroyActionMode(ActionMode actionMode) {
                 }
             });
         }
@@ -150,7 +142,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     }
 
     private void initActionBar() {
-        ActionBar actionBar = getActivity().getActionBar();
+        ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(false);
@@ -248,9 +240,34 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
-            AppInfo info = (AppInfo) gridAppView.getItemAtPosition(position);
-            clickListener.onItemClick(info);
+            if (actionMode != null) { // 複数選択モード
+                updateMultipleChoiceState(position);
+            } else {
+                AppInfo info = (AppInfo) gridAppView.getItemAtPosition(position);
+                clickListener.onItemClick(info);
+            }
         }
+    }
+
+    private void updateMultipleChoiceState(int position) {
+        adapter.toggleCheckState(position);
+        adapter.notifyDataSetChanged();
+        if (adapter.getCheckedStates().size() <= 0) {
+            actionMode.finish();
+            return;
+        }
+        SparseBooleanArray checkedItems = adapter.getCheckedStates();
+
+        actionMode.setSubtitle(getString(R.string.action_mode_subtitle_share, checkedItems.size()));
+
+        StringBuilder appListStr = new StringBuilder();
+        for (int idx=0; idx<checkedItems.size(); idx++) {
+            int pos = checkedItems.keyAt(idx);
+            AppInfo appInfo = (AppInfo) gridAppView.getItemAtPosition(pos);
+            appListStr.append(appInfo.appName).append(":").append(AppLinkBase.LINK_HTTP_DETAIL).append(appInfo.packageName).append("\n\n");
+        }
+
+        shareActionProvider.setShareIntent(CommonUtil.createShareIntent(appListStr.toString()));
     }
 
     /**

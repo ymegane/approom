@@ -4,7 +4,6 @@ import org.ymegane.android.approom.MainActivity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Fragment;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -12,6 +11,7 @@ import android.nfc.NfcAdapter.CreateNdefMessageCallback;
 import android.nfc.NfcEvent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)

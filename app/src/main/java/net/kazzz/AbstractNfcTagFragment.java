@@ -18,9 +18,6 @@ import net.kazzz.nfc.NfcTag;
 import net.kazzz.util.ArrayUtil;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -29,6 +26,10 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Build;
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import org.ymegane.android.approomcommns.util.MyLog;
 
@@ -110,7 +111,7 @@ public abstract class AbstractNfcTagFragment extends Fragment {
      */
     protected void registerFragment(Activity activity, String tag) {
         this.unRegisterFragment(activity, tag);
-        FragmentManager fm = activity.getFragmentManager();
+        FragmentManager fm = ((FragmentActivity)activity).getSupportFragmentManager();
         FragmentTransaction trans = fm.beginTransaction();
         {
             trans.add(this, tag);
@@ -124,7 +125,7 @@ public abstract class AbstractNfcTagFragment extends Fragment {
      * @param tag フラグメントを識別するタグをセット
      */
     protected void unRegisterFragment(Activity activity, String tag) {
-        FragmentManager fm = activity.getFragmentManager();
+        FragmentManager fm = ((FragmentActivity)activity).getSupportFragmentManager();
         Fragment fragment = fm.findFragmentByTag(tag);
         if ( fragment != null ) {
             FragmentTransaction  trans = fm.beginTransaction();
