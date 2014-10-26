@@ -167,7 +167,10 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
         actionBar.setListNavigationCallbacks(adapter, new ActionBar.OnNavigationListener() {
             @Override
             public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-                if(itemPosition < linkList.size()) {
+                if (getActivity() == null) {
+                    return false;
+                }
+                if(shareActionProvider != null && itemPosition < linkList.size()) {
                     AppPrefs.newInstance(getActivity()).saveLinkType(itemPosition);
                     currentUri = linkList.get(itemPosition);
                     shareActionProvider.setShareIntent(CommonUtil.createShareIntent(appName + ":" + currentUri));
@@ -181,8 +184,6 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
             }
         });
         actionBar.setSelectedNavigationItem(AppPrefs.newInstance(getActivity()).getLinkType());
-
-        setHasOptionsMenu(true);
     }
 
     @Override
