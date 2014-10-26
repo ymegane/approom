@@ -1,12 +1,12 @@
 package org.ymegane.android.approom;
 
-import android.app.Activity;
-import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.Loader;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.wearable.view.WatchViewStub;
 import android.widget.ImageView;
 
@@ -16,7 +16,7 @@ import org.ymegane.android.approomcommns.QRCodeLoader;
 /**
  * 共有画面
  */
-public class ShareActivity extends Activity implements LoaderManager.LoaderCallbacks<Bitmap> {
+public class ShareActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<Bitmap> {
 
     public static void startShareActivity(Context context, AppInfo appInfo) {
         Intent intent = new Intent(context, ShareActivity.class);
@@ -38,7 +38,7 @@ public class ShareActivity extends Activity implements LoaderManager.LoaderCallb
             public void onLayoutInflated(WatchViewStub stub) {
                 mImageView = (ImageView) findViewById(R.id.imageQR);
 
-                getLoaderManager().initLoader(0, null, ShareActivity.this);
+                getSupportLoaderManager().initLoader(0, null, ShareActivity.this);
             }
         });
         mAppInfo = getIntent().getParcelableExtra("appInfo");
