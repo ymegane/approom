@@ -59,4 +59,33 @@ public class AppInfo implements Parcelable {
             return new AppInfo[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AppInfo)) return false;
+
+        AppInfo appInfo1 = (AppInfo) o;
+
+        if (isStoped != appInfo1.isStoped) return false;
+        if (lastModify != appInfo1.lastModify) return false;
+        if (appInfo != null ? !appInfo.equals(appInfo1.appInfo) : appInfo1.appInfo != null)
+            return false;
+        if (appName != null ? !appName.equals(appInfo1.appName) : appInfo1.appName != null)
+            return false;
+        if (packageName != null ? !packageName.equals(appInfo1.packageName) : appInfo1.packageName != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = appInfo != null ? appInfo.hashCode() : 0;
+        result = 31 * result + (int) (lastModify ^ (lastModify >>> 32));
+        result = 31 * result + (appName != null ? appName.hashCode() : 0);
+        result = 31 * result + (packageName != null ? packageName.hashCode() : 0);
+        result = 31 * result + (isStoped ? 1 : 0);
+        return result;
+    }
 }

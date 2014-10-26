@@ -41,7 +41,7 @@ import android.widget.TextView;
  * アプリ一覧表示Fragment
  */
 public class AppDisplayFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<AppInfo>> {
-    public static final String TAG = "AppListFragment";
+    public static final String TAG = "AppDisplayFragment";
 
     private ViewGroup rootView;
 
@@ -76,6 +76,10 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (rootView != null) {
+            ((ViewGroup)rootView.getParent()).removeView(rootView);
+            return rootView;
+        }
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_applist, null);
         layoutProgress = rootView.findViewById(R.id.layoutProgress);
         gridAppView = (GridView) rootView.findViewById(R.id.gridAppIcon);

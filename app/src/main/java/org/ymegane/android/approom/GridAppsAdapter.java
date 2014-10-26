@@ -99,7 +99,12 @@ public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable
             AppInfo info = params[0];
             mAppInfo = info;
 
-            Drawable icon = params[0].appInfo.loadIcon(packageMng);
+            ImageView imageView = mImageViewReference.get();
+            Bitmap cacheIcon = IconCache.getInstance().getBitmap(info.packageName);
+            if (imageView != null && cacheIcon != null) {
+                return new BitmapDrawable(imageView.getResources(), cacheIcon);
+            }
+            Drawable icon =info.appInfo.loadIcon(packageMng);
             return icon;
         }
 
@@ -150,11 +155,6 @@ public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable
     public void loadIcon(Context context, AppInfo appINfo, ImageView imageView, Bitmap loadingBitmap) {
         // 同じタスクが走っていないか、同じ ImageView で古いタスクが走っていないかチェック
         if (cancelPotentialWork(appINfo, imageView)) {
-            Bitmap cacheIcon = IconCache.getInstance().getBitmap(appINfo.packageName);
-            if (cacheIcon != null) {
-                imageView.setImageBitmap(cacheIcon);
-                return;
-            }
             final IconImageTask task = new IconImageTask(imageView);
             final AsyncDrawable asyncDrawable = new AsyncDrawable(context.getResources(), loadingBitmap, task);
             imageView.setImageDrawable(asyncDrawable);

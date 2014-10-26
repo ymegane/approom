@@ -20,6 +20,7 @@
         android:id="@+id/item_setting"
         android:icon="@android:drawable/ic_menu_preferences"
         compat:showAsAction="never"
+        android:visible="false"
         android:title="@string/setting"/>
     <item
         android:id="@+id/item_appinfo"
