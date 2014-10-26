@@ -10,4 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_box="top"/>
+    <android.support.wearable.view.DismissOverlayView
+        android:id="@+id/dismiss_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </android.support.wearable.view.BoxInsetLayout>

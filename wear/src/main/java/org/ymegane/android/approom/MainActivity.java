@@ -3,9 +3,14 @@ package org.ymegane.android.approom;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.view.GestureDetectorCompat;
+import android.support.wearable.view.DismissOverlayView;
 import android.support.wearable.view.WatchViewStub;
 import android.support.wearable.view.WearableListView;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -30,6 +35,9 @@ public class MainActivity extends Activity implements WearableListView.ClickList
     private ProgressBar mProgress;
     private WearableListView mListView;
 
+    private GestureDetectorCompat mGestureDetector;
+    private DismissOverlayView mDismissOverlayView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +50,8 @@ public class MainActivity extends Activity implements WearableListView.ClickList
                 mListView = (WearableListView) findViewById(R.id.list);
                 mListView.setAdapter(new Adapter(getApplicationContext(), new ArrayList<AppInfo>(1)));
                 mListView.setClickListener(MainActivity.this);
+                mDismissOverlayView = (DismissOverlayView) findViewById(R.id.dismiss_overlay);
+                mGestureDetector = new GestureDetectorCompat(MainActivity.this, new LongPressListener());
 
                 AppInfoRequestService.startAppInfoRequestService(getApplicationContext());
             }
@@ -60,6 +70,9 @@ public class MainActivity extends Activity implements WearableListView.ClickList
 
     @Override
     public void onClick(WearableListView.ViewHolder viewHolder) {
+        if (mDismissOverlayView.isShown()) {
+            return;
+        }
         AppInfo appInfo = (AppInfo) viewHolder.itemView.getTag();
         ShareActivity.startShareActivity(this, appInfo);
     }
@@ -111,6 +124,21 @@ public class MainActivity extends Activity implements WearableListView.ClickList
                 finish();
             }
         });
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+        if (mGestureDetector.onTouchEvent(event)) {
+            return false;
+        }
+        return super.dispatchTouchEvent(event);
+    }
+
+    private class LongPressListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public void onLongPress(MotionEvent event) {
+            mDismissOverlayView.show();
+        }
     }
 
     private static final class Adapter extends WearableListView.Adapter {
