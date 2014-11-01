@@ -5,8 +5,8 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 10
-    buildToolsVersion "21.1.0"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion 10

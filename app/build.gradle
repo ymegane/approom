@@ -12,8 +12,8 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.0"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     lintOptions {
         abortOnError false
@@ -26,7 +26,7 @@ android {
 
     defaultConfig {
         applicationId "org.ymegane.android.approom"
-        minSdkVersion 14
+        minSdkVersion 10
         targetSdkVersion 21
 
         versionCode 15
@@ -35,11 +35,17 @@ android {
 
     buildTypes {
         debug {
+            multiDexEnabled = true
+
             applicationIdSuffix '.debug'
         }
         release {
-            runProguard true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
+            minifyEnabled true
+            shrinkResources = true // minifyEnabled true の指定必須
+            proguardFile getDefaultProguardFile('proguard-android.txt')
+            proguardFile file('proguard-project.txt')
+
+            multiDexEnabled = false
         }
     }
 }

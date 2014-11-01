@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.0"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     lintOptions {
         disable 'InvalidPackage'
@@ -27,11 +27,17 @@ android {
     }
     buildTypes {
         debug {
+            multiDexEnabled = true
             applicationIdSuffix ".debug"
         }
         release {
-            runProguard true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources = true // minifyEnabled true の指定必須
+            proguardFile getDefaultProguardFile('proguard-android.txt')
+            proguardFile file('proguard-rules.pro')
+
+            multiDexEnabled = false
+
         }
     }
 }
