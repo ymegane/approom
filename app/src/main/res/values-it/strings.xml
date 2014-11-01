@@ -20,5 +20,7 @@
     <string name="nfcfelica_name">・&lt;a href=\"http://code.google.com/p/nfc-felica/\"&gt;nfc-felica&lt;/a&gt;</string>
     <string name="apache_license">&lt;a href=\"http://www.apache.org/licenses/\"&gt;Apache License Version 2.0&lt;/a&gt;</string>
     <string name="touch_enable">È possibile inviare in contatto</string>
+    <string name="search">ricerca</string>
+    <string name="search_hint">ricerca</string>
 
 </resources>

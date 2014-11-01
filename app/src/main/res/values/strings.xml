@@ -24,5 +24,7 @@
 
     <string name="action_mode_title_share">Share apps</string>
     <string name="action_mode_subtitle_share">selected:%d</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Search</string>
 
 </resources>

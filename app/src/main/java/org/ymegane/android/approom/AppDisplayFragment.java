@@ -10,6 +10,7 @@ import org.ymegane.android.approomcommns.util.MyLog;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
@@ -21,8 +22,10 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.ShareActionProvider;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.method.MovementMethod;
 import android.util.SparseBooleanArray;
@@ -32,8 +35,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -83,6 +89,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_applist, null);
         layoutProgress = rootView.findViewById(R.id.layoutProgress);
         gridAppView = (GridView) rootView.findViewById(R.id.gridAppIcon);
+        gridAppView.setTextFilterEnabled(true);
         gridAppView.setOnItemClickListener(new ItemClickListener());
         if (!clickListener.isMashroom()) {
             gridAppView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -98,7 +105,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
                             shareActionProvider = new ShareActionProvider(((ActionBarActivity)getActivity()).getSupportActionBar().getThemedContext());
                             MenuItem item = menu.add(getString(R.string.share)).setIcon(android.R.drawable.ic_menu_share);
                             MenuItemCompat.setActionProvider(item, shareActionProvider);
-                            MenuItemCompat.setShowAsAction(item, MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                            MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
                             return true;
                         }
 
@@ -158,11 +165,22 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     public void onPause() {
         super.onPause();
         lastGridPosition = gridAppView.getFirstVisiblePosition();
+
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(gridAppView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
+
+    private Menu menuItems;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.desplay_menu, menu);
+
+        this.menuItems = menu;
+
+        // SearchViewの初期化
+        initSearchView(menu.findItem(R.id.item_search));
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -185,8 +203,52 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
                     clickListener.onOpenSetting();
                 }
                 return true;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initSearchView(MenuItem item) {
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setQueryHint(getString(R.string.search_hint));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                updateSearchResult(s);
+                return true;
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                updateSearchResult(null);
+                return false;
+            }
+        });
+        searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+            }
+        });
+    }
+
+    private void updateSearchResult(String word) {
+        Filter filter = ((Filterable) gridAppView.getAdapter()).getFilter();
+        if (TextUtils.isEmpty(word)) {
+            filter.filter("");
+        } else {
+            filter.filter(word);
+        }
     }
 
     @Override
@@ -247,6 +309,8 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
             if (actionMode != null) { // 複数選択モード
                 updateMultipleChoiceState(position);
             } else {
+                updateSearchResult(null);
+
                 AppInfo info = (AppInfo) gridAppView.getItemAtPosition(position);
                 clickListener.onItemClick(info);
             }

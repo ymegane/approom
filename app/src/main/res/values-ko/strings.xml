@@ -19,4 +19,6 @@
     <string name="nfcfelica_name">・&lt;a href=\"http://code.google.com/p/nfc-felica/\"&gt;nfc-felica&lt;/a&gt;</string>
     <string name="apache_license">&lt;a href=\"http://www.apache.org/licenses/\"&gt;Apache License Version 2.0&lt;/a&gt;</string>
     <string name="touch_enable">터치로 보낼 수 있습니다</string>
+    <string name="search">검색</string>
+    <string name="search_hint">검색</string>
 </resources>

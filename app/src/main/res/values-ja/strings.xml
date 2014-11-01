@@ -22,5 +22,7 @@
 
     <string name="action_mode_title_share">アプリを共有</string>
     <string name="action_mode_subtitle_share">選択中:%d</string>
+    <string name="search">検索</string>
+    <string name="search_hint">アプリを検索</string>
 
 </resources>
