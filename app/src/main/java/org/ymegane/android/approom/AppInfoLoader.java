@@ -13,7 +13,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.AsyncTaskLoader;
+import android.support.v7.graphics.Palette;
 
 /**
  * アプリ情報読み込みLoader
@@ -23,8 +27,11 @@ import android.support.v4.content.AsyncTaskLoader;
 public class AppInfoLoader extends AsyncTaskLoader<List<AppInfo>> {
     private static final String TAG = "AppInfoLoader";
 
-    public AppInfoLoader(Context context) {
+    private boolean isLoadPalette = false;
+
+    public AppInfoLoader(Context context, boolean isLoadPalette) {
         super(context);
+        this.isLoadPalette = isLoadPalette;
     }
 
     @Override
@@ -36,10 +43,10 @@ public class AppInfoLoader extends AsyncTaskLoader<List<AppInfo>> {
 
     @Override
     public List<AppInfo> loadInBackground() {
-        return getAppInfo(getContext());
+        return getAppInfo(getContext(), this.isLoadPalette);
     }
 
-    static List<AppInfo> getAppInfo(Context context) {
+    static List<AppInfo> getAppInfo(Context context, boolean isLoadPalette) {
         PackageManager packageMng = context.getPackageManager();
 
         Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
@@ -88,6 +95,13 @@ public class AppInfoLoader extends AsyncTaskLoader<List<AppInfo>> {
                 appData.lastModify = lastMod;
                 appData.appName = (String) appInfo.loadLabel(packageMng);
                 appData.isStoped = isStop;
+
+                if (isLoadPalette) {
+                    Drawable icon = appInfo.loadIcon(packageMng);
+                    Bitmap iconBitmap = ((BitmapDrawable)icon).getBitmap();
+                    Palette palette = Palette.generate(iconBitmap);
+                    appData.palette = palette.getVibrantColor(R.color.light_blue_600);
+                }
 
                 appsList.add(appData);
             }

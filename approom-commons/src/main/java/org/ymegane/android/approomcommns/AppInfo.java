@@ -21,44 +21,16 @@ public class AppInfo implements Parcelable {
     public String packageName;
     @SerializedName("isStoped")
     public boolean isStoped;
+    @SerializedName("palette")
+    public int palette;
 
     @Override
     public String toString() {
         return appName;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.lastModify);
-        dest.writeString(this.appName);
-        dest.writeString(this.packageName);
-        dest.writeByte(isStoped ? (byte) 1 : (byte) 0);
-    }
-
     public AppInfo() {
     }
-
-    private AppInfo(Parcel in) {
-        this.lastModify = in.readLong();
-        this.appName = in.readString();
-        this.packageName = in.readString();
-        this.isStoped = in.readByte() != 0;
-    }
-
-    public static final Creator<AppInfo> CREATOR = new Creator<AppInfo>() {
-        public AppInfo createFromParcel(Parcel source) {
-            return new AppInfo(source);
-        }
-
-        public AppInfo[] newArray(int size) {
-            return new AppInfo[size];
-        }
-    };
 
     @Override
     public boolean equals(Object o) {
@@ -88,4 +60,38 @@ public class AppInfo implements Parcelable {
         result = 31 * result + (isStoped ? 1 : 0);
         return result;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.appInfo, 0);
+        dest.writeLong(this.lastModify);
+        dest.writeString(this.appName);
+        dest.writeString(this.packageName);
+        dest.writeByte(isStoped ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.palette);
+    }
+
+    private AppInfo(Parcel in) {
+        this.appInfo = in.readParcelable(ApplicationInfo.class.getClassLoader());
+        this.lastModify = in.readLong();
+        this.appName = in.readString();
+        this.packageName = in.readString();
+        this.isStoped = in.readByte() != 0;
+        this.palette = in.readInt();
+    }
+
+    public static final Creator<AppInfo> CREATOR = new Creator<AppInfo>() {
+        public AppInfo createFromParcel(Parcel source) {
+            return new AppInfo(source);
+        }
+
+        public AppInfo[] newArray(int size) {
+            return new AppInfo[size];
+        }
+    };
 }

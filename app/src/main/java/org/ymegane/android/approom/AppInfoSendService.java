@@ -48,7 +48,7 @@ public class AppInfoSendService extends IntentService {
             MyLog.w(TAG, "Failed to connect to GoogleApiClient.");
             return;
         }
-        List<AppInfo> appInfoList = AppInfoLoader.getAppInfo(getApplicationContext());
+        List<AppInfo> appInfoList = AppInfoLoader.getAppInfo(getApplicationContext(), true);
         if (appInfoList.size() > 20) {
             //appInfoList = appInfoList.subList(0, 20);
         }

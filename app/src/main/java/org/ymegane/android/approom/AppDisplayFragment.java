@@ -193,7 +193,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     public Loader<List<AppInfo>> onCreateLoader(int arg0, Bundle arg1) {
         // アプリ一覧の読み込み
         layoutProgress.setVisibility(View.VISIBLE);
-        return new AppInfoLoader(getActivity());
+        return new AppInfoLoader(getActivity(), false);
     }
 
     @Override

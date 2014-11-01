@@ -30,7 +30,6 @@ public class WearableListItemLayout extends LinearLayout implements WearableList
 
     private final float mFadedTextAlpha;
     private final int mFadedCircleColor;
-    private final int mChosenCircleColor;
     private ImageView mCircle;
     private float mScale;
     private TextView mName;
@@ -47,11 +46,11 @@ public class WearableListItemLayout extends LinearLayout implements WearableList
         super(context, attrs, defStyle);
         mFadedTextAlpha = getResources().getInteger(R.integer.action_text_faded_alpha) / 100f;
         mFadedCircleColor = getResources().getColor(R.color.wl_gray);
-        mChosenCircleColor = getResources().getColor(R.color.wl_blue);
     }
 
     public void bindView(AppInfo info) {
         mName.setText(info.appName);
+        mCircle.setTag(info);
     }
 
     @Override
@@ -86,7 +85,8 @@ public class WearableListItemLayout extends LinearLayout implements WearableList
     @Override
     public void onScaleUpStart() {
         mName.setAlpha(1f);
-        ((GradientDrawable) mCircle.getDrawable()).setColor(mChosenCircleColor);
+        AppInfo info = (AppInfo) mCircle.getTag();
+        ((GradientDrawable) mCircle.getDrawable()).setColor(info.palette);
     }
 
     @Override

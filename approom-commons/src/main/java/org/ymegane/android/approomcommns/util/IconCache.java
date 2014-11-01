@@ -1,7 +1,7 @@
 package org.ymegane.android.approomcommns.util;
 
 import android.graphics.Bitmap;
-import android.util.LruCache;
+import android.support.v4.util.LruCache;
 
 /**
  * Created by y on 2014/10/11.
