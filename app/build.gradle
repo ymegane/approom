@@ -34,6 +34,12 @@ android {
         versionName '2.3.0'
     }
 
+    aaptOptions {
+        // android wear 用の apk を asset に置く場合に、圧縮を行わないようにするための設定
+        // see http://developer.android.com/training/wearables/apps/packaging.html
+        noCompress "apk"
+    }
+
     buildTypes {
         debug {
             multiDexEnabled = true
@@ -42,7 +48,7 @@ android {
         }
         release {
             minifyEnabled true
-            shrinkResources = true // minifyEnabled true の指定必須
+            shrinkResources = false // minifyEnabled true の指定必須
             proguardFile getDefaultProguardFile('proguard-android.txt')
             proguardFile file('proguard-project.txt')
 
