@@ -9,7 +9,6 @@ import org.ymegane.android.approomcommns.util.CommonUtil;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -21,8 +20,10 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
@@ -56,7 +57,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     private ApplicationInfo appInfo;
 
     public interface OnAppDetailEventObserver {
-        void onDetailDestory();
+        void onDetailDestroy();
     }
 
     private OnAppDetailEventObserver eventListener;
@@ -64,7 +65,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     private String appName;
     private String currentUri;
 
-    public static AppDetailFragment newInsance(ApplicationInfo appInfo, boolean isTouch) {
+    public static AppDetailFragment newInstance(ApplicationInfo appInfo, boolean isTouch) {
         Bundle args = new Bundle();
         args.putParcelable(AppDetailFragment.KEY_APPINFO, appInfo);
         args.putBoolean(KEY_TOUCH_ENABLE, isTouch);
@@ -110,6 +111,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
         if(icon != null) {
             ImageView imageIcon = (ImageView) view.findViewById(R.id.imageIcon);
             imageIcon.setImageDrawable(icon);
+            ViewCompat.setTransitionName(imageIcon, DetailActivity.APP_INFO);
         }
 
         textLinkUri = (TextView) view.findViewById(R.id.textUri);
@@ -148,7 +150,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public void onDestroy() {
-        eventListener.onDetailDestory();
+        eventListener.onDetailDestroy();
         super.onDestroy();
     }
 
@@ -197,7 +199,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case android.R.id.home:
-                getFragmentManager().popBackStack();
+                NavUtils.navigateUpFromSameTask(getActivity());
                 return true;
             case R.id.item_detail:
                 Intent settingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:"+packageName));

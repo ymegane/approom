@@ -312,7 +312,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
                 updateSearchResult(null);
 
                 AppInfo info = (AppInfo) gridAppView.getItemAtPosition(position);
-                clickListener.onItemClick(info);
+                clickListener.onItemClick(view.findViewById(R.id.imageAppIcon), info);
             }
         }
     }
@@ -344,7 +344,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
      *
      */
     public interface OnAppInfoClickListener {
-        void onItemClick(AppInfo info);
+        void onItemClick(View view, AppInfo info);
         boolean isMashroom();
         void onOpenSetting();
     }

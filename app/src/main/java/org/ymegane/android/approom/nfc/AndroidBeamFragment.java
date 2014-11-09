@@ -1,6 +1,6 @@
 package org.ymegane.android.approom.nfc;
 
-import org.ymegane.android.approom.MainActivity;
+import org.ymegane.android.approom.DetailActivity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -64,8 +64,8 @@ public class AndroidBeamFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        MainActivity activity = (MainActivity) getActivity();
-        if(mNfcAdapter != null && !activity.isDestory()) {
+        DetailActivity activity = (DetailActivity) getActivity();
+        if(mNfcAdapter != null && !activity.isDestroy()) {
             mNfcAdapter.setNdefPushMessageCallback(null, getActivity());
         }
         super.onDestroy();

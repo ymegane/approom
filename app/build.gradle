@@ -48,7 +48,7 @@ android {
         }
         release {
             minifyEnabled true
-            shrinkResources = false // minifyEnabled true の指定必須
+            shrinkResources = true // minifyEnabled true の指定必須
             proguardFile getDefaultProguardFile('proguard-android.txt')
             proguardFile file('proguard-project.txt')
 

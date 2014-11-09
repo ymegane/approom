@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <style
-        name="MyTheme"
-        parent="Theme.AppCompat">
+    <style name="MyTheme" parent="MyTheme.Base"/>
 
+    <style name="MyTheme.Base" parent="Theme.AppCompat">
         <!-- Set AppCompat’s color theming attrs -->
         <item name="colorPrimary">@color/light_blue_600</item>
         <item name="colorPrimaryDark">@color/light_blue_900</item>
         <item name="colorAccent">@color/grid_item_selected</item>
-    </style>
-    <!-- style for the action bar backgrounds -->
-    <style name="MyActionBar" parent="Widget.AppCompat.ActionBar">
-        <item name="background">@color/light_blue_600</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 </resources>

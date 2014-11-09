@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="share">Share</string>
     <string name="show_detail">App Detail</string>
     <string name="show_store">Open Play Store</string>
@@ -13,18 +14,20 @@
     <string name="setting">Setting</string>
     <string name="appinfo">About</string>
     <string name="version">AppRoom v%s</string>
-    <string name="creater">created by &lt;a href=&quot;http://twitter.com/y_megane&quot;&gt;@y_megane&lt;/a&gt;</string>
+    <string name="creater">created by &lt;a href="http://twitter.com/y_megane">@y_megane&lt;/a></string>
     <string name="oss">Open Source Software</string>
-    <string name="zxing_name">・&lt;a href=&quot;http://code.google.com/p/zxing/&quot;&gt;ZXing&lt;/a&gt;</string>
-    <string name="nfcfelica_name">・&lt;a href=&quot;http://code.google.com/p/nfc-felica/&quot;&gt;nfc-felica&lt;/a&gt;</string>
-    <string name="gson_name">・&lt;a href=&quot;https://code.google.com/p/google-gson/&quot;&gt;google-gson&lt;/a&gt;</string>
-    <string name="otto_name">・&lt;a href=&quot;http://square.github.io/otto/&quot;&gt;Otto&lt;/a&gt;</string>
-    <string name="apache_license">&lt;a href=&quot;http://www.apache.org/licenses/&quot;&gt;Apache License Version 2.0&lt;/a&gt;</string>
+    <string name="zxing_name">・&lt;a href="http://code.google.com/p/zxing/">ZXing&lt;/a></string>
+    <string name="nfcfelica_name">・&lt;a href="http://code.google.com/p/nfc-felica/">nfc-felica&lt;/a></string>
+    <string name="gson_name">・&lt;a href="https://code.google.com/p/google-gson/">google-gson&lt;/a></string>
+    <string name="otto_name">・&lt;a href="http://square.github.io/otto/">Otto&lt;/a></string>
+    <string name="apache_license">&lt;a href="http://www.apache.org/licenses/">Apache License Version 2.0&lt;/a></string>
     <string name="touch_enable">You can send in touch</string>
-
     <string name="action_mode_title_share">Share apps</string>
     <string name="action_mode_subtitle_share">selected:%d</string>
     <string name="search">Search</string>
     <string name="search_hint">Search</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
