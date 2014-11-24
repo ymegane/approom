@@ -27,7 +27,7 @@ android {
     }
     buildTypes {
         debug {
-            multiDexEnabled = true
+            multiDexEnabled = false
             applicationIdSuffix ".debug"
         }
         release {

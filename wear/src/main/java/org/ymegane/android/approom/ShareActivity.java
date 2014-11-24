@@ -10,7 +10,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.wearable.view.DismissOverlayView;
-import android.support.wearable.view.WatchViewStub;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.ImageView;
@@ -38,20 +37,14 @@ public class ShareActivity extends FragmentActivity implements LoaderManager.Loa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_share);
-        final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
-        stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
-            @Override
-            public void onLayoutInflated(WatchViewStub stub) {
-                mImageView = (ImageView) findViewById(R.id.imageQR);
-                mDismissOverlayView = (DismissOverlayView) findViewById(R.id.dismiss_overlay);
-                mGestureDetector = new GestureDetectorCompat(ShareActivity.this, new LongPressListener());
 
-                getSupportLoaderManager().initLoader(0, null, ShareActivity.this);
-            }
-        });
         mAppInfo = getIntent().getParcelableExtra("appInfo");
+        mImageView = (ImageView) findViewById(R.id.imageQR);
+        mDismissOverlayView = (DismissOverlayView) findViewById(R.id.dismiss_overlay);
+        mGestureDetector = new GestureDetectorCompat(ShareActivity.this, new LongPressListener());
+
+        getSupportLoaderManager().initLoader(0, null, ShareActivity.this);
     }
 
     @Override

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.wearable.view.DismissOverlayView;
-import android.support.wearable.view.WatchViewStub;
 import android.support.wearable.view.WearableListView;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -42,23 +41,18 @@ public class MainActivity extends Activity implements WearableListView.ClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
-        stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
-            @Override
-            public void onLayoutInflated(WatchViewStub stub) {
-                mProgress = (ProgressBar) findViewById(R.id.progressBar);
-                mListView = (WearableListView) findViewById(R.id.list);
-                mListView.setAdapter(new Adapter(getApplicationContext(), new ArrayList<AppInfo>(1)));
-                mListView.setClickListener(MainActivity.this);
-                mDismissOverlayView = (DismissOverlayView) findViewById(R.id.dismiss_overlay);
-                mGestureDetector = new GestureDetectorCompat(MainActivity.this, new LongPressListener());
 
-                AppInfoRequestService.startAppInfoRequestService(getApplicationContext());
-            }
-        });
+        mProgress = (ProgressBar) findViewById(R.id.progressBar);
+        mListView = (WearableListView) findViewById(R.id.list);
+        mListView.setAdapter(new Adapter(getApplicationContext(), new ArrayList<AppInfo>(1)));
+        mListView.setClickListener(MainActivity.this);
+        mDismissOverlayView = (DismissOverlayView) findViewById(R.id.dismiss_overlay);
+        mGestureDetector = new GestureDetectorCompat(MainActivity.this, new LongPressListener());
 
         MyLog.setOutputMode(BuildConfig.DEBUG);
         BusProvider.getInstance().register(this);
+
+        AppInfoRequestService.startAppInfoRequestService(getApplicationContext());
     }
 
     @Override
