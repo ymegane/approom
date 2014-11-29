@@ -2,10 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.ymegane.android.approom" >
 
-    <uses-permission android:name="com.felicanetworks.mfc.permission.MFC_ACCESS" />
-    <uses-permission android:name="android.permission.NFC"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-
     <uses-feature android:name="android.hardware.type.watch" />
 
     <application

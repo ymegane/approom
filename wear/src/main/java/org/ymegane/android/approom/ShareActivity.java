@@ -12,6 +12,7 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.support.wearable.view.DismissOverlayView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import org.ymegane.android.approomcommns.AppInfo;
@@ -38,6 +39,8 @@ public class ShareActivity extends FragmentActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         mAppInfo = getIntent().getParcelableExtra("appInfo");
         mImageView = (ImageView) findViewById(R.id.imageQR);
