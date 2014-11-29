@@ -5,7 +5,7 @@
     <style name="MyTheme.Base" parent="Theme.AppCompat">
         <!-- Set AppCompat’s color theming attrs -->
         <item name="colorPrimary">@color/light_blue_600</item>
-        <item name="colorPrimaryDark">@color/light_blue_900</item>
+        <item name="colorPrimaryDark">@color/light_blue_800</item>
         <item name="colorAccent">@color/grid_item_selected</item>
         <item name="android:windowNoTitle">true</item>
     </style>
