@@ -5,7 +5,6 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "org.ymegane.android.approomcommns"
         minSdkVersion 10
         targetSdkVersion 21
         versionCode 1
