@@ -19,5 +19,5 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="animation_range">60dp</dimen>
-    <dimen name="qr_size">200dp</dimen>
+    <dimen name="qr_size">160dp</dimen>
 </resources>
