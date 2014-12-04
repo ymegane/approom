@@ -1,9 +1,11 @@
 package org.ymegane.android.approom;
 
 import android.app.Activity;
+import android.app.WallpaperManager;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Build;
@@ -15,6 +17,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.felicanetworks.mfc.PushStartBrowserSegment;
 
@@ -48,6 +51,12 @@ public class DetailActivity extends ActionBarActivity implements AppDetailFragme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+
+        WallpaperManager wallpaper = WallpaperManager.getInstance(this);
+        Drawable d = wallpaper.getFastDrawable().mutate();
+        ImageView imageView = (ImageView) findViewById(R.id.imageWallpaper);
+        imageView.setImageDrawable(d);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
