@@ -22,8 +22,8 @@ android {
         applicationId "org.ymegane.android.approom"
         minSdkVersion 20
         targetSdkVersion 21
-        versionCode 3
-        versionName "1.2"
+        versionCode 17
+        versionName '2.3.1'
     }
     buildTypes {
         debug {
