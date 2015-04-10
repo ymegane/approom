@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.2'
+        classpath 'com.android.tools.build:gradle:1.1.3'
     }
 }
 
@@ -30,7 +30,7 @@ subprojects {
 
 project.ext {
     compileSdkVersion = 21
-    buildToolsVersion = '21.1.2'
+    buildToolsVersion = '22.0.1'
 
     // see http://tools.android.com/tech-docs/new-build-system/tips#TOC-Improving-Build-Server-performance.
     // CIサーバなどでは -PdisablePreDex をつける。 preDexが省略されてビルドが速くなる

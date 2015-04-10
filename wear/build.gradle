@@ -21,7 +21,7 @@ android {
     defaultConfig {
         applicationId "org.ymegane.android.approom"
         minSdkVersion 20
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode 17
         versionName '2.3.1'
     }
@@ -46,6 +46,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(":approom-commons")
     compile 'com.google.android.support:wearable:1.0.0'
-    compile 'com.google.android.gms:play-services-wearable:6.5.87'
+    compile 'com.google.android.gms:play-services-wearable:7.0.0'
     compile 'com.squareup:otto:1.3.5'
 }
