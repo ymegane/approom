@@ -20,7 +20,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.ShareActionProvider;
@@ -95,14 +95,14 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
             gridAppView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                    ((ActionBarActivity)getActivity()).startSupportActionMode(new android.support.v7.view.ActionMode.Callback() {
+                    ((AppCompatActivity)getActivity()).startSupportActionMode(new android.support.v7.view.ActionMode.Callback() {
                         @Override
                         public boolean onCreateActionMode(android.support.v7.view.ActionMode actionMode, Menu menu) {
                             AppDisplayFragment.this.actionMode = actionMode;
 
                             actionMode.setTitle(R.string.action_mode_title_share);
 
-                            shareActionProvider = new ShareActionProvider(((ActionBarActivity)getActivity()).getSupportActionBar().getThemedContext());
+                            shareActionProvider = new ShareActionProvider(((AppCompatActivity)getActivity()).getSupportActionBar().getThemedContext());
                             MenuItem item = menu.add(getString(R.string.share)).setIcon(android.R.drawable.ic_menu_share);
                             MenuItemCompat.setActionProvider(item, shareActionProvider);
                             MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
@@ -153,7 +153,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     }
 
     private void initActionBar() {
-        ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(false);

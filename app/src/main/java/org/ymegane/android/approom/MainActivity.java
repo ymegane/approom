@@ -3,23 +3,22 @@ package org.ymegane.android.approom;
 import org.ymegane.android.approom.AppDisplayFragment.OnAppInfoClickListener;
 import org.ymegane.android.approomcommns.AppInfo;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.WallpaperManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
-public class MainActivity extends ActionBarActivity implements OnAppInfoClickListener {
+public class MainActivity extends AppCompatActivity implements OnAppInfoClickListener {
     private static final String TAG = "MainActivity";
 
     private static final String ACTION_INTERCEPT = "com.adamrocker.android.simeji.ACTION_INTERCEPT";
@@ -77,6 +76,7 @@ public class MainActivity extends ActionBarActivity implements OnAppInfoClickLis
     public static class LinkSelectDialog extends DialogFragment implements OnClickListener {
         private String[] linkItems;
         @Override
+        @NonNull
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             String appName = getArguments().getString("appName");
             String packageName = getArguments().getString("packageName");

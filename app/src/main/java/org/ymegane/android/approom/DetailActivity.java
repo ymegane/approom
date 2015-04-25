@@ -13,8 +13,8 @@ import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -32,7 +32,7 @@ import org.ymegane.android.approom.nfc.PushCommand;
 import org.ymegane.android.approomcommns.util.CommonUtil;
 import org.ymegane.android.approomcommns.util.MyLog;
 
-public class DetailActivity extends ActionBarActivity implements AppDetailFragment.OnAppDetailEventObserver, AbstractNfcTagFragment.INfcTagListener, AndroidBeamFragment.OnCreateNdefMessageListener,  MfcManageFragment.OnPushRequestEventObserver  {
+public class DetailActivity extends AppCompatActivity implements AppDetailFragment.OnAppDetailEventObserver, AbstractNfcTagFragment.INfcTagListener, AndroidBeamFragment.OnCreateNdefMessageListener,  MfcManageFragment.OnPushRequestEventObserver  {
     private static final String TAG = DetailActivity.class.getSimpleName();
 
     public static final String APP_INFO = "applicationInfo";
