@@ -29,7 +29,7 @@ subprojects {
 }
 
 project.ext {
-    compileSdkVersion = 21
+    compileSdkVersion = 22
     buildToolsVersion = '22.0.1'
 
     // see http://tools.android.com/tech-docs/new-build-system/tips#TOC-Improving-Build-Server-performance.
