@@ -28,7 +28,7 @@ public class AppInfoSendService extends IntentService {
         super(TAG);
     }
 
-    private static final int CONNECT_TIMEOUT_MS = 100;
+    private static final int CONNECT_TIMEOUT_MS = 10000;
     public static final String REQUEST_APP_INFO = "request/app_info";
     public static final String RESET_PATH = "request/reset";
 
@@ -53,6 +53,7 @@ public class AppInfoSendService extends IntentService {
             //appInfoList = appInfoList.subList(0, 20);
         }
         String jsonStr = new Gson().toJson(appInfoList);
+        MyLog.d(TAG, "appListJson " + jsonStr);
 
         NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes(googleApiClient).await();
         if (nodes.getNodes().isEmpty()) {

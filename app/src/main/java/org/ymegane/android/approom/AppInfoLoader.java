@@ -76,8 +76,9 @@ public class AppInfoLoader extends AsyncTaskLoader<List<AppInfo>> {
             // システムアプリ以外
             if (isAdd(appInfo, includeSystemApp, includeDisableApp)) {
                 AppInfo appData = new AppInfo();
-                appData.appInfo = appInfo;
-
+                if (!isLoadPalette) {
+                    appData.appInfo = appInfo;
+                }
                 lastMod = -1;
 
                 // Nullの場合があるよう。細かくは分かってない
@@ -99,7 +100,7 @@ public class AppInfoLoader extends AsyncTaskLoader<List<AppInfo>> {
                 if (isLoadPalette) {
                     Drawable icon = appInfo.loadIcon(packageMng);
                     Bitmap iconBitmap = ((BitmapDrawable)icon).getBitmap();
-                    Palette palette = Palette.generate(iconBitmap);
+                    Palette palette = Palette.from(iconBitmap).generate();
                     appData.palette = palette.getVibrantColor(R.color.light_blue_600);
                 }
 

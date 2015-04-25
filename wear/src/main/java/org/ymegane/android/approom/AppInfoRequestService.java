@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 public class AppInfoRequestService extends IntentService {
     private static final String TAG = AppInfoRequestService.class.getSimpleName();
 
-    private static final int CONNECT_TIMEOUT_MS = 100;
+    private static final int CONNECT_TIMEOUT_MS = 10000;
 
     public AppInfoRequestService() {
         super(TAG);
