@@ -1,14 +1,14 @@
 package org.ymegane.android.approom;
 
+import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.Loader;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.DismissOverlayView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -17,11 +17,13 @@ import android.widget.ImageView;
 
 import org.ymegane.android.approomcommns.AppInfo;
 import org.ymegane.android.approomcommns.QRCodeLoader;
+import org.ymegane.android.approomcommns.util.MyLog;
 
 /**
  * 共有画面
  */
-public class ShareActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<Bitmap> {
+public class ShareActivity extends WearableActivity implements LoaderManager.LoaderCallbacks<Bitmap> {
+    private static final String TAG = ShareActivity.class.getSimpleName();
 
     public static void startShareActivity(Context context, AppInfo appInfo) {
         Intent intent = new Intent(context, ShareActivity.class);
@@ -40,14 +42,14 @@ public class ShareActivity extends FragmentActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share);
 
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        setAmbientEnabled();
 
         mAppInfo = getIntent().getParcelableExtra("appInfo");
         mImageView = (ImageView) findViewById(R.id.imageQR);
         mDismissOverlayView = (DismissOverlayView) findViewById(R.id.dismiss_overlay);
         mGestureDetector = new GestureDetectorCompat(ShareActivity.this, new LongPressListener());
 
-        getSupportLoaderManager().initLoader(0, null, ShareActivity.this);
+        getLoaderManager().initLoader(0, null, ShareActivity.this);
     }
 
     @Override
@@ -68,6 +70,20 @@ public class ShareActivity extends FragmentActivity implements LoaderManager.Loa
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
         return mGestureDetector.onTouchEvent(event) || super.dispatchTouchEvent(event);
+    }
+
+    @Override
+    public void onEnterAmbient(Bundle ambientDetails) {
+        super.onEnterAmbient(ambientDetails);
+        MyLog.d(TAG, "[onEnterAmbient]");
+
+        // TODO 画像を反転させる？
+    }
+
+    @Override
+    public void onExitAmbient() {
+        super.onExitAmbient();
+        MyLog.d(TAG, "[onExitAmbient]");
     }
 
     private class LongPressListener extends GestureDetector.SimpleOnGestureListener {

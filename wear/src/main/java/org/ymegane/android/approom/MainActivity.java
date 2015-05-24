@@ -1,10 +1,10 @@
 package org.ymegane.android.approom;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.DismissOverlayView;
 import android.support.wearable.view.WearableListView;
 import android.view.GestureDetector;
@@ -29,7 +29,7 @@ import org.ymegane.android.approomcommns.util.MyLog;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity implements WearableListView.ClickListener {
+public class MainActivity extends WearableActivity implements WearableListView.ClickListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private ProgressBar mProgress;

@@ -26,12 +26,11 @@ import android.widget.TextView;
 
 import org.ymegane.android.approomcommns.AppInfo;
 
-public class WearableListItemLayout extends LinearLayout implements WearableListView.Item {
+public class WearableListItemLayout extends LinearLayout implements WearableListView.OnCenterProximityListener  {
 
     private final float mFadedTextAlpha;
     private final int mFadedCircleColor;
     private ImageView mCircle;
-    private float mScale;
     private TextView mName;
 
     public WearableListItemLayout(Context context) {
@@ -61,36 +60,14 @@ public class WearableListItemLayout extends LinearLayout implements WearableList
     }
 
     @Override
-    public float getProximityMinValue() {
-        return 1f;
-    }
-
-    @Override
-    public float getProximityMaxValue() {
-        return 1.6f;
-    }
-
-    @Override
-    public float getCurrentProximityValue() {
-        return mScale;
-    }
-
-    @Override
-    public void setScalingAnimatorValue(float scale) {
-        mScale = scale;
-        mCircle.setScaleX(scale);
-        mCircle.setScaleY(scale);
-    }
-
-    @Override
-    public void onScaleUpStart() {
+    public void onCenterPosition(boolean b) {
         mName.setAlpha(1f);
         AppInfo info = (AppInfo) mCircle.getTag();
         ((GradientDrawable) mCircle.getDrawable()).setColor(info.palette);
     }
 
     @Override
-    public void onScaleDownStart() {
+    public void onNonCenterPosition(boolean b) {
         ((GradientDrawable) mCircle.getDrawable()).setColor(mFadedCircleColor);
         mName.setAlpha(mFadedTextAlpha);
     }

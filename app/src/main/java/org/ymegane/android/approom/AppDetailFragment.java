@@ -3,7 +3,7 @@ package org.ymegane.android.approom;
 import java.util.ArrayList;
 
 import org.ymegane.android.approom.preference.AppPrefs;
-import org.ymegane.android.approomcommns.QRCodeLoader;
+import org.ymegane.android.approomcommns.QRCodeLoaderSupport;
 import org.ymegane.android.approomcommns.util.CommonUtil;
 
 import android.app.Activity;
@@ -240,7 +240,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public Loader<Bitmap> onCreateLoader(int arg0, Bundle arg1) {
         String uri = arg1.getString("currentUri");
-        return new QRCodeLoader(getActivity(), uri, getResources().getDimensionPixelSize(R.dimen.qr_size));
+        return new QRCodeLoaderSupport(getActivity(), uri, getResources().getDimensionPixelSize(R.dimen.qr_size));
     }
 
     @Override
