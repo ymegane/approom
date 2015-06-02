@@ -49,16 +49,6 @@ public class NfcFeliCaTagFragment extends AbstractNfcTagFragment {
     }
 
     /**
-     * コンストラクタ 
-     * @param activity アクティビティをセット
-     */
-    public NfcFeliCaTagFragment(FragmentActivity activity) {
-        super(activity, NfcFeliCaTagFragment.TAG);
-        
-        // FeliCa及びFeliCaLiteは NFC-F のみ
-        mTechList = new String[][]{ new String[] { NfcF.class.getName() }};
-    }
-    /**
      * FeliCa Liteデバイスか否かを検査します
      * @return boolean 読み込み対象がFeliCa Liteの場合trueが戻ります
      * @throws FeliCaException

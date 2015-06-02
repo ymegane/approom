@@ -6,6 +6,7 @@
     <uses-permission android:name="com.felicanetworks.mfc.permission.MFC_ACCESS" />
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature
         android:name="android.hardware.nfc"

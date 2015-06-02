@@ -100,23 +100,16 @@ public abstract class AbstractNfcTagFragment extends Fragment {
      * @param activity このフラグメントを管理するアクティビティをセット
      * @param tag このフラグメントを一意の識別するタグ名をセット
      */
-    public AbstractNfcTagFragment(Activity activity, String tag) {
+    public AbstractNfcTagFragment(String tag) {
         super();
-        this.registerFragment(activity, tag);
+        this.registerFragment(tag);
     }
     /**
      * フラグメントを生成してActivityに登録します
      * @param activity このフラグメントを管理するアクティビティをセット
      * @param tag フラグメントを識別するタグをセット
      */
-    protected void registerFragment(Activity activity, String tag) {
-        this.unRegisterFragment(activity, tag);
-        FragmentManager fm = ((FragmentActivity)activity).getSupportFragmentManager();
-        FragmentTransaction trans = fm.beginTransaction();
-        {
-            trans.add(this, tag);
-        }
-        trans.commit();
+    protected void registerFragment( String tag) {
         //fm.executePendingTransactions();
     }
     /**
