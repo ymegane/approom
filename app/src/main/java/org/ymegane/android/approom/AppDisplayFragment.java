@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.ymegane.android.approom.preference.AppPrefs;
 import org.ymegane.android.approomcommns.AppInfo;
+import org.ymegane.android.approomcommns.AppLinkBase;
 import org.ymegane.android.approomcommns.util.CommonUtil;
 import org.ymegane.android.approomcommns.util.MyLog;
 

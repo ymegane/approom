@@ -3,6 +3,7 @@ package org.ymegane.android.approom;
 import java.util.ArrayList;
 
 import org.ymegane.android.approom.preference.AppPrefs;
+import org.ymegane.android.approomcommns.AppLinkBase;
 import org.ymegane.android.approomcommns.QRCodeLoaderSupport;
 import org.ymegane.android.approomcommns.util.CommonUtil;
 

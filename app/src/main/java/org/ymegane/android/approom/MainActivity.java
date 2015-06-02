@@ -2,6 +2,7 @@ package org.ymegane.android.approom;
 
 import org.ymegane.android.approom.AppDisplayFragment.OnAppInfoClickListener;
 import org.ymegane.android.approomcommns.AppInfo;
+import org.ymegane.android.approomcommns.AppLinkBase;
 
 import android.app.Dialog;
 import android.app.WallpaperManager;

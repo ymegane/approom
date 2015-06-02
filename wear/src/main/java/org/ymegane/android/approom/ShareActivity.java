@@ -12,10 +12,10 @@ import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.DismissOverlayView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import org.ymegane.android.approomcommns.AppInfo;
+import org.ymegane.android.approomcommns.AppLinkBase;
 import org.ymegane.android.approomcommns.QRCodeLoader;
 import org.ymegane.android.approomcommns.util.MyLog;
 
@@ -54,7 +54,7 @@ public class ShareActivity extends WearableActivity implements LoaderManager.Loa
 
     @Override
     public Loader<Bitmap> onCreateLoader(int id, Bundle args) {
-        return new QRCodeLoader(getApplicationContext(), mAppInfo.packageName, getResources().getDimensionPixelSize(R.dimen.qr_size));
+        return new QRCodeLoader(getApplicationContext(), AppLinkBase.LINK_HTTP_DETAIL + mAppInfo.packageName, getResources().getDimensionPixelSize(R.dimen.qr_size));
     }
 
     @Override
