@@ -12,6 +12,7 @@ import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.DismissOverlayView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import org.ymegane.android.approomcommns.AppInfo;
@@ -42,7 +43,8 @@ public class ShareActivity extends WearableActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share);
 
-        setAmbientEnabled();
+        //setAmbientEnabled();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         mAppInfo = getIntent().getParcelableExtra("appInfo");
         mImageView = (ImageView) findViewById(R.id.imageQR);
