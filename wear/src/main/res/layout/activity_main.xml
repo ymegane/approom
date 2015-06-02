@@ -10,15 +10,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".MainActivity">
-        <android.support.wearable.view.WearableListView
-            android:id="@+id/list"
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:id="@+id/frame_layout"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:scrollbars="none"
-            android:dividerHeight="0dp"
-            app:layout_box="top|left"/>
-
+            android:layout_width="match_parent"
+            app:layout_box="left|bottom|right">
+            <android.support.wearable.view.WearableListView
+                android:id="@+id/list"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"/>
+            </FrameLayout>
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"

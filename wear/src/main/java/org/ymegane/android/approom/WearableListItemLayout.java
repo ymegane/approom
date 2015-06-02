@@ -28,6 +28,8 @@ import org.ymegane.android.approomcommns.AppInfo;
 
 public class WearableListItemLayout extends LinearLayout implements WearableListView.OnCenterProximityListener  {
 
+    private static final int ANIMATION_DURATION_MS = 150;
+
     private final float mFadedTextAlpha;
     private final int mFadedCircleColor;
     private ImageView mCircle;
@@ -60,15 +62,29 @@ public class WearableListItemLayout extends LinearLayout implements WearableList
     }
 
     @Override
-    public void onCenterPosition(boolean b) {
+    public void onCenterPosition(boolean animate) {
         mName.setAlpha(1f);
         AppInfo info = (AppInfo) mCircle.getTag();
         ((GradientDrawable) mCircle.getDrawable()).setColor(info.palette);
+
+        if (animate) {
+            mCircle.animate().scaleX(1.6f).scaleY(1.6f).setDuration(ANIMATION_DURATION_MS);
+        } else {
+            mCircle.setScaleX(1.6f);
+            mCircle.setScaleY(1.6f);
+        }
     }
 
     @Override
-    public void onNonCenterPosition(boolean b) {
+    public void onNonCenterPosition(boolean animate) {
         ((GradientDrawable) mCircle.getDrawable()).setColor(mFadedCircleColor);
         mName.setAlpha(mFadedTextAlpha);
+
+        if (animate) {
+            mCircle.animate().scaleY(1f).scaleX(1f).setDuration(ANIMATION_DURATION_MS);
+        } else {
+            mCircle.setScaleX(1f);
+            mCircle.setScaleY(1f);
+        }
     }
 }
