@@ -30,8 +30,8 @@ android {
         minSdkVersion 14
         targetSdkVersion 22
 
-        versionCode 18
-        versionName '2.3.2'
+        versionCode 19
+        versionName '2.3.3'
     }
 
     aaptOptions {
