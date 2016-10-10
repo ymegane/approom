@@ -45,18 +45,32 @@ android {
         // see http://developer.android.com/training/wearables/apps/packaging.html
         noCompress "apk"
     }
-
+    signingConfigs {
+        debug {
+            storeFile file('../approom_debug.jks')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
     buildTypes {
         debug {
-            multiDexEnabled = false
-
+            signingConfig signingConfigs.debug
+            multiDexEnabled false
             applicationIdSuffix '.debug'
+        }
+        beta {
+            signingConfig signingConfigs.debug
+            debuggable true
+            applicationIdSuffix '.beta'
+            minifyEnabled true
+            shrinkResources = true // minifyEnabled true の指定必須
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
         }
         release {
             minifyEnabled true
             shrinkResources = true // minifyEnabled true の指定必須
-            proguardFile getDefaultProguardFile('proguard-android.txt')
-            proguardFile file('proguard-project.txt')
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
 
             multiDexEnabled = false
         }
