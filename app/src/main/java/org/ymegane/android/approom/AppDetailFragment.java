@@ -39,7 +39,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -53,13 +53,13 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     public static final String KEY_APPINFO = "key_appinfo";
     public static final String KEY_TOUCH_ENABLE = "key_touch";
 
-    @Bind(R.id.textAppName)
+    @BindView(R.id.textAppName)
     protected TextView textAppName;
-    @Bind(R.id.imageIcon)
+    @BindView(R.id.imageIcon)
     protected ImageView imageIcon;
-    @Bind(R.id.textUri)
+    @BindView(R.id.textUri)
     protected TextView textLinkUri;
-    @Bind(R.id.imageQr)
+    @BindView(R.id.imageQr)
     protected ImageView imageQr;
 
     private PackageManager packageMng;
@@ -107,7 +107,6 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     @Override

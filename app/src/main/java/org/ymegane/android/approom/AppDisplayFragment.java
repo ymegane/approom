@@ -44,7 +44,7 @@ import android.widget.Filterable;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -53,9 +53,9 @@ import butterknife.ButterKnife;
 public class AppDisplayFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<AppInfo>>, Toolbar.OnMenuItemClickListener {
     public static final String TAG = "AppDisplayFragment";
 
-    @Bind(R.id.layoutProgress)
+    @BindView(R.id.layoutProgress)
     protected View layoutProgress;
-    @Bind(R.id.gridAppIcon)
+    @BindView(R.id.gridAppIcon)
     protected GridView gridAppView;
 
     private GridAppsAdapter adapter;
@@ -94,7 +94,6 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     @Override
