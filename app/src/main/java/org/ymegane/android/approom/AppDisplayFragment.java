@@ -308,7 +308,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
                 updateSearchResult(null);
 
                 AppInfo info = (AppInfo) gridAppView.getItemAtPosition(position);
-                clickListener.onItemClick(view.findViewById(R.id.imageAppIcon), info);
+                clickListener.onItemClick(view, info);
             }
         }
     }

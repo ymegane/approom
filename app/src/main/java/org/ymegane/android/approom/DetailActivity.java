@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -37,12 +38,15 @@ public class DetailActivity extends AppCompatActivity implements AppDetailFragme
 
     public static final String APP_INFO = "applicationInfo";
 
+    public static final String TRANSITION_ICON = "appIcon";
+    public static final String TRANSITION_LABEL = "appLabel";
+
     private AppDetailFragment appDetailFragment;
 
-    public static void launch(Activity activity, View transitionView, ApplicationInfo info) {
+    public static void launch(Activity activity, ApplicationInfo info, Pair<View, String>... sharedElements) {
         ActivityOptionsCompat options =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        activity, transitionView, APP_INFO);
+                        activity, sharedElements);
         Intent intent = new Intent(activity, DetailActivity.class);
         intent.putExtra(APP_INFO, info);
         ActivityCompat.startActivity(activity, intent, options.toBundle());
