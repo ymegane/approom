@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<org.ymegane.android.approom.GridAppItemView xmlns:android="http://schemas.android.com/apk/res/android"
+<org.ymegane.android.approom.GridAppItemView
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/grid_columnWidth"
     android:layout_height="@dimen/grid_columnWidth" >
 
     <ImageView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/imageAppIcon"
         android:layout_width="@dimen/grid_icon_size"
         android:layout_height="@dimen/grid_icon_size"
@@ -32,6 +33,6 @@
         android:shadowDy="0"
         android:textColor="@android:color/white"
         android:textSize="@dimen/grid_text_size"
-        android:text="test"/>
+        tools:text="test"/>
 
 </org.ymegane.android.approom.GridAppItemView>

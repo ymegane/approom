@@ -125,7 +125,8 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
         Drawable icon = appInfo.loadIcon(packageMng);
         if(icon != null) {
             imageIcon.setImageDrawable(icon);
-            ViewCompat.setTransitionName(imageIcon, DetailActivity.APP_INFO);
+            ViewCompat.setTransitionName(imageIcon, DetailActivity.TRANSITION_ICON);
+            ViewCompat.setTransitionName(textAppName, DetailActivity.TRANSITION_LABEL);
         }
 
         initActionBar();

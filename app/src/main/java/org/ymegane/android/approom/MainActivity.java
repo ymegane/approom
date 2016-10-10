@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -55,7 +56,9 @@ public class MainActivity extends AppCompatActivity implements OnAppInfoClickLis
             dialog.show(getSupportFragmentManager(), "LinkSelectDialog");
         }else {
             // 詳細画面を表示する
-            DetailActivity.launch(this, view, info.appInfo);
+            Pair<View, String> sharedIcon = new Pair<>(view.findViewById(R.id.imageAppIcon), DetailActivity.TRANSITION_ICON);
+            Pair<View, String> sharedLabel = new Pair<>(view.findViewById(R.id.textAppName), DetailActivity.TRANSITION_LABEL);
+            DetailActivity.launch(this, info.appInfo, sharedIcon, sharedLabel);
         }
     }
 

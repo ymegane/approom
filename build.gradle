@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:2.2.1'
     }
 }
 
@@ -29,15 +29,15 @@ subprojects {
 }
 
 project.ext {
-    compileSdkVersion = 23
-    buildToolsVersion = '23.0.3'
-    supportLibVersion = '23.3.0'
-    playServiceVersion = '8.4.0'
+    compileSdkVersion = 24
+    buildToolsVersion = '24.0.3'
+    supportLibVersion = '24.2.1'
+    playServiceVersion = '9.6.1'
     // see http://tools.android.com/tech-docs/new-build-system/tips#TOC-Improving-Build-Server-performance.
     // CIサーバなどでは -PdisablePreDex をつける。 preDexが省略されてビルドが速くなる
     preDexLibs = !project.hasProperty('disablePreDex')
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.10'
+    gradleVersion = '2.14.1'
 }

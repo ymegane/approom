@@ -1,6 +1,6 @@
 # README #
 
-The approom is can share your applications by URL, QR-code, Android Beam and FeliCa.
+The approom will be able to share your applications by URL, QR-code, Android Beam and FeliCa.
 
 ## License
 

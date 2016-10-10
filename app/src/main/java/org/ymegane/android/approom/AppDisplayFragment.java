@@ -6,6 +6,7 @@ import org.ymegane.android.approom.preference.AppPrefs;
 import org.ymegane.android.approomcommns.AppInfo;
 import org.ymegane.android.approomcommns.AppLinkBase;
 import org.ymegane.android.approomcommns.util.CommonUtil;
+import org.ymegane.android.approomcommns.util.HtmlUtil;
 import org.ymegane.android.approomcommns.util.MyLog;
 
 import android.app.AlertDialog;
@@ -14,6 +15,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -24,7 +27,6 @@ import android.support.v7.view.ActionMode;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.method.MovementMethod;
@@ -306,7 +308,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
                 updateSearchResult(null);
 
                 AppInfo info = (AppInfo) gridAppView.getItemAtPosition(position);
-                clickListener.onItemClick(view.findViewById(R.id.imageAppIcon), info);
+                clickListener.onItemClick(view, info);
             }
         }
     }
@@ -344,50 +346,51 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     }
 
     public static class AppInfoDialog extends DialogFragment implements OnClickListener {
+        @NonNull
         @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_appinfo, null);
+        public Dialog onCreateDialog(@Nullable  Bundle savedInstanceState) {
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_appinfo, null, false);
 
             // LinkMovementMethod のインスタンスを取得します
             MovementMethod movementmethod = LinkMovementMethod.getInstance();
 
             TextView textVersion = (TextView) view.findViewById(R.id.textVersion);
-            textVersion.setText(getString(R.string.version, CommonUtil.getAppVersion(getActivity())));
+            textVersion.setText(getString(R.string.version, BuildConfig.VERSION_NAME));
 
             TextView textDev = (TextView) view.findViewById(R.id.textDeveloperName);
-            textDev.setText(Html.fromHtml(getString(R.string.creater)));
+            textDev.setText(HtmlUtil.fromHtml(getString(R.string.creater)));
             textDev.setMovementMethod(movementmethod);
 
             TextView textZxing = (TextView) view.findViewById(R.id.textZxing);
-            textZxing.setText(Html.fromHtml(getString(R.string.zxing_name)));
+            textZxing.setText(HtmlUtil.fromHtml(getString(R.string.zxing_name)));
             textZxing.setMovementMethod(movementmethod);
 
             TextView textZxingLicense = (TextView) view.findViewById(R.id.textZxingLicense);
-            textZxingLicense.setText(Html.fromHtml(getString(R.string.apache_license)));
+            textZxingLicense.setText(HtmlUtil.fromHtml(getString(R.string.apache_license)));
             textZxingLicense.setMovementMethod(movementmethod);
 
             TextView textNfcFelica = (TextView) view.findViewById(R.id.textNfcFelica);
-            textNfcFelica.setText(Html.fromHtml(getString(R.string.nfcfelica_name)));
+            textNfcFelica.setText(HtmlUtil.fromHtml(getString(R.string.nfcfelica_name)));
             textNfcFelica.setMovementMethod(movementmethod);
 
             TextView textNfcFelicaLicense = (TextView) view.findViewById(R.id.textNfcFelicaLicense);
-            textNfcFelicaLicense.setText(Html.fromHtml(getString(R.string.apache_license)));
+            textNfcFelicaLicense.setText(HtmlUtil.fromHtml(getString(R.string.apache_license)));
             textNfcFelicaLicense.setMovementMethod(movementmethod);
 
             TextView textGson = (TextView) view.findViewById(R.id.textGson);
-            textGson.setText(Html.fromHtml(getString(R.string.gson_name)));
+            textGson.setText(HtmlUtil.fromHtml(getString(R.string.gson_name)));
             textGson.setMovementMethod(movementmethod);
 
             TextView textGsonLicense = (TextView) view.findViewById(R.id.textGsonLicense);
-            textGsonLicense.setText(Html.fromHtml(getString(R.string.apache_license)));
+            textGsonLicense.setText(HtmlUtil.fromHtml(getString(R.string.apache_license)));
             textGsonLicense.setMovementMethod(movementmethod);
 
             TextView textOtto = (TextView) view.findViewById(R.id.textOtto);
-            textOtto.setText(Html.fromHtml(getString(R.string.otto_name)));
+            textOtto.setText(HtmlUtil.fromHtml(getString(R.string.otto_name)));
             textOtto.setMovementMethod(movementmethod);
 
             TextView textOttoL = (TextView) view.findViewById(R.id.textOttoLicense);
-            textOttoL.setText(Html.fromHtml(getString(R.string.apache_license)));
+            textOttoL.setText(HtmlUtil.fromHtml(getString(R.string.apache_license)));
             textOttoL.setMovementMethod(movementmethod);
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());

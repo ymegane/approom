@@ -18,6 +18,7 @@ package org.ymegane.android.approom;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.wearable.view.WearableListView;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -46,7 +47,7 @@ public class WearableListItemLayout extends LinearLayout implements WearableList
     public WearableListItemLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mFadedTextAlpha = getResources().getInteger(R.integer.action_text_faded_alpha) / 100f;
-        mFadedCircleColor = getResources().getColor(R.color.wl_gray);
+        mFadedCircleColor = ContextCompat.getColor(context, R.color.wl_gray);
     }
 
     public void bindView(AppInfo info) {
