@@ -3,9 +3,6 @@ package org.ymegane.android.approomcommns.util;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 
-/**
- * Created by y on 2014/10/11.
- */
 public class IconCache {
     private static LruCache<String, Bitmap> iconLruCache;
 

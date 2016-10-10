@@ -17,6 +17,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
 
 /**
@@ -101,7 +102,7 @@ public class AppInfoLoader extends AsyncTaskLoader<List<AppInfo>> {
                     Drawable icon = appInfo.loadIcon(packageMng);
                     Bitmap iconBitmap = ((BitmapDrawable)icon).getBitmap();
                     Palette palette = Palette.from(iconBitmap).generate();
-                    appData.palette = palette.getVibrantColor(R.color.primary);
+                    appData.palette = palette.getVibrantColor(ContextCompat.getColor(context, R.color.primary));
                 }
 
                 appsList.add(appData);

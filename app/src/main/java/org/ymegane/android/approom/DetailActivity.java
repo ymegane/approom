@@ -146,7 +146,7 @@ public class DetailActivity extends AppCompatActivity implements AppDetailFragme
             PushStartBrowserSegment segment = new PushStartBrowserSegment(appDetailFragment.getCurrentUri(), null);
             try {
                 FeliCaLib.execute((Tag)nfcTag, new PushCommand(idm, segment));
-                CommonUtil.doViblate(getApplicationContext(), 300);
+                CommonUtil.doVibrate(getApplicationContext(), 300);
             } catch (FeliCaException e) {
                 MyLog.w(TAG, e);
             }
