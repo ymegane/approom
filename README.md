@@ -1,4 +1,4 @@
-# README #
+# Approom [![Build Status](https://travis-ci.org/ymegane/approom.svg?branch=master)](https://travis-ci.org/ymegane/approom)
 
 The approom will be able to share your applications by URL, QR-code, Android Beam and FeliCa.
 
