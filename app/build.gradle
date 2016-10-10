@@ -1,22 +1,5 @@
 apply plugin: 'com.android.application'
-
-dependencies {
-    compile "com.google.android.gms:play-services-wearable:${playServiceVersion}"
-    compile "com.android.support:support-v4:${supportLibVersion}"
-    compile "com.android.support:appcompat-v7:${supportLibVersion}"
-    compile "com.android.support:palette-v7:${supportLibVersion}"
-    compile "com.android.support:design:${supportLibVersion}"
-    compile "com.android.support:percent:${supportLibVersion}"
-
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.jakewharton:butterknife:7.0.1'
-
-    compile project(":nfc-felica-lib")
-    compile project(":approom-commons")
-    compile fileTree(dir: 'libs', include: '*.jar')
-
-    wearApp project(':wear')
-}
+apply plugin: 'android-apt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -76,4 +59,25 @@ android {
         }
     }
 }
+
+dependencies {
+    compile "com.google.android.gms:play-services-wearable:${playServiceVersion}"
+    compile "com.android.support:support-core-utils:${supportLibVersion}"
+    compile "com.android.support:support-compat:${supportLibVersion}"
+    compile "com.android.support:support-fragment:${supportLibVersion}"
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:palette-v7:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
+    compile "com.android.support:percent:${supportLibVersion}"
+
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+
+    compile project(":nfc-felica-lib")
+    compile project(":approom-commons")
+    compile fileTree(dir: 'libs', include: '*.jar')
+
+    wearApp project(':wear')
+}
+
 

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -17,9 +17,9 @@ import butterknife.ButterKnife;
  */
 public class GridAppItemView extends RelativeLayout implements Checkable {
 
-    @Bind(R.id.textAppName)
+    @BindView(R.id.textAppName)
     TextView textAppName;
-    @Bind(R.id.imageAppIcon)
+    @BindView(R.id.imageAppIcon)
     ImageView imageIcon;
 
     public GridAppItemView(Context context) {
