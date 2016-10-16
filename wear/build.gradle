@@ -22,7 +22,7 @@ android {
         applicationId "org.ymegane.android.approom"
         minSdkVersion 23
         targetSdkVersion 23
-        versionCode 20
+        versionCode 21
         versionName '2.3.4'
     }
     signingConfigs {
@@ -45,12 +45,12 @@ android {
             applicationIdSuffix '.beta'
             minifyEnabled true
             shrinkResources = true // minifyEnabled true の指定必須
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
             minifyEnabled true
             shrinkResources = true // minifyEnabled true の指定必須
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), file('proguard-rules.pro')
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), file('proguard-rules.pro')
 
             multiDexEnabled = false
 
