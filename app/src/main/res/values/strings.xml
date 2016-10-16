@@ -20,6 +20,7 @@
     <string name="nfcfelica_name">・&lt;a href="http://code.google.com/p/nfc-felica/">nfc-felica&lt;/a></string>
     <string name="gson_name">・&lt;a href="https://code.google.com/p/google-gson/">google-gson&lt;/a></string>
     <string name="otto_name">・&lt;a href="http://square.github.io/otto/">Otto&lt;/a></string>
+    <string name="butterknife_name">・&lt;a href="https://github.com/JakeWharton/butterknife">Butter Knife&lt;/a></string>
     <string name="apache_license">&lt;a href="http://www.apache.org/licenses/">Apache License Version 2.0&lt;/a></string>
     <string name="touch_enable">You can send in touch</string>
     <string name="action_mode_title_share">Share apps</string>

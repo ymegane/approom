@@ -42,6 +42,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 
 /**
@@ -61,6 +62,8 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     protected TextView textLinkUri;
     @BindView(R.id.imageQr)
     protected ImageView imageQr;
+
+    private Unbinder mUnbinder;
 
     private PackageManager packageMng;
     private ApplicationInfo appInfo;
@@ -100,13 +103,17 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_appdetail, container, false);
-        ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+        }
     }
 
     @Override
