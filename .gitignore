@@ -39,3 +39,6 @@ proguard.cfg
 .DS_Store
 tmp
 .svn
+
+approom_release.jks
+app/wear-release.apk
