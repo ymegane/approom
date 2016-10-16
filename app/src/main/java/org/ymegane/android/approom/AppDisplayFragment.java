@@ -14,9 +14,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -46,6 +49,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * アプリ一覧表示Fragment
@@ -63,6 +67,8 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     private OnAppInfoClickListener clickListener;
 
     private List<AppInfo> appInfoList;
+
+    private Unbinder mUnbinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,13 +93,16 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_applist, container, false);
-        ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+        }
     }
 
     @Override
@@ -360,37 +369,12 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
             textDev.setText(HtmlUtil.fromHtml(getString(R.string.creater)));
             textDev.setMovementMethod(movementmethod);
 
-            TextView textZxing = (TextView) view.findViewById(R.id.textZxing);
-            textZxing.setText(HtmlUtil.fromHtml(getString(R.string.zxing_name)));
-            textZxing.setMovementMethod(movementmethod);
-
-            TextView textZxingLicense = (TextView) view.findViewById(R.id.textZxingLicense);
-            textZxingLicense.setText(HtmlUtil.fromHtml(getString(R.string.apache_license)));
-            textZxingLicense.setMovementMethod(movementmethod);
-
-            TextView textNfcFelica = (TextView) view.findViewById(R.id.textNfcFelica);
-            textNfcFelica.setText(HtmlUtil.fromHtml(getString(R.string.nfcfelica_name)));
-            textNfcFelica.setMovementMethod(movementmethod);
-
-            TextView textNfcFelicaLicense = (TextView) view.findViewById(R.id.textNfcFelicaLicense);
-            textNfcFelicaLicense.setText(HtmlUtil.fromHtml(getString(R.string.apache_license)));
-            textNfcFelicaLicense.setMovementMethod(movementmethod);
-
-            TextView textGson = (TextView) view.findViewById(R.id.textGson);
-            textGson.setText(HtmlUtil.fromHtml(getString(R.string.gson_name)));
-            textGson.setMovementMethod(movementmethod);
-
-            TextView textGsonLicense = (TextView) view.findViewById(R.id.textGsonLicense);
-            textGsonLicense.setText(HtmlUtil.fromHtml(getString(R.string.apache_license)));
-            textGsonLicense.setMovementMethod(movementmethod);
-
-            TextView textOtto = (TextView) view.findViewById(R.id.textOtto);
-            textOtto.setText(HtmlUtil.fromHtml(getString(R.string.otto_name)));
-            textOtto.setMovementMethod(movementmethod);
-
-            TextView textOttoL = (TextView) view.findViewById(R.id.textOttoLicense);
-            textOttoL.setText(HtmlUtil.fromHtml(getString(R.string.apache_license)));
-            textOttoL.setMovementMethod(movementmethod);
+            setLicence(view, movementmethod, R.id.textZxing, R.string.zxing_name, R.id.textZxingLicense, R.string.apache_license);
+            setLicence(view, movementmethod, R.id.textNfcFelica, R.string.nfcfelica_name, R.id.textNfcFelicaLicense, R.string.apache_license);
+            setLicence(view, movementmethod, R.id.textGson, R.string.gson_name, R.id.textGsonLicense, R.string.apache_license);
+            setLicence(view, movementmethod, R.id.textOtto, R.string.otto_name, R.id.textOttoLicense, R.string.apache_license);
+            setLicence(view, movementmethod, R.id.textBtkn, R.string.butterknife_name, R.id.textBtknLicense, R.string.apache_license);
+            setLicence(view, movementmethod, R.id.textPicasso, R.string.picasso_name, R.id.textPicassoLicense, R.string.apache_license);
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
             dialog.setIcon(R.drawable.ic_info_24dp);
@@ -403,6 +387,17 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
         @Override
         public void onClick(DialogInterface dialog, int which) {
             // 何もしない
+        }
+
+        private static void setLicence(View view, MovementMethod movementMethod, @IdRes int textId, @StringRes int textRes, @IdRes int licenseId, @StringRes int licenseRes) {
+            Resources res = view.getResources();
+            TextView text = ButterKnife.findById(view, textId);
+            text.setText(HtmlUtil.fromHtml(res.getString(textRes)));
+            text.setMovementMethod(movementMethod);
+
+            TextView textL = ButterKnife.findById(view, licenseId);
+            textL.setText(HtmlUtil.fromHtml(res.getString(licenseRes)));
+            textL.setMovementMethod(movementMethod);
         }
     }
 }

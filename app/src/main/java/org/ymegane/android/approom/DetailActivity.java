@@ -30,6 +30,7 @@ import net.kazzz.felica.lib.FeliCaLib;
 import org.ymegane.android.approom.nfc.AndroidBeamFragment;
 import org.ymegane.android.approom.nfc.MfcManageFragment;
 import org.ymegane.android.approom.nfc.PushCommand;
+import org.ymegane.android.approomcommns.AppInfo;
 import org.ymegane.android.approomcommns.util.CommonUtil;
 import org.ymegane.android.approomcommns.util.MyLog;
 
@@ -43,7 +44,7 @@ public class DetailActivity extends AppCompatActivity implements AppDetailFragme
 
     private AppDetailFragment appDetailFragment;
 
-    public static void launch(Activity activity, ApplicationInfo info, Pair<View, String>... sharedElements) {
+    public static void launch(Activity activity, AppInfo info, Pair<View, String>... sharedElements) {
         ActivityOptionsCompat options =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(
                         activity, sharedElements);
@@ -67,7 +68,7 @@ public class DetailActivity extends AppCompatActivity implements AppDetailFragme
         if (savedInstanceState == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-            ApplicationInfo info = getIntent().getParcelableExtra(APP_INFO);
+            AppInfo info = getIntent().getParcelableExtra(APP_INFO);
             appDetailFragment = AppDetailFragment.newInstance(info, addIcCardFragments(ft));
 
             ft.replace(R.id.container, appDetailFragment, AppDetailFragment.TAG);

@@ -22,7 +22,7 @@ android {
         applicationId "org.ymegane.android.approom"
         minSdkVersion 23
         targetSdkVersion 23
-        versionCode 20
+        versionCode 21
         versionName '2.3.4'
     }
     signingConfigs {
@@ -31,6 +31,13 @@ android {
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'
+        }
+        release {
+            Properties properties = rootProject.ext.releaseProperties
+            storeFile file('../approom_release.jks')
+            storePassword "${properties.storePassword}"
+            keyAlias "${properties.keyAlias}"
+            keyPassword "${properties.keyPassword}"
         }
     }
     buildTypes {
@@ -45,12 +52,13 @@ android {
             applicationIdSuffix '.beta'
             minifyEnabled true
             shrinkResources = true // minifyEnabled true の指定必須
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
+            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources = true // minifyEnabled true の指定必須
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), file('proguard-rules.pro')
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), file('proguard-rules.pro')
 
             multiDexEnabled = false
 

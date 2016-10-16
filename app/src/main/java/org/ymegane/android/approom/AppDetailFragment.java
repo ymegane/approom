@@ -3,6 +3,7 @@ package org.ymegane.android.approom;
 import java.util.ArrayList;
 
 import org.ymegane.android.approom.preference.AppPrefs;
+import org.ymegane.android.approomcommns.AppInfo;
 import org.ymegane.android.approomcommns.AppLinkBase;
 import org.ymegane.android.approomcommns.QRCodeLoaderSupport;
 import org.ymegane.android.approomcommns.util.CommonUtil;
@@ -12,10 +13,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,9 +37,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 
 /**
@@ -62,8 +63,9 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     @BindView(R.id.imageQr)
     protected ImageView imageQr;
 
-    private PackageManager packageMng;
-    private ApplicationInfo appInfo;
+    private Unbinder mUnbinder;
+
+    private AppInfo appInfo;
 
     public interface OnAppDetailEventObserver {
         void onDetailDestroy();
@@ -74,7 +76,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     private String appName;
     private String currentUri;
 
-    public static AppDetailFragment newInstance(ApplicationInfo appInfo, boolean isTouch) {
+    public static AppDetailFragment newInstance(AppInfo appInfo, boolean isTouch) {
         Bundle args = new Bundle();
         args.putParcelable(AppDetailFragment.KEY_APPINFO, appInfo);
         args.putBoolean(KEY_TOUCH_ENABLE, isTouch);
@@ -93,20 +95,23 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        packageMng = getActivity().getPackageManager();
         setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_appdetail, container, false);
-        ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+        }
     }
 
     @Override
@@ -115,18 +120,24 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
 
         Bundle args = getArguments();
         appInfo = args.getParcelable(KEY_APPINFO);
-        appName = appInfo.loadLabel(packageMng).toString();
+        appName = appInfo.appName.toString();
         packageName = appInfo.packageName;
 
         textAppName.setText(appName);
         textAppName.requestFocus();
 
-        Drawable icon = appInfo.loadIcon(packageMng);
-        if(icon != null) {
-            imageIcon.setImageDrawable(icon);
-            ViewCompat.setTransitionName(imageIcon, DetailActivity.TRANSITION_ICON);
-            ViewCompat.setTransitionName(textAppName, DetailActivity.TRANSITION_LABEL);
+        if (appInfo.iconUrl != null) {
+            Picasso.with(getContext())
+                    .load(appInfo.iconUrl)
+                    .placeholder(R.drawable.ic_launcher_failed)
+                    .error(R.drawable.ic_launcher_failed)
+                    .stableKey(appInfo.iconUrl.toString()+String.valueOf(appInfo.lastModify))
+                    .into(imageIcon);
+        } else {
+            imageIcon.setImageResource(R.drawable.ic_launcher_failed);
         }
+        ViewCompat.setTransitionName(imageIcon, DetailActivity.TRANSITION_ICON);
+        ViewCompat.setTransitionName(textAppName, DetailActivity.TRANSITION_LABEL);
 
         initActionBar();
 
