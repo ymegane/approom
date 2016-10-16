@@ -1,6 +1,7 @@
 package org.ymegane.android.approomcommns;
 
 import android.content.pm.ApplicationInfo;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -23,6 +24,8 @@ public class AppInfo implements Parcelable {
     public boolean isStoped;
     @SerializedName("palette")
     public int palette;
+
+    public Uri iconUrl;
 
     @Override
     public String toString() {
@@ -74,6 +77,9 @@ public class AppInfo implements Parcelable {
         dest.writeString(this.packageName);
         dest.writeByte(isStoped ? (byte) 1 : (byte) 0);
         dest.writeInt(this.palette);
+        if (this.iconUrl != null) {
+            dest.writeParcelable(this.iconUrl, 0);
+        }
     }
 
     private AppInfo(Parcel in) {
@@ -83,6 +89,7 @@ public class AppInfo implements Parcelable {
         this.packageName = in.readString();
         this.isStoped = in.readByte() != 0;
         this.palette = in.readInt();
+        this.iconUrl = in.readParcelable(ApplicationInfo.class.getClassLoader());
     }
 
     public static final Creator<AppInfo> CREATOR = new Creator<AppInfo>() {

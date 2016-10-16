@@ -16,6 +16,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
@@ -97,6 +98,7 @@ public class AppInfoLoader extends AsyncTaskLoader<List<AppInfo>> {
                 appData.lastModify = lastMod;
                 appData.appName = (String) appInfo.loadLabel(packageMng);
                 appData.isStoped = isStop;
+                appData.iconUrl = Uri.parse("android.resource://" + appInfo.packageName + "/" + appInfo.icon);
 
                 if (isLoadPalette) {
                     Drawable icon = appInfo.loadIcon(packageMng);

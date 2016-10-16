@@ -374,6 +374,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
             setLicence(view, movementmethod, R.id.textGson, R.string.gson_name, R.id.textGsonLicense, R.string.apache_license);
             setLicence(view, movementmethod, R.id.textOtto, R.string.otto_name, R.id.textOttoLicense, R.string.apache_license);
             setLicence(view, movementmethod, R.id.textBtkn, R.string.butterknife_name, R.id.textBtknLicense, R.string.apache_license);
+            setLicence(view, movementmethod, R.id.textPicasso, R.string.picasso_name, R.id.textPicassoLicense, R.string.apache_license);
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
             dialog.setIcon(R.drawable.ic_info_24dp);

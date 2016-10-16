@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements OnAppInfoClickLis
             // 詳細画面を表示する
             Pair<View, String> sharedIcon = new Pair<>(view.findViewById(R.id.imageAppIcon), DetailActivity.TRANSITION_ICON);
             Pair<View, String> sharedLabel = new Pair<>(view.findViewById(R.id.textAppName), DetailActivity.TRANSITION_LABEL);
-            DetailActivity.launch(this, info.appInfo, sharedIcon, sharedLabel);
+            DetailActivity.launch(this, info, sharedIcon, sharedLabel);
         }
     }
 

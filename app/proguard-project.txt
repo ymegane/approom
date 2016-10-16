@@ -51,3 +51,5 @@
 -keep class android.support.v7.widget.ShareActionProvider
 -keep class android.support.v7.internal.** { *; }
 -keep interface android.support.v7.internal.** { *; }
+
+-dontwarn com.squareup.okhttp.**
