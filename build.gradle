@@ -37,6 +37,19 @@ project.ext {
     // see http://tools.android.com/tech-docs/new-build-system/tips#TOC-Improving-Build-Server-performance.
     // CIサーバなどでは -PdisablePreDex をつける。 preDexが省略されてビルドが速くなる
     preDexLibs = !project.hasProperty('disablePreDex')
+
+    releaseProperties = loadProperties(file('play-release.properties'))
+}
+
+def loadProperties(File file) {
+    Properties properties = new Properties();
+    if (!file.exists()) {
+        return properties;
+    }
+    file.withInputStream {
+        properties.load(it)
+    }
+    return properties;
 }
 
 task wrapper(type: Wrapper) {

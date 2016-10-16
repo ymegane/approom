@@ -32,6 +32,13 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            Properties properties = rootProject.ext.releaseProperties
+            storeFile file('../approom_release.jks')
+            storePassword "${properties.storePassword}"
+            keyAlias "${properties.keyAlias}"
+            keyPassword "${properties.keyPassword}"
+        }
     }
     buildTypes {
         debug {
@@ -48,6 +55,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
+            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources = true // minifyEnabled true の指定必須
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), file('proguard-rules.pro')
