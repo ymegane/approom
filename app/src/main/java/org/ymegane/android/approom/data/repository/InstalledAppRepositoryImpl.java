@@ -78,7 +78,7 @@ public class InstalledAppRepositoryImpl implements InstalledAppRepository {
 
                         AppModel appData = new AppModel();
                         if (!loadPallet) {
-                            appData.appInfo = appInfo;
+                            appData.setAppInfo(appInfo);
                         }
                         lastMod = -1;
 
@@ -93,17 +93,17 @@ public class InstalledAppRepositoryImpl implements InstalledAppRepository {
                                 DLog.e("Access Error", e);
                             }
                         }
-                        appData.packageName = appInfo.packageName;
-                        appData.lastModify = lastMod;
-                        appData.appName = (String) appInfo.loadLabel(packageMng);
-                        appData.isStoped = isStop;
-                        appData.iconUrl = Uri.parse("android.resource://" + appInfo.packageName + "/" + appInfo.icon);
+                        appData.setPackageName(appInfo.packageName);
+                        appData.setLastModify(lastMod);
+                        appData.setAppName((String) appInfo.loadLabel(packageMng));
+                        appData.setStoped(isStop);
+                        appData.setIconUrl(Uri.parse("android.resource://" + appInfo.packageName + "/" + appInfo.icon));
 
                         if (loadPallet) {
                             Drawable icon = appInfo.loadIcon(packageMng);
                             Bitmap iconBitmap = ((BitmapDrawable) icon).getBitmap();
                             Palette palette = Palette.from(iconBitmap).generate();
-                            appData.palette = palette.getVibrantColor(ContextCompat.getColor(mContext, R.color.primary));
+                            appData.setPalette(palette.getVibrantColor(ContextCompat.getColor(mContext, R.color.primary)));
                         }
                         return appData;
                     }

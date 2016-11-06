@@ -51,7 +51,7 @@ public class WearableListItemLayout extends LinearLayout implements WearableList
     }
 
     public void bindView(AppModel info) {
-        mName.setText(info.appName);
+        mName.setText(info.getAppName());
         mCircle.setTag(info);
     }
 
@@ -66,7 +66,7 @@ public class WearableListItemLayout extends LinearLayout implements WearableList
     public void onCenterPosition(boolean animate) {
         mName.setAlpha(1f);
         AppModel info = (AppModel) mCircle.getTag();
-        ((GradientDrawable) mCircle.getDrawable()).setColor(info.palette);
+        ((GradientDrawable) mCircle.getDrawable()).setColor(info.getPalette());
 
         if (animate) {
             mCircle.animate().scaleX(1.6f).scaleY(1.6f).setDuration(ANIMATION_DURATION_MS);

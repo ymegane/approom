@@ -1,38 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<org.ymegane.android.approom.presentation.view.component.GridAppItemView
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/grid_columnWidth"
-    android:layout_height="@dimen/grid_columnWidth" >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="appModel"
+            type="org.ymegane.android.approomcommns.domain.model.AppModel" />
+    </data>
+    <org.ymegane.android.approom.presentation.view.component.GridAppItemView
+        android:layout_width="@dimen/grid_columnWidth"
+        android:layout_height="@dimen/grid_columnHeight" >
 
-    <ImageView
-        android:id="@+id/imageAppIcon"
-        android:layout_width="@dimen/grid_icon_size"
-        android:layout_height="@dimen/grid_icon_size"
-        android:layout_marginTop="12dp"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="Apps Icon" />
+        <ImageView
+            android:id="@+id/imageAppIcon"
+            android:layout_width="@dimen/grid_icon_size"
+            android:layout_height="@dimen/grid_icon_size"
+            android:layout_marginTop="12dp"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="Apps Icon"
+            app:loadAppIcon="@{appModel}"/>
 
-    <TextView
-        android:id="@+id/textAppName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageAppIcon"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:paddingBottom="5dp"
-        android:ellipsize="marquee"
-        android:gravity="center_horizontal"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:shadowColor="#333"
-        android:shadowRadius="5"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/grid_text_size"
-        tools:text="test"/>
+        <TextView
+            android:id="@+id/textAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageAppIcon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:paddingBottom="5dp"
+            android:ellipsize="marquee"
+            android:gravity="center_horizontal"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:shadowColor="#333"
+            android:shadowRadius="5"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/grid_text_size"
+            android:text="@{appModel.appName}"
+            tools:text="test"/>
 
-</org.ymegane.android.approom.presentation.view.component.GridAppItemView>
+    </org.ymegane.android.approom.presentation.view.component.GridAppItemView>
+</layout>

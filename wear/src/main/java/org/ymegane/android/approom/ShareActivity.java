@@ -56,7 +56,7 @@ public class ShareActivity extends WearableActivity implements LoaderManager.Loa
 
     @Override
     public Loader<Bitmap> onCreateLoader(int id, Bundle args) {
-        return new QRCodeLoader(getApplicationContext(), AppLinkBase.LINK_HTTP_DETAIL + mAppModel.packageName, getResources().getDimensionPixelSize(R.dimen.qr_size));
+        return new QRCodeLoader(getApplicationContext(), AppLinkBase.LINK_HTTP_DETAIL + mAppModel.getPackageName(), getResources().getDimensionPixelSize(R.dimen.qr_size));
     }
 
     @Override

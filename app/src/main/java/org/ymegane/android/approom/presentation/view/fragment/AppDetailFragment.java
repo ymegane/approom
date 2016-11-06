@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.ymegane.android.approom.R;
 import org.ymegane.android.approom.data.repository.PreferenceSettingsRepository;
+import org.ymegane.android.approom.databinding.FragmentAppdetailBinding;
 import org.ymegane.android.approom.domain.repository.SettingsRepository;
 import org.ymegane.android.approom.presentation.view.activity.DetailActivity;
 import org.ymegane.android.approomcommns.domain.model.AppModel;
@@ -15,6 +16,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,18 +37,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.ymegane.android.dlog.DLog;
-import com.squareup.picasso.Picasso;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-
 
 /**
  * アプリ詳細表示
@@ -57,19 +50,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     public static final String KEY_APPINFO = "key_appinfo";
     public static final String KEY_TOUCH_ENABLE = "key_touch";
 
-    @BindView(R.id.textAppName)
-    protected TextView textAppName;
-    @BindView(R.id.imageIcon)
-    protected ImageView imageIcon;
-    @BindView(R.id.textUri)
-    protected TextView textLinkUri;
-    @BindView(R.id.imageQr)
-    protected ImageView imageQr;
-
-    private Unbinder mUnbinder;
-
-    private AppModel mAppModel;
-
+    private FragmentAppdetailBinding mBinding;
     private SettingsRepository mSettingsRepository;
 
     public interface OnAppDetailEventObserver {
@@ -107,18 +88,12 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_appdetail, container, false);
-        mUnbinder = ButterKnife.bind(this, view);
-        return view;
+        return inflater.inflate(R.layout.fragment_appdetail, container, false);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        if (mUnbinder != null) {
-            mUnbinder.unbind();
-        }
     }
 
     @Override
@@ -126,25 +101,22 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
         super.onActivityCreated(savedInstanceState);
 
         Bundle args = getArguments();
-        mAppModel = args.getParcelable(KEY_APPINFO);
-        appName = mAppModel.appName.toString();
-        packageName = mAppModel.packageName;
+        AppModel appModel = args.getParcelable(KEY_APPINFO);
+        appName = appModel.getAppName().toString();
+        packageName = appModel.getPackageName();
 
-        textAppName.setText(appName);
-        textAppName.requestFocus();
+        mBinding = DataBindingUtil.bind(getView());
+        mBinding.setAppModel(appModel);
+        mBinding.textAppName.requestFocus();
+        mBinding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickFab();
+            }
+        });
 
-        if (mAppModel.iconUrl != null) {
-            Picasso.with(getContext())
-                    .load(mAppModel.iconUrl)
-                    .placeholder(R.drawable.ic_launcher_failed)
-                    .error(R.drawable.ic_launcher_failed)
-                    .stableKey(mAppModel.iconUrl.toString()+String.valueOf(mAppModel.lastModify))
-                    .into(imageIcon);
-        } else {
-            imageIcon.setImageResource(R.drawable.ic_launcher_failed);
-        }
-        ViewCompat.setTransitionName(imageIcon, DetailActivity.TRANSITION_ICON);
-        ViewCompat.setTransitionName(textAppName, DetailActivity.TRANSITION_LABEL);
+        ViewCompat.setTransitionName(mBinding.imageIcon, DetailActivity.TRANSITION_ICON);
+        ViewCompat.setTransitionName(mBinding.textAppName, DetailActivity.TRANSITION_LABEL);
 
         initActionBar();
 
@@ -204,7 +176,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
                 if(itemPosition < linkList.size()) {
                     mSettingsRepository.setLinkType(itemPosition);
                     currentUri = linkList.get(itemPosition);
-                    textLinkUri.setText(currentUri);
+                    mBinding.textUri.setText(currentUri);
                     Bundle arg = new Bundle();
                     arg.putString("currentUri", currentUri);
                     getLoaderManager().restartLoader(0, arg, AppDetailFragment.this);
@@ -251,7 +223,6 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.fab)
     public void onClickFab() {
         try {
             startActivity(Intent.createChooser(CommonUtil.createShareIntent(appName + ":" + currentUri), getString(R.string.action_mode_title_share)));
@@ -281,7 +252,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public void onLoadFinished(Loader<Bitmap> arg0, Bitmap arg1) {
-        imageQr.setImageBitmap(arg1);
+        mBinding.imageQr.setImageBitmap(arg1);
     }
 
     @Override

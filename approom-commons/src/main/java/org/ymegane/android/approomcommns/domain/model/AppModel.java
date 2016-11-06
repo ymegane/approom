@@ -13,19 +13,19 @@ import com.google.gson.annotations.SerializedName;
  */
 public class AppModel implements Parcelable {
 
-    public ApplicationInfo appInfo;
+    private ApplicationInfo appInfo;
     @SerializedName("lastModify")
-    public long lastModify;
+    private long lastModify;
     @SerializedName("appName")
-    public String appName;
+    private String appName;
     @SerializedName("packageName")
-    public String packageName;
+    private String packageName;
     @SerializedName("isStoped")
-    public boolean isStoped;
+    private boolean isStoped;
     @SerializedName("palette")
-    public int palette;
+    private int palette;
 
-    public Uri iconUrl;
+    private Uri iconUrl;
 
     @Override
     public String toString() {
@@ -33,6 +33,58 @@ public class AppModel implements Parcelable {
     }
 
     public AppModel() {
+    }
+
+    public String getAppName() {
+        return appName;
+    }
+
+    public ApplicationInfo getAppInfo() {
+        return appInfo;
+    }
+
+    public int getPalette() {
+        return palette;
+    }
+
+    public long getLastModify() {
+        return lastModify;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public Uri getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setAppInfo(ApplicationInfo appInfo) {
+        this.appInfo = appInfo;
+    }
+
+    public void setLastModify(long lastModify) {
+        this.lastModify = lastModify;
+    }
+
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+
+    public void setStoped(boolean stoped) {
+        isStoped = stoped;
+    }
+
+    public void setPalette(int palette) {
+        this.palette = palette;
+    }
+
+    public void setIconUrl(Uri iconUrl) {
+        this.iconUrl = iconUrl;
     }
 
     @Override

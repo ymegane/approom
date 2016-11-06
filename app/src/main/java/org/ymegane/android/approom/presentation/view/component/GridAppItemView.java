@@ -5,24 +5,14 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.widget.Checkable;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import org.ymegane.android.approom.R;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * GridItem
  */
 public class GridAppItemView extends RelativeLayout implements Checkable {
-
-    @BindView(R.id.textAppName)
-    public TextView textAppName;
-    @BindView(R.id.imageAppIcon)
-    public ImageView imageIcon;
 
     public GridAppItemView(Context context) {
         super(context);
@@ -34,12 +24,6 @@ public class GridAppItemView extends RelativeLayout implements Checkable {
 
     public GridAppItemView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        ButterKnife.bind(this);
     }
 
     private boolean isChecked;

@@ -3,6 +3,7 @@ package org.ymegane.android.approom.presentation.view.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filterable;
 
-import com.squareup.picasso.Picasso;
-
-import org.ymegane.android.approom.presentation.view.component.GridAppItemView;
+import org.ymegane.android.approom.databinding.AdapterGridAppItemBinding;
 import org.ymegane.android.approom.R;
 import org.ymegane.android.approomcommns.domain.model.AppModel;
 
@@ -56,32 +55,23 @@ public class GridAppsAdapter extends ArrayAdapter<AppModel> implements Filterabl
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        GridAppItemView itemView = (GridAppItemView) convertView;
+        AdapterGridAppItemBinding binding;
         if(convertView == null) {
-            itemView = (GridAppItemView) inflater.inflate(R.layout.adapter_grid_app_item, null);
-        }
-
-        AppModel appData = getItem(position);
-
-        itemView.textAppName.setText(appData.appName);
-
-        if(appData.iconUrl != null) {
-            Picasso.with(getContext())
-                    .load(appData.iconUrl)
-                    .placeholder(R.drawable.ic_launcher_failed)
-                    .error(R.drawable.ic_launcher_failed)
-                    .stableKey(appData.iconUrl.toString()+String.valueOf(appData.lastModify))
-                    .into(itemView.imageIcon);
+            binding = DataBindingUtil.inflate(inflater, R.layout.adapter_grid_app_item, parent, false);
+            convertView = binding.getRoot();
+            convertView.setTag(binding);
         } else {
-            itemView.imageIcon.setImageResource(R.drawable.ic_launcher_failed);
+            binding = (AdapterGridAppItemBinding) convertView.getTag();
         }
+
+        binding.setAppModel(getItem(position));
 
         if (checkedArray.get(position)) {
-            itemView.setBackgroundResource(R.drawable.grid_item_select);
+            convertView.setBackgroundResource(R.drawable.grid_item_select);
         } else {
-            itemView.setBackgroundResource(0);
+            convertView.setBackgroundResource(0);
         }
 
-        return itemView;
+        return convertView;
     }
 }

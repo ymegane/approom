@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity implements OnAppInfoClickLis
 
         if(action != null && action.contains(ACTION_INTERCEPT)){
             Bundle args = new Bundle();
-            args.putString("appName", info.appName);
-            args.putString("packageName", info.appInfo.packageName);
+            args.putString("appName", info.getAppName());
+            args.putString("packageName", info.getAppInfo().packageName);
             LinkSelectDialog dialog = new LinkSelectDialog();
             dialog.setArguments(args);
             dialog.show(getSupportFragmentManager(), "LinkSelectDialog");

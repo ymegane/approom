@@ -6,6 +6,7 @@ import org.ymegane.android.approom.data.repository.AppInstallComparator;
 import org.ymegane.android.approom.BuildConfig;
 import org.ymegane.android.approom.data.repository.InstalledAppRepositoryImpl;
 import org.ymegane.android.approom.data.repository.PreferenceSettingsRepository;
+import org.ymegane.android.approom.databinding.FragmentApplistBinding;
 import org.ymegane.android.approom.domain.repository.SettingsRepository;
 import org.ymegane.android.approom.presentation.view.adapter.GridAppsAdapter;
 import org.ymegane.android.approom.R;
@@ -20,6 +21,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -46,15 +48,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.github.ymegane.android.dlog.DLog;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -67,18 +66,13 @@ import rx.schedulers.Schedulers;
 public class AppDisplayFragment extends RxFragment implements Toolbar.OnMenuItemClickListener {
     public static final String TAG = "AppDisplayFragment";
 
-    @BindView(R.id.layoutProgress)
-    protected View layoutProgress;
-    @BindView(R.id.gridAppIcon)
-    protected GridView gridAppView;
+    FragmentApplistBinding mBinding;
 
     private GridAppsAdapter adapter;
     //private ListView listAppView;
     private OnAppInfoClickListener clickListener;
 
     private List<AppModel> mAppModelList;
-
-    private Unbinder mUnbinder;
 
     private SettingsRepository mSettingsRepository;
 
@@ -105,29 +99,25 @@ public class AppDisplayFragment extends RxFragment implements Toolbar.OnMenuItem
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_applist, container, false);
-        mUnbinder = ButterKnife.bind(this, view);
-        return view;
+        return inflater.inflate(R.layout.fragment_applist, container, false);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mUnbinder != null) {
-            mUnbinder.unbind();
-        }
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mBinding = DataBindingUtil.bind(getView());
 
         initActionBar();
 
-        gridAppView.setTextFilterEnabled(true);
-        gridAppView.setOnItemClickListener(new ItemClickListener());
+        mBinding.gridAppIcon.setTextFilterEnabled(true);
+        mBinding.gridAppIcon.setOnItemClickListener(new ItemClickListener());
         if (!clickListener.isMashroom()) {
-            gridAppView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            mBinding.gridAppIcon.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                     ((AppCompatActivity)getActivity()).startSupportActionMode(new android.support.v7.view.ActionMode.Callback() {
@@ -170,10 +160,10 @@ public class AppDisplayFragment extends RxFragment implements Toolbar.OnMenuItem
 
         // 読み込み開始
         if (mAppModelList != null) {
-            layoutProgress.setVisibility(View.GONE);
+            mBinding.layoutProgress.setVisibility(View.GONE);
             setGridAdapter(mAppModelList);
         } else {
-            layoutProgress.setVisibility(View.VISIBLE);
+            mBinding.layoutProgress.setVisibility(View.VISIBLE);
 
             Observable.create(new Observable.OnSubscribe<List<AppModel>>(){
                 @Override
@@ -202,7 +192,7 @@ public class AppDisplayFragment extends RxFragment implements Toolbar.OnMenuItem
                     if (view == null) {
                         return;
                     }
-                    layoutProgress.setVisibility(View.GONE);
+                    mBinding.layoutProgress.setVisibility(View.GONE);
                     if(appModels != null) {
                         mAppModelList = appModels;
                         setGridAdapter(mAppModelList);
@@ -227,10 +217,10 @@ public class AppDisplayFragment extends RxFragment implements Toolbar.OnMenuItem
     @Override
     public void onPause() {
         super.onPause();
-        lastGridPosition = gridAppView.getFirstVisiblePosition();
+        lastGridPosition = mBinding.gridAppIcon.getFirstVisiblePosition();
 
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(gridAppView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        inputMethodManager.hideSoftInputFromWindow(mBinding.gridAppIcon.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     private void initSearchView(MenuItem item) {
@@ -267,7 +257,7 @@ public class AppDisplayFragment extends RxFragment implements Toolbar.OnMenuItem
     }
 
     private void updateSearchResult(String word) {
-        Filter filter = ((Filterable) gridAppView.getAdapter()).getFilter();
+        Filter filter = ((Filterable) mBinding.gridAppIcon.getAdapter()).getFilter();
         if (TextUtils.isEmpty(word)) {
             filter.filter("");
         } else {
@@ -277,20 +267,20 @@ public class AppDisplayFragment extends RxFragment implements Toolbar.OnMenuItem
 
     private void setGridAdapter(List<AppModel> appModelList) {
         adapter = new GridAppsAdapter(getActivity(), appModelList);
-        gridAppView.setAdapter(adapter);
+        mBinding.gridAppIcon.setAdapter(adapter);
         // スクロール位置を復元
-        gridAppView.setSelection(lastGridPosition);
+        mBinding.gridAppIcon.setSelection(lastGridPosition);
     }
 
     /**
      * 表示するViewを切り替える
      */
     public void switchViewVisibility() {
-        if(gridAppView.getVisibility() == View.VISIBLE) {
-            gridAppView.setVisibility(View.GONE);
+        if(mBinding.gridAppIcon.getVisibility() == View.VISIBLE) {
+            mBinding.gridAppIcon.setVisibility(View.GONE);
             //listAppView.setVisibility(View.VISIBLE);
         }else {
-            gridAppView.setVisibility(View.VISIBLE);
+            mBinding.gridAppIcon.setVisibility(View.VISIBLE);
             //listAppView.setVisibility(View.GONE);
         }
     }
@@ -336,7 +326,7 @@ public class AppDisplayFragment extends RxFragment implements Toolbar.OnMenuItem
             } else {
                 updateSearchResult(null);
 
-                AppModel info = (AppModel) gridAppView.getItemAtPosition(position);
+                AppModel info = (AppModel) mBinding.gridAppIcon.getItemAtPosition(position);
                 clickListener.onItemClick(view, info);
             }
         }
@@ -356,8 +346,8 @@ public class AppDisplayFragment extends RxFragment implements Toolbar.OnMenuItem
         StringBuilder appListStr = new StringBuilder();
         for (int idx=0; idx<checkedItems.size(); idx++) {
             int pos = checkedItems.keyAt(idx);
-            AppModel appModel = (AppModel) gridAppView.getItemAtPosition(pos);
-            appListStr.append(appModel.appName).append(":").append(AppLinkBase.LINK_HTTP_DETAIL).append(appModel.packageName).append("\n\n");
+            AppModel appModel = (AppModel) mBinding.gridAppIcon.getItemAtPosition(pos);
+            appListStr.append(appModel.getAppName()).append(":").append(AppLinkBase.LINK_HTTP_DETAIL).append(appModel.getPackageName()).append("\n\n");
         }
 
         shareActionProvider.setShareIntent(CommonUtil.createShareIntent(appListStr.toString()));

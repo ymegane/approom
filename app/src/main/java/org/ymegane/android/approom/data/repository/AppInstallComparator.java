@@ -22,16 +22,16 @@ public class AppInstallComparator implements Comparator<AppModel>, Serializable 
 
         switch(mode){
             case MODE_INSTALL:
-                if(object1.lastModify < object2.lastModify){
+                if(object1.getLastModify() < object2.getLastModify()){
                     return 1;
-                }else if(object1.lastModify > object2.lastModify){
+                }else if(object1.getLastModify() > object2.getLastModify()){
                     return -1;
                 }else{
                     return 0;
                 }
             case MODE_NAME:
             default:
-                return object1.appName.compareTo(object2.appName);
+                return object1.getAppName().compareTo(object2.getAppName());
         }
     }
 
