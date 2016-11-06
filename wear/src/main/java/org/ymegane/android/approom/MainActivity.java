@@ -24,7 +24,7 @@ import org.ymegane.android.approom.events.FailureAppInfoReceiveEvent;
 import org.ymegane.android.approom.events.FailureAppInfoRequestEvent;
 import org.ymegane.android.approom.events.SuccessAppInfoReceiveEvent;
 import org.ymegane.android.approom.events.SuccessAppInfoRequestEvent;
-import org.ymegane.android.approomcommns.domain.model.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class MainActivity extends WearableActivity implements WearableListView.C
 
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
         mListView = (WearableListView) findViewById(R.id.list);
-        mListView.setAdapter(new Adapter(getApplicationContext(), new ArrayList<AppInfo>(1)));
+        mListView.setAdapter(new Adapter(getApplicationContext(), new ArrayList<AppModel>(1)));
         mListView.setClickListener(MainActivity.this);
         mDismissOverlayView = (DismissOverlayView) findViewById(R.id.dismiss_overlay);
         mGestureDetector = new GestureDetectorCompat(MainActivity.this, new LongPressListener());
@@ -68,8 +68,8 @@ public class MainActivity extends WearableActivity implements WearableListView.C
         if (mDismissOverlayView.isShown()) {
             return;
         }
-        AppInfo appInfo = (AppInfo) viewHolder.itemView.getTag();
-        ShareActivity.startShareActivity(this, appInfo);
+        AppModel appModel = (AppModel) viewHolder.itemView.getTag();
+        ShareActivity.startShareActivity(this, appModel);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class MainActivity extends WearableActivity implements WearableListView.C
             @Override
             public void run() {
                 mProgress.setVisibility(View.GONE);
-                mListView.setAdapter(new Adapter(MainActivity.this, event.getAppInfos()));
+                mListView.setAdapter(new Adapter(MainActivity.this, event.getAppModels()));
             }
         });
     }
@@ -139,12 +139,12 @@ public class MainActivity extends WearableActivity implements WearableListView.C
     private static final class Adapter extends WearableListView.Adapter {
         private final Context mContext;
         private final LayoutInflater mInflater;
-        private final List<AppInfo> mAppInfo;
+        private final List<AppModel> mAppModel;
 
-        private Adapter(Context context, List<AppInfo> appInfoList) {
+        private Adapter(Context context, List<AppModel> appModelList) {
             mContext = context;
             mInflater = LayoutInflater.from(context);
-            mAppInfo = appInfoList;
+            mAppModel = appModelList;
         }
 
         @Override
@@ -157,14 +157,14 @@ public class MainActivity extends WearableActivity implements WearableListView.C
         public void onBindViewHolder(WearableListView.ViewHolder holder, int position) {
             WearableListItemLayout itemView = (WearableListItemLayout) holder.itemView;
 
-            AppInfo appInfo = mAppInfo.get(position);
-            itemView.bindView(appInfo);
-            holder.itemView.setTag(appInfo);
+            AppModel appModel = mAppModel.get(position);
+            itemView.bindView(appModel);
+            holder.itemView.setTag(appModel);
         }
 
         @Override
         public int getItemCount() {
-            return mAppInfo.size();
+            return mAppModel.size();
         }
     }
 }

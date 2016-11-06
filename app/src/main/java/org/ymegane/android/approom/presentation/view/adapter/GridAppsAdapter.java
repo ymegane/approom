@@ -14,21 +14,21 @@ import com.squareup.picasso.Picasso;
 
 import org.ymegane.android.approom.presentation.view.component.GridAppItemView;
 import org.ymegane.android.approom.R;
-import org.ymegane.android.approomcommns.domain.model.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppModel;
 
 /**
  * グリッド表示時のアダプター
  * @author y
  *
  */
-public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable {
+public class GridAppsAdapter extends ArrayAdapter<AppModel> implements Filterable {
     private static final String TAG = "GridAppsAdapter";
 
     private LayoutInflater inflater;
 
     private SparseBooleanArray checkedArray = new SparseBooleanArray();
 
-    public GridAppsAdapter(Context context, List<AppInfo> objects) {
+    public GridAppsAdapter(Context context, List<AppModel> objects) {
         super(context, -1, objects);
         inflater = LayoutInflater.from(context);
     }
@@ -61,7 +61,7 @@ public class GridAppsAdapter extends ArrayAdapter<AppInfo> implements Filterable
             itemView = (GridAppItemView) inflater.inflate(R.layout.adapter_grid_app_item, null);
         }
 
-        AppInfo appData = getItem(position);
+        AppModel appData = getItem(position);
 
         itemView.textAppName.setText(appData.appName);
 

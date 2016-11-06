@@ -1,6 +1,6 @@
 package org.ymegane.android.approom.data.repository;
 
-import org.ymegane.android.approomcommns.domain.model.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppModel;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -10,7 +10,7 @@ import java.util.Comparator;
  * @author y
  *
  */
-public class AppInstallComparator implements Comparator<AppInfo>, Serializable {
+public class AppInstallComparator implements Comparator<AppModel>, Serializable {
     private static final long serialVersionUID = 1L;
     public static final int MODE_INSTALL = 0;
     public static final int MODE_NAME = 1;
@@ -18,7 +18,7 @@ public class AppInstallComparator implements Comparator<AppInfo>, Serializable {
     private int mode = MODE_INSTALL;
 
     @Override
-    public int compare(AppInfo object1, AppInfo object2) {
+    public int compare(AppModel object1, AppModel object2) {
 
         switch(mode){
             case MODE_INSTALL:

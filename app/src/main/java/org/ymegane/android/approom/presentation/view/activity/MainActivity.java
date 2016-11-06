@@ -4,7 +4,7 @@ import org.ymegane.android.approom.presentation.view.fragment.AppDisplayFragment
 import org.ymegane.android.approom.presentation.view.fragment.AppDisplayFragment.OnAppInfoClickListener;
 import org.ymegane.android.approom.presentation.view.fragment.DetailPreferenceFragment;
 import org.ymegane.android.approom.R;
-import org.ymegane.android.approomcommns.domain.model.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppModel;
 import org.ymegane.android.approomcommns.AppLinkBase;
 
 import android.app.Dialog;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements OnAppInfoClickLis
     }
 
     @Override
-    public void onItemClick(View view, AppInfo info) {
+    public void onItemClick(View view, AppModel info) {
         String action = getIntent().getAction();
 
         if(action != null && action.contains(ACTION_INTERCEPT)){

@@ -3,9 +3,10 @@ package org.ymegane.android.approom.presentation.view.fragment;
 import java.util.ArrayList;
 
 import org.ymegane.android.approom.R;
-import org.ymegane.android.approom.data.repository.AppPrefs;
+import org.ymegane.android.approom.data.repository.PreferenceSettingsRepository;
+import org.ymegane.android.approom.domain.repository.SettingsRepository;
 import org.ymegane.android.approom.presentation.view.activity.DetailActivity;
-import org.ymegane.android.approomcommns.domain.model.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppModel;
 import org.ymegane.android.approomcommns.AppLinkBase;
 import org.ymegane.android.approomcommns.data.repository.QRCodeLoaderSupport;
 import org.ymegane.android.approomcommns.util.CommonUtil;
@@ -67,7 +68,9 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
 
     private Unbinder mUnbinder;
 
-    private AppInfo appInfo;
+    private AppModel mAppModel;
+
+    private SettingsRepository mSettingsRepository;
 
     public interface OnAppDetailEventObserver {
         void onDetailDestroy();
@@ -78,9 +81,9 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     private String appName;
     private String currentUri;
 
-    public static AppDetailFragment newInstance(AppInfo appInfo, boolean isTouch) {
+    public static AppDetailFragment newInstance(AppModel appModel, boolean isTouch) {
         Bundle args = new Bundle();
-        args.putParcelable(AppDetailFragment.KEY_APPINFO, appInfo);
+        args.putParcelable(AppDetailFragment.KEY_APPINFO, appModel);
         args.putBoolean(KEY_TOUCH_ENABLE, isTouch);
         AppDetailFragment fragment = new AppDetailFragment();
         fragment.setArguments(args);
@@ -91,6 +94,8 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     public void onAttach(Context context) {
         super.onAttach(context);
         eventListener = (OnAppDetailEventObserver) context;
+
+        mSettingsRepository = new PreferenceSettingsRepository(context);
     }
 
     @Override
@@ -121,19 +126,19 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
         super.onActivityCreated(savedInstanceState);
 
         Bundle args = getArguments();
-        appInfo = args.getParcelable(KEY_APPINFO);
-        appName = appInfo.appName.toString();
-        packageName = appInfo.packageName;
+        mAppModel = args.getParcelable(KEY_APPINFO);
+        appName = mAppModel.appName.toString();
+        packageName = mAppModel.packageName;
 
         textAppName.setText(appName);
         textAppName.requestFocus();
 
-        if (appInfo.iconUrl != null) {
+        if (mAppModel.iconUrl != null) {
             Picasso.with(getContext())
-                    .load(appInfo.iconUrl)
+                    .load(mAppModel.iconUrl)
                     .placeholder(R.drawable.ic_launcher_failed)
                     .error(R.drawable.ic_launcher_failed)
-                    .stableKey(appInfo.iconUrl.toString()+String.valueOf(appInfo.lastModify))
+                    .stableKey(mAppModel.iconUrl.toString()+String.valueOf(mAppModel.lastModify))
                     .into(imageIcon);
         } else {
             imageIcon.setImageResource(R.drawable.ic_launcher_failed);
@@ -197,7 +202,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
                     return false;
                 }
                 if(itemPosition < linkList.size()) {
-                    AppPrefs.newInstance(getActivity()).saveLinkType(itemPosition);
+                    mSettingsRepository.setLinkType(itemPosition);
                     currentUri = linkList.get(itemPosition);
                     textLinkUri.setText(currentUri);
                     Bundle arg = new Bundle();
@@ -208,7 +213,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
                 return false;
             }
         });
-        actionBar.setSelectedNavigationItem(AppPrefs.newInstance(getActivity()).getLinkType());
+        actionBar.setSelectedNavigationItem(mSettingsRepository.getLinkType());
     }
 
     @Override

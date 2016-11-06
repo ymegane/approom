@@ -1,17 +1,17 @@
 package org.ymegane.android.approom.events;
 
-import org.ymegane.android.approomcommns.domain.model.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppModel;
 
 import java.util.List;
 
 public class SuccessAppInfoReceiveEvent {
-    List<AppInfo> appInfos;
+    List<AppModel> mAppModels;
 
-    public SuccessAppInfoReceiveEvent(List<AppInfo> appInfos) {
-        this.appInfos = appInfos;
+    public SuccessAppInfoReceiveEvent(List<AppModel> appModels) {
+        this.mAppModels = appModels;
     }
 
-    public List<AppInfo> getAppInfos() {
-        return appInfos;
+    public List<AppModel> getAppModels() {
+        return mAppModels;
     }
 }

@@ -17,7 +17,7 @@ import android.widget.ImageView;
 
 import com.github.ymegane.android.dlog.DLog;
 
-import org.ymegane.android.approomcommns.domain.model.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppModel;
 import org.ymegane.android.approomcommns.AppLinkBase;
 import org.ymegane.android.approomcommns.data.repository.QRCodeLoader;
 
@@ -26,14 +26,14 @@ import org.ymegane.android.approomcommns.data.repository.QRCodeLoader;
  */
 public class ShareActivity extends WearableActivity implements LoaderManager.LoaderCallbacks<Bitmap> {
 
-    public static void startShareActivity(Context context, AppInfo appInfo) {
+    public static void startShareActivity(Context context, AppModel appModel) {
         Intent intent = new Intent(context, ShareActivity.class);
-        intent.putExtra("appInfo", appInfo);
+        intent.putExtra("appModel", appModel);
         context.startActivity(intent);
     }
 
     private ImageView mImageView;
-    private AppInfo mAppInfo;
+    private AppModel mAppModel;
 
     private GestureDetectorCompat mGestureDetector;
     private DismissOverlayView mDismissOverlayView;
@@ -46,7 +46,7 @@ public class ShareActivity extends WearableActivity implements LoaderManager.Loa
         //setAmbientEnabled();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        mAppInfo = getIntent().getParcelableExtra("appInfo");
+        mAppModel = getIntent().getParcelableExtra("appInfo");
         mImageView = (ImageView) findViewById(R.id.imageQR);
         mDismissOverlayView = (DismissOverlayView) findViewById(R.id.dismiss_overlay);
         mGestureDetector = new GestureDetectorCompat(ShareActivity.this, new LongPressListener());
@@ -56,7 +56,7 @@ public class ShareActivity extends WearableActivity implements LoaderManager.Loa
 
     @Override
     public Loader<Bitmap> onCreateLoader(int id, Bundle args) {
-        return new QRCodeLoader(getApplicationContext(), AppLinkBase.LINK_HTTP_DETAIL + mAppInfo.packageName, getResources().getDimensionPixelSize(R.dimen.qr_size));
+        return new QRCodeLoader(getApplicationContext(), AppLinkBase.LINK_HTTP_DETAIL + mAppModel.packageName, getResources().getDimensionPixelSize(R.dimen.qr_size));
     }
 
     @Override

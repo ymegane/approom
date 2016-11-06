@@ -2,13 +2,14 @@ package org.ymegane.android.approom.presentation.view.fragment;
 
 import java.util.List;
 
-import org.ymegane.android.approom.data.repository.AppInfoLoader;
 import org.ymegane.android.approom.data.repository.AppInstallComparator;
 import org.ymegane.android.approom.BuildConfig;
+import org.ymegane.android.approom.data.repository.InstalledAppRepositoryImpl;
+import org.ymegane.android.approom.data.repository.PreferenceSettingsRepository;
+import org.ymegane.android.approom.domain.repository.SettingsRepository;
 import org.ymegane.android.approom.presentation.view.adapter.GridAppsAdapter;
 import org.ymegane.android.approom.R;
-import org.ymegane.android.approom.data.repository.AppPrefs;
-import org.ymegane.android.approomcommns.domain.model.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppModel;
 import org.ymegane.android.approomcommns.AppLinkBase;
 import org.ymegane.android.approomcommns.util.CommonUtil;
 import org.ymegane.android.approomcommns.util.HtmlUtil;
@@ -25,9 +26,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -52,15 +50,21 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.github.ymegane.android.dlog.DLog;
+import com.trello.rxlifecycle.components.support.RxFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import rx.Observable;
+import rx.Observer;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * アプリ一覧表示Fragment
  */
-public class AppDisplayFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<AppInfo>>, Toolbar.OnMenuItemClickListener {
+public class AppDisplayFragment extends RxFragment implements Toolbar.OnMenuItemClickListener {
     public static final String TAG = "AppDisplayFragment";
 
     @BindView(R.id.layoutProgress)
@@ -72,9 +76,11 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     //private ListView listAppView;
     private OnAppInfoClickListener clickListener;
 
-    private List<AppInfo> appInfoList;
+    private List<AppModel> mAppModelList;
 
     private Unbinder mUnbinder;
+
+    private SettingsRepository mSettingsRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,6 +96,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
         }catch(ClassCastException e) {
             DLog.e("unimplements Listener!!", e);
         }
+        mSettingsRepository = new PreferenceSettingsRepository(context);
     }
 
     private ActionMode actionMode;
@@ -162,12 +169,46 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
         }
 
         // 読み込み開始
-        if (appInfoList != null) {
+        if (mAppModelList != null) {
             layoutProgress.setVisibility(View.GONE);
-            setGridAdapter(appInfoList);
+            setGridAdapter(mAppModelList);
         } else {
-            LoaderManager loaderMng = getLoaderManager();
-            loaderMng.initLoader(0, null, this);
+            layoutProgress.setVisibility(View.VISIBLE);
+
+            Observable.create(new Observable.OnSubscribe<List<AppModel>>(){
+                @Override
+                public void call(Subscriber<? super List<AppModel>> subscriber) {
+                    subscriber.onNext(new InstalledAppRepositoryImpl(getContext()).getInstalledAppList());
+                    subscriber.onCompleted();
+                }
+
+            }).compose(this.<List<AppModel>>bindToLifecycle())
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Observer<List<AppModel>>() {
+                @Override
+                public void onCompleted() {
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                }
+
+                @Override
+                public void onNext(List<AppModel> appModels) {
+                    DLog.printMethod();
+
+                    View view = getView();
+                    if (view == null) {
+                        return;
+                    }
+                    layoutProgress.setVisibility(View.GONE);
+                    if(appModels != null) {
+                        mAppModelList = appModels;
+                        setGridAdapter(mAppModelList);
+                    }
+                }
+            });
         }
     }
 
@@ -234,34 +275,8 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
         }
     }
 
-    @Override
-    public Loader<List<AppInfo>> onCreateLoader(int arg0, Bundle arg1) {
-        // アプリ一覧の読み込み
-        layoutProgress.setVisibility(View.VISIBLE);
-        return new AppInfoLoader(getActivity(), false);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<List<AppInfo>> listLoader, List<AppInfo> appInfos) {
-        DLog.d("onLoadFinished");
-
-        View view = getView();
-        getLoaderManager().destroyLoader(0);
-        if(view != null) {
-            layoutProgress.setVisibility(View.GONE);
-        }
-        if(appInfos != null) {
-            appInfoList = appInfos;
-            setGridAdapter(appInfoList);
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<List<AppInfo>> arg0) {
-    }
-
-    private void setGridAdapter(List<AppInfo> appInfoList) {
-        adapter = new GridAppsAdapter(getActivity(), appInfoList);
+    private void setGridAdapter(List<AppModel> appModelList) {
+        adapter = new GridAppsAdapter(getActivity(), appModelList);
         gridAppView.setAdapter(adapter);
         // スクロール位置を復元
         gridAppView.setSelection(lastGridPosition);
@@ -284,12 +299,12 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
     public boolean onMenuItemClick(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.item_sort_install:
-                AppPrefs.newInstance(getActivity()).saveSortType(AppInstallComparator.MODE_INSTALL);
+                mSettingsRepository.setSortType(AppInstallComparator.MODE_INSTALL);
                 adapter.setNotifyOnChange(true);
                 adapter.sort(new AppInstallComparator().setMode(AppInstallComparator.MODE_INSTALL));
                 return true;
             case R.id.item_sort_alpabet:
-                AppPrefs.newInstance(getActivity()).saveSortType(AppInstallComparator.MODE_NAME);
+                mSettingsRepository.setSortType(AppInstallComparator.MODE_NAME);
                 adapter.setNotifyOnChange(true);
                 adapter.sort(new AppInstallComparator().setMode(AppInstallComparator.MODE_NAME));
                 return true;
@@ -321,7 +336,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
             } else {
                 updateSearchResult(null);
 
-                AppInfo info = (AppInfo) gridAppView.getItemAtPosition(position);
+                AppModel info = (AppModel) gridAppView.getItemAtPosition(position);
                 clickListener.onItemClick(view, info);
             }
         }
@@ -341,8 +356,8 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
         StringBuilder appListStr = new StringBuilder();
         for (int idx=0; idx<checkedItems.size(); idx++) {
             int pos = checkedItems.keyAt(idx);
-            AppInfo appInfo = (AppInfo) gridAppView.getItemAtPosition(pos);
-            appListStr.append(appInfo.appName).append(":").append(AppLinkBase.LINK_HTTP_DETAIL).append(appInfo.packageName).append("\n\n");
+            AppModel appModel = (AppModel) gridAppView.getItemAtPosition(pos);
+            appListStr.append(appModel.appName).append(":").append(AppLinkBase.LINK_HTTP_DETAIL).append(appModel.packageName).append("\n\n");
         }
 
         shareActionProvider.setShareIntent(CommonUtil.createShareIntent(appListStr.toString()));
@@ -354,7 +369,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
      *
      */
     public interface OnAppInfoClickListener {
-        void onItemClick(View view, AppInfo info);
+        void onItemClick(View view, AppModel info);
         boolean isMashroom();
         void onOpenSetting();
     }

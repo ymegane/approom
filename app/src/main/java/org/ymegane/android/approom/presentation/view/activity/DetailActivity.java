@@ -32,7 +32,7 @@ import org.ymegane.android.approom.R;
 import org.ymegane.android.approom.presentation.view.fragment.nfc.AndroidBeamFragment;
 import org.ymegane.android.approom.presentation.view.fragment.nfc.MfcManageFragment;
 import org.ymegane.android.approom.presentation.view.fragment.nfc.PushCommand;
-import org.ymegane.android.approomcommns.domain.model.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppModel;
 import org.ymegane.android.approomcommns.util.CommonUtil;
 
 public class DetailActivity extends AppCompatActivity implements AppDetailFragment.OnAppDetailEventObserver, AbstractNfcTagFragment.INfcTagListener, AndroidBeamFragment.OnCreateNdefMessageListener,  MfcManageFragment.OnPushRequestEventObserver  {
@@ -45,7 +45,7 @@ public class DetailActivity extends AppCompatActivity implements AppDetailFragme
 
     private AppDetailFragment appDetailFragment;
 
-    public static void launch(Activity activity, AppInfo info, Pair<View, String>... sharedElements) {
+    public static void launch(Activity activity, AppModel info, Pair<View, String>... sharedElements) {
         ActivityOptionsCompat options =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(
                         activity, sharedElements);
@@ -69,7 +69,7 @@ public class DetailActivity extends AppCompatActivity implements AppDetailFragme
         if (savedInstanceState == null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-            AppInfo info = getIntent().getParcelableExtra(APP_INFO);
+            AppModel info = getIntent().getParcelableExtra(APP_INFO);
             appDetailFragment = AppDetailFragment.newInstance(info, addIcCardFragments(ft));
 
             ft.replace(R.id.container, appDetailFragment, AppDetailFragment.TAG);

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public class AppPrefs {
+class AppPrefs {
     private AppPrefs(Context context){
         mDefSharedPref = PreferenceManager.getDefaultSharedPreferences(context);
     };

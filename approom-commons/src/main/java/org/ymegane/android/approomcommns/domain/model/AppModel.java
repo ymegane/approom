@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
  * アプリ情報
  * @author y
  */
-public class AppInfo implements Parcelable {
+public class AppModel implements Parcelable {
 
     public ApplicationInfo appInfo;
     @SerializedName("lastModify")
@@ -32,23 +32,23 @@ public class AppInfo implements Parcelable {
         return appName;
     }
 
-    public AppInfo() {
+    public AppModel() {
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AppInfo)) return false;
+        if (!(o instanceof AppModel)) return false;
 
-        AppInfo appInfo1 = (AppInfo) o;
+        AppModel appModel1 = (AppModel) o;
 
-        if (isStoped != appInfo1.isStoped) return false;
-        if (lastModify != appInfo1.lastModify) return false;
-        if (appInfo != null ? !appInfo.equals(appInfo1.appInfo) : appInfo1.appInfo != null)
+        if (isStoped != appModel1.isStoped) return false;
+        if (lastModify != appModel1.lastModify) return false;
+        if (appInfo != null ? !appInfo.equals(appModel1.appInfo) : appModel1.appInfo != null)
             return false;
-        if (appName != null ? !appName.equals(appInfo1.appName) : appInfo1.appName != null)
+        if (appName != null ? !appName.equals(appModel1.appName) : appModel1.appName != null)
             return false;
-        if (packageName != null ? !packageName.equals(appInfo1.packageName) : appInfo1.packageName != null)
+        if (packageName != null ? !packageName.equals(appModel1.packageName) : appModel1.packageName != null)
             return false;
 
         return true;
@@ -82,7 +82,7 @@ public class AppInfo implements Parcelable {
         }
     }
 
-    private AppInfo(Parcel in) {
+    private AppModel(Parcel in) {
         this.appInfo = in.readParcelable(ApplicationInfo.class.getClassLoader());
         this.lastModify = in.readLong();
         this.appName = in.readString();
@@ -92,13 +92,13 @@ public class AppInfo implements Parcelable {
         this.iconUrl = in.readParcelable(ApplicationInfo.class.getClassLoader());
     }
 
-    public static final Creator<AppInfo> CREATOR = new Creator<AppInfo>() {
-        public AppInfo createFromParcel(Parcel source) {
-            return new AppInfo(source);
+    public static final Creator<AppModel> CREATOR = new Creator<AppModel>() {
+        public AppModel createFromParcel(Parcel source) {
+            return new AppModel(source);
         }
 
-        public AppInfo[] newArray(int size) {
-            return new AppInfo[size];
+        public AppModel[] newArray(int size) {
+            return new AppModel[size];
         }
     };
 }

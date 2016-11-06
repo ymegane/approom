@@ -13,10 +13,12 @@ import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 import com.google.gson.Gson;
 
-import org.ymegane.android.approom.data.repository.AppInfoLoader;
-import org.ymegane.android.approomcommns.domain.model.AppInfo;
+import org.ymegane.android.approom.data.repository.InstalledAppRepositoryImpl;
+import org.ymegane.android.approom.domain.exception.ErrorBundle;
+import org.ymegane.android.approom.domain.repository.InstalledAppRepository;
+import org.ymegane.android.approomcommns.domain.model.AppModel;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -40,6 +42,13 @@ public class AppInfoSendService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        InstalledAppRepositoryImpl repository = new InstalledAppRepositoryImpl(getApplicationContext())
+                .setLoadPallet(true);
+
+        handleAppModels(repository.getInstalledAppList());
+    }
+
+    private void handleAppModels(Collection<AppModel> appModels) {
         GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Wearable.API)
                 .build();
@@ -49,11 +58,11 @@ public class AppInfoSendService extends IntentService {
             DLog.w("Failed to connect to GoogleApiClient.");
             return;
         }
-        List<AppInfo> appInfoList = AppInfoLoader.getAppInfo(getApplicationContext(), true);
-        if (appInfoList.size() > 20) {
-            //appInfoList = appInfoList.subList(0, 20);
+
+        if (appModels.size() > 20) {
+            //appModelList = appModelList.subList(0, 20);
         }
-        String jsonStr = new Gson().toJson(appInfoList);
+        String jsonStr = new Gson().toJson(appModels);
         DLog.d("appListJson " + jsonStr);
 
         NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes(googleApiClient).await();

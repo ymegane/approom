@@ -25,7 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.ymegane.android.approomcommns.domain.model.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppModel;
 
 public class WearableListItemLayout extends LinearLayout implements WearableListView.OnCenterProximityListener  {
 
@@ -50,7 +50,7 @@ public class WearableListItemLayout extends LinearLayout implements WearableList
         mFadedCircleColor = ContextCompat.getColor(context, R.color.wl_gray);
     }
 
-    public void bindView(AppInfo info) {
+    public void bindView(AppModel info) {
         mName.setText(info.appName);
         mCircle.setTag(info);
     }
@@ -65,7 +65,7 @@ public class WearableListItemLayout extends LinearLayout implements WearableList
     @Override
     public void onCenterPosition(boolean animate) {
         mName.setAlpha(1f);
-        AppInfo info = (AppInfo) mCircle.getTag();
+        AppModel info = (AppModel) mCircle.getTag();
         ((GradientDrawable) mCircle.getDrawable()).setColor(info.palette);
 
         if (animate) {

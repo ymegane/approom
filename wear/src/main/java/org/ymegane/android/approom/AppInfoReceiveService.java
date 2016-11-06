@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import org.ymegane.android.approom.events.BusProvider;
 import org.ymegane.android.approom.events.FailureAppInfoReceiveEvent;
 import org.ymegane.android.approom.events.SuccessAppInfoReceiveEvent;
-import org.ymegane.android.approomcommns.domain.model.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppModel;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -22,9 +22,9 @@ public class AppInfoReceiveService extends WearableListenerService {
                 return;
             }
             String appJson = new String(messageEvent.getData());
-            Type listType = new TypeToken<List<AppInfo>>() {}.getType();
-            List<AppInfo> appInfoList = new Gson().fromJson(appJson, listType);
-            BusProvider.getInstance().post(new SuccessAppInfoReceiveEvent(appInfoList));
+            Type listType = new TypeToken<List<AppModel>>() {}.getType();
+            List<AppModel> appModelList = new Gson().fromJson(appJson, listType);
+            BusProvider.getInstance().post(new SuccessAppInfoReceiveEvent(appModelList));
         }
     }
 }
