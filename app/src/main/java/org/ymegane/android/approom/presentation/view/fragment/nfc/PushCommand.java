@@ -1,4 +1,4 @@
-package org.ymegane.android.approom.nfc;
+package org.ymegane.android.approom.presentation.view.fragment.nfc;
 
 import java.nio.ByteBuffer;
 

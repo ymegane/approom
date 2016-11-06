@@ -1,4 +1,4 @@
-package org.ymegane.android.approom;
+package org.ymegane.android.approom.presentation.view.component;
 
 import android.content.Context;
 import android.os.Build;
@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.ymegane.android.approom.R;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -18,9 +20,9 @@ import butterknife.ButterKnife;
 public class GridAppItemView extends RelativeLayout implements Checkable {
 
     @BindView(R.id.textAppName)
-    TextView textAppName;
+    public TextView textAppName;
     @BindView(R.id.imageAppIcon)
-    ImageView imageIcon;
+    public ImageView imageIcon;
 
     public GridAppItemView(Context context) {
         super(context);

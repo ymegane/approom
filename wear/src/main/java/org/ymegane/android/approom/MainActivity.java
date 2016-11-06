@@ -23,7 +23,7 @@ import org.ymegane.android.approom.events.FailureAppInfoReceiveEvent;
 import org.ymegane.android.approom.events.FailureAppInfoRequestEvent;
 import org.ymegane.android.approom.events.SuccessAppInfoReceiveEvent;
 import org.ymegane.android.approom.events.SuccessAppInfoRequestEvent;
-import org.ymegane.android.approomcommns.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppInfo;
 import org.ymegane.android.approomcommns.util.MyLog;
 
 import java.util.ArrayList;

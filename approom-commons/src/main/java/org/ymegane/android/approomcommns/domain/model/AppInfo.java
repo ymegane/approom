@@ -1,4 +1,4 @@
-package org.ymegane.android.approomcommns;
+package org.ymegane.android.approomcommns.domain.model;
 
 import android.content.pm.ApplicationInfo;
 import android.net.Uri;

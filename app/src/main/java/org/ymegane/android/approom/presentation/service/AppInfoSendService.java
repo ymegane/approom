@@ -1,4 +1,4 @@
-package org.ymegane.android.approom;
+package org.ymegane.android.approom.presentation.service;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -12,7 +12,8 @@ import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 import com.google.gson.Gson;
 
-import org.ymegane.android.approomcommns.AppInfo;
+import org.ymegane.android.approom.data.repository.AppInfoLoader;
+import org.ymegane.android.approomcommns.domain.model.AppInfo;
 import org.ymegane.android.approomcommns.util.MyLog;
 
 import java.util.List;

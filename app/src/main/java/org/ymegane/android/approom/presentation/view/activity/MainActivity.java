@@ -1,7 +1,10 @@
-package org.ymegane.android.approom;
+package org.ymegane.android.approom.presentation.view.activity;
 
-import org.ymegane.android.approom.AppDisplayFragment.OnAppInfoClickListener;
-import org.ymegane.android.approomcommns.AppInfo;
+import org.ymegane.android.approom.presentation.view.fragment.AppDisplayFragment;
+import org.ymegane.android.approom.presentation.view.fragment.AppDisplayFragment.OnAppInfoClickListener;
+import org.ymegane.android.approom.presentation.view.fragment.DetailPreferenceFragment;
+import org.ymegane.android.approom.R;
+import org.ymegane.android.approomcommns.domain.model.AppInfo;
 import org.ymegane.android.approomcommns.AppLinkBase;
 
 import android.app.Dialog;

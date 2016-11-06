@@ -15,9 +15,9 @@ import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import org.ymegane.android.approomcommns.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppInfo;
 import org.ymegane.android.approomcommns.AppLinkBase;
-import org.ymegane.android.approomcommns.QRCodeLoader;
+import org.ymegane.android.approomcommns.data.repository.QRCodeLoader;
 import org.ymegane.android.approomcommns.util.MyLog;
 
 /**

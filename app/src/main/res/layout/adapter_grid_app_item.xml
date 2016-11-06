@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<org.ymegane.android.approom.GridAppItemView
+<org.ymegane.android.approom.presentation.view.component.GridAppItemView
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/grid_columnWidth"
@@ -35,4 +35,4 @@
         android:textSize="@dimen/grid_text_size"
         tools:text="test"/>
 
-</org.ymegane.android.approom.GridAppItemView>
+</org.ymegane.android.approom.presentation.view.component.GridAppItemView>

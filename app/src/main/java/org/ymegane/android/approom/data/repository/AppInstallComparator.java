@@ -1,6 +1,6 @@
-package org.ymegane.android.approom;
+package org.ymegane.android.approom.data.repository;
 
-import org.ymegane.android.approomcommns.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppInfo;
 
 import java.io.Serializable;
 import java.util.Comparator;

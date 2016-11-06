@@ -1,6 +1,6 @@
-package org.ymegane.android.approom.nfc;
+package org.ymegane.android.approom.presentation.view.fragment.nfc;
 
-import org.ymegane.android.approom.DetailActivity;
+import org.ymegane.android.approom.presentation.view.activity.DetailActivity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

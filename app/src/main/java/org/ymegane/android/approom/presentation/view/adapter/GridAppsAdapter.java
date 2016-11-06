@@ -1,4 +1,4 @@
-package org.ymegane.android.approom;
+package org.ymegane.android.approom.presentation.view.adapter;
 
 import java.util.List;
 
@@ -12,7 +12,9 @@ import android.widget.Filterable;
 
 import com.squareup.picasso.Picasso;
 
-import org.ymegane.android.approomcommns.AppInfo;
+import org.ymegane.android.approom.presentation.view.component.GridAppItemView;
+import org.ymegane.android.approom.R;
+import org.ymegane.android.approomcommns.domain.model.AppInfo;
 
 /**
  * グリッド表示時のアダプター

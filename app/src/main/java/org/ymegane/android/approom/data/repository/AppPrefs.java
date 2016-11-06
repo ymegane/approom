@@ -1,6 +1,4 @@
-package org.ymegane.android.approom.preference;
-
-import org.ymegane.android.approom.AppInstallComparator;
+package org.ymegane.android.approom.data.repository;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -1,6 +1,6 @@
 package org.ymegane.android.approom.events;
 
-import org.ymegane.android.approomcommns.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppInfo;
 
 import java.util.List;
 

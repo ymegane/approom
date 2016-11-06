@@ -1,8 +1,9 @@
-package org.ymegane.android.approomcommns;
+package org.ymegane.android.approomcommns.data.repository;
 
+import android.annotation.TargetApi;
+import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v4.content.AsyncTaskLoader;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -12,14 +13,15 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.util.Hashtable;
 
-public class QRCodeLoaderSupport extends AsyncTaskLoader<Bitmap> {
+@TargetApi(11)
+public class QRCodeLoader extends AsyncTaskLoader<Bitmap> {
     private String target;
     private int size;
 
     /** エンコード設定 */
     private static final String ENCORD_NAME = "ISO-8859-1";
 
-    public QRCodeLoaderSupport(Context context, String target, int size) {
+    public QRCodeLoader(Context context, String target, int size) {
         super(context);
         this.target = target;
         this.size = size;

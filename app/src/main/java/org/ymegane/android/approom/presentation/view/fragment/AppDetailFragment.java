@@ -1,11 +1,13 @@
-package org.ymegane.android.approom;
+package org.ymegane.android.approom.presentation.view.fragment;
 
 import java.util.ArrayList;
 
-import org.ymegane.android.approom.preference.AppPrefs;
-import org.ymegane.android.approomcommns.AppInfo;
+import org.ymegane.android.approom.R;
+import org.ymegane.android.approom.data.repository.AppPrefs;
+import org.ymegane.android.approom.presentation.view.activity.DetailActivity;
+import org.ymegane.android.approomcommns.domain.model.AppInfo;
 import org.ymegane.android.approomcommns.AppLinkBase;
-import org.ymegane.android.approomcommns.QRCodeLoaderSupport;
+import org.ymegane.android.approomcommns.data.repository.QRCodeLoaderSupport;
 import org.ymegane.android.approomcommns.util.CommonUtil;
 import org.ymegane.android.approomcommns.util.MyLog;
 

@@ -1,4 +1,4 @@
-package org.ymegane.android.approom;
+package org.ymegane.android.approom.presentation.service;
 
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;

@@ -1,12 +1,12 @@
-package org.ymegane.android.approom;
+package org.ymegane.android.approom.data.repository;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.ymegane.android.approom.preference.AppPrefs;
-import org.ymegane.android.approomcommns.AppInfo;
+import org.ymegane.android.approom.R;
+import org.ymegane.android.approomcommns.domain.model.AppInfo;
 import org.ymegane.android.approomcommns.util.MyLog;
 
 import android.content.Context;
@@ -48,7 +48,7 @@ public class AppInfoLoader extends AsyncTaskLoader<List<AppInfo>> {
         return getAppInfo(getContext(), this.isLoadPalette);
     }
 
-    static List<AppInfo> getAppInfo(Context context, boolean isLoadPalette) {
+    public static List<AppInfo> getAppInfo(Context context, boolean isLoadPalette) {
         PackageManager packageMng = context.getPackageManager();
 
         Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);

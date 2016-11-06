@@ -22,7 +22,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="org.ymegane.android.approom.MainActivity"
+            android:name="org.ymegane.android.approom.presentation.view.activity.MainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
             android:launchMode="singleTop"
@@ -44,7 +44,7 @@
             android:name="com.felicanetworks.mfc.Felica"
             android:exported="false" >
         </service>
-        <service android:name="org.ymegane.android.approom.AppInfoRequestReceiveService"
+        <service android:name="org.ymegane.android.approom.presentation.service.AppInfoRequestReceiveService"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
@@ -52,16 +52,16 @@
             </intent-filter>
         </service>
         <service
-            android:name="org.ymegane.android.approom.AppInfoSendService"
+            android:name="org.ymegane.android.approom.presentation.service.AppInfoSendService"
             android:exported="false" />
 
         <activity
-            android:name="org.ymegane.android.approom.DetailActivity"
+            android:name="org.ymegane.android.approom.presentation.view.activity.DetailActivity"
             android:label="@string/title_activity_detail"
-            android:parentActivityName="org.ymegane.android.approom.MainActivity" >
+            android:parentActivityName="org.ymegane.android.approom.presentation.view.activity.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.ymegane.android.approom.MainActivity" />
+                android:value="org.ymegane.android.approom.presentation.view.activity.MainActivity" />
         </activity>
     </application>
 

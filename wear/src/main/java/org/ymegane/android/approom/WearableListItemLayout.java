@@ -25,7 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.ymegane.android.approomcommns.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppInfo;
 
 public class WearableListItemLayout extends LinearLayout implements WearableListView.OnCenterProximityListener  {
 

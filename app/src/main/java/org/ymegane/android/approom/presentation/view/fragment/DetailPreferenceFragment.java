@@ -1,15 +1,11 @@
-package org.ymegane.android.approom;
+package org.ymegane.android.approom.presentation.view.fragment;
 
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 
-import org.ymegane.android.approom.preference.AppPrefs;
-import org.ymegane.android.approomcommns.util.CommonUtil;
-
-import java.util.ArrayList;
+import org.ymegane.android.approom.R;
 
 /**
  * 設定画面

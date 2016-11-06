@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import org.ymegane.android.approom.events.BusProvider;
 import org.ymegane.android.approom.events.FailureAppInfoReceiveEvent;
 import org.ymegane.android.approom.events.SuccessAppInfoReceiveEvent;
-import org.ymegane.android.approomcommns.AppInfo;
+import org.ymegane.android.approomcommns.domain.model.AppInfo;
 
 import java.lang.reflect.Type;
 import java.util.List;

@@ -1,9 +1,8 @@
-package org.ymegane.android.approom;
+package org.ymegane.android.approom.presentation.view.activity;
 
 import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.nfc.NfcAdapter;
@@ -27,10 +26,12 @@ import net.kazzz.AbstractNfcTagFragment;
 import net.kazzz.felica.FeliCaException;
 import net.kazzz.felica.lib.FeliCaLib;
 
-import org.ymegane.android.approom.nfc.AndroidBeamFragment;
-import org.ymegane.android.approom.nfc.MfcManageFragment;
-import org.ymegane.android.approom.nfc.PushCommand;
-import org.ymegane.android.approomcommns.AppInfo;
+import org.ymegane.android.approom.presentation.view.fragment.AppDetailFragment;
+import org.ymegane.android.approom.R;
+import org.ymegane.android.approom.presentation.view.fragment.nfc.AndroidBeamFragment;
+import org.ymegane.android.approom.presentation.view.fragment.nfc.MfcManageFragment;
+import org.ymegane.android.approom.presentation.view.fragment.nfc.PushCommand;
+import org.ymegane.android.approomcommns.domain.model.AppInfo;
 import org.ymegane.android.approomcommns.util.CommonUtil;
 import org.ymegane.android.approomcommns.util.MyLog;
 
