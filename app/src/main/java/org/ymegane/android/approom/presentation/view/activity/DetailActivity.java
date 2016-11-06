@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.felicanetworks.mfc.PushStartBrowserSegment;
+import com.github.ymegane.android.dlog.DLog;
 
 import net.kazz.felica.NfcFeliCaTagFragment;
 import net.kazzz.AbstractNfcTagFragment;
@@ -33,7 +34,6 @@ import org.ymegane.android.approom.presentation.view.fragment.nfc.MfcManageFragm
 import org.ymegane.android.approom.presentation.view.fragment.nfc.PushCommand;
 import org.ymegane.android.approomcommns.domain.model.AppInfo;
 import org.ymegane.android.approomcommns.util.CommonUtil;
-import org.ymegane.android.approomcommns.util.MyLog;
 
 public class DetailActivity extends AppCompatActivity implements AppDetailFragment.OnAppDetailEventObserver, AbstractNfcTagFragment.INfcTagListener, AndroidBeamFragment.OnCreateNdefMessageListener,  MfcManageFragment.OnPushRequestEventObserver  {
     private static final String TAG = DetailActivity.class.getSimpleName();
@@ -91,7 +91,7 @@ public class DetailActivity extends AppCompatActivity implements AppDetailFragme
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        MyLog.d(TAG, "onNewIntent");
+        DLog.d("onNewIntent");
         if(nfcFelicaFragment != null) {
             nfcFelicaFragment.onNewIntent(intent);
         }
@@ -145,7 +145,7 @@ public class DetailActivity extends AppCompatActivity implements AppDetailFragme
 
     @Override
     public void onTagDiscovered(Intent intent, Parcelable nfcTag, AbstractNfcTagFragment fragment) {
-        MyLog.d(TAG, "onTagDiscovered");
+        DLog.d("onTagDiscovered");
         if(fragment != null && fragment instanceof NfcFeliCaTagFragment) {
             FeliCaLib.IDm idm =
                     new FeliCaLib.IDm(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID));
@@ -154,7 +154,7 @@ public class DetailActivity extends AppCompatActivity implements AppDetailFragme
                 FeliCaLib.execute((Tag)nfcTag, new PushCommand(idm, segment));
                 CommonUtil.doVibrate(getApplicationContext(), 300);
             } catch (FeliCaException e) {
-                MyLog.w(TAG, e);
+                DLog.w(e);
             }
         }
     }

@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 
+import com.github.ymegane.android.dlog.DLog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.MessageApi;
@@ -14,7 +15,6 @@ import com.google.gson.Gson;
 
 import org.ymegane.android.approom.data.repository.AppInfoLoader;
 import org.ymegane.android.approomcommns.domain.model.AppInfo;
-import org.ymegane.android.approomcommns.util.MyLog;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -46,7 +46,7 @@ public class AppInfoSendService extends IntentService {
         ConnectionResult result = googleApiClient.blockingConnect(CONNECT_TIMEOUT_MS,
                 TimeUnit.MILLISECONDS);
         if (!result.isSuccess()) {
-            MyLog.w(TAG, "Failed to connect to GoogleApiClient.");
+            DLog.w("Failed to connect to GoogleApiClient.");
             return;
         }
         List<AppInfo> appInfoList = AppInfoLoader.getAppInfo(getApplicationContext(), true);
@@ -54,17 +54,17 @@ public class AppInfoSendService extends IntentService {
             //appInfoList = appInfoList.subList(0, 20);
         }
         String jsonStr = new Gson().toJson(appInfoList);
-        MyLog.d(TAG, "appListJson " + jsonStr);
+        DLog.d("appListJson " + jsonStr);
 
         NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes(googleApiClient).await();
         if (nodes.getNodes().isEmpty()) {
-            MyLog.w(TAG, "Failed to connect.");
+            DLog.w("Failed to connect.");
             return;
         }
         for (Node node : nodes.getNodes()) {
             MessageApi.SendMessageResult result1 = Wearable.MessageApi.sendMessage(googleApiClient, node.getId(), REQUEST_APP_INFO, jsonStr.getBytes()).await();
             if (!result1.getStatus().isSuccess()) {
-                MyLog.w(TAG, "Failed to send.");
+                DLog.w("Failed to send.");
             }
         }
     }

@@ -3,8 +3,8 @@ package org.ymegane.android.approom;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 
+import com.github.ymegane.android.dlog.DLog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.MessageApi;
@@ -15,7 +15,6 @@ import com.google.android.gms.wearable.Wearable;
 import org.ymegane.android.approom.events.BusProvider;
 import org.ymegane.android.approom.events.FailureAppInfoRequestEvent;
 import org.ymegane.android.approom.events.SuccessAppInfoRequestEvent;
-import org.ymegane.android.approomcommns.util.MyLog;
 
 import java.util.concurrent.TimeUnit;
 
@@ -47,14 +46,14 @@ public class AppInfoRequestService extends IntentService {
         ConnectionResult result = googleApiClient.blockingConnect(CONNECT_TIMEOUT_MS,
                 TimeUnit.MILLISECONDS);
         if (!result.isSuccess()) {
-            MyLog.w(TAG, "Failed to connect to GoogleApiClient.");
+            DLog.w("Failed to connect to GoogleApiClient.");
             BusProvider.getInstance().post(new FailureAppInfoRequestEvent());
             return;
         }
 
         final NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes(googleApiClient).await();
         if (nodes.getNodes().isEmpty()) {
-            MyLog.w(TAG, "Failed to connect to GoogleApiClient.");
+            DLog.w("Failed to connect to GoogleApiClient.");
             BusProvider.getInstance().post(new FailureAppInfoRequestEvent());
             return;
         }

@@ -12,7 +12,6 @@ import org.ymegane.android.approomcommns.domain.model.AppInfo;
 import org.ymegane.android.approomcommns.AppLinkBase;
 import org.ymegane.android.approomcommns.util.CommonUtil;
 import org.ymegane.android.approomcommns.util.HtmlUtil;
-import org.ymegane.android.approomcommns.util.MyLog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -52,6 +51,8 @@ import android.widget.Filterable;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.github.ymegane.android.dlog.DLog;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -87,7 +88,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
         try {
             clickListener = (OnAppInfoClickListener) context;
         }catch(ClassCastException e) {
-            MyLog.e(TAG, "unimplements Listener!!", e);
+            DLog.e("unimplements Listener!!", e);
         }
     }
 
@@ -242,7 +243,7 @@ public class AppDisplayFragment extends Fragment implements LoaderManager.Loader
 
     @Override
     public void onLoadFinished(Loader<List<AppInfo>> listLoader, List<AppInfo> appInfos) {
-        MyLog.d(TAG, "onLoadFinished");
+        DLog.d("onLoadFinished");
 
         View view = getView();
         getLoaderManager().destroyLoader(0);

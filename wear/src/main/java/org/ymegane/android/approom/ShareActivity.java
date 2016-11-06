@@ -15,16 +15,16 @@ import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.github.ymegane.android.dlog.DLog;
+
 import org.ymegane.android.approomcommns.domain.model.AppInfo;
 import org.ymegane.android.approomcommns.AppLinkBase;
 import org.ymegane.android.approomcommns.data.repository.QRCodeLoader;
-import org.ymegane.android.approomcommns.util.MyLog;
 
 /**
  * 共有画面
  */
 public class ShareActivity extends WearableActivity implements LoaderManager.LoaderCallbacks<Bitmap> {
-    private static final String TAG = ShareActivity.class.getSimpleName();
 
     public static void startShareActivity(Context context, AppInfo appInfo) {
         Intent intent = new Intent(context, ShareActivity.class);
@@ -77,7 +77,7 @@ public class ShareActivity extends WearableActivity implements LoaderManager.Loa
     @Override
     public void onEnterAmbient(Bundle ambientDetails) {
         super.onEnterAmbient(ambientDetails);
-        MyLog.d(TAG, "[onEnterAmbient]");
+        DLog.d("[onEnterAmbient]");
 
         // TODO 画像を反転させる？
     }
@@ -85,7 +85,7 @@ public class ShareActivity extends WearableActivity implements LoaderManager.Loa
     @Override
     public void onExitAmbient() {
         super.onExitAmbient();
-        MyLog.d(TAG, "[onExitAmbient]");
+        DLog.d("[onExitAmbient]");
     }
 
     private class LongPressListener extends GestureDetector.SimpleOnGestureListener {

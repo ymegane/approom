@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.ymegane.android.approom.R;
 import org.ymegane.android.approomcommns.domain.model.AppInfo;
-import org.ymegane.android.approomcommns.util.MyLog;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +19,8 @@ import android.net.Uri;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
+
+import com.github.ymegane.android.dlog.DLog;
 
 /**
  * アプリ情報読み込みLoader
@@ -91,7 +92,7 @@ public class AppInfoLoader extends AsyncTaskLoader<List<AppInfo>> {
                         // 最終更新日時
                         lastMod = file.lastModified();
                     }catch (SecurityException e) {
-                        MyLog.e(TAG, "Access Error", e);
+                        DLog.e("Access Error", e);
                     }
                 }
                 appData.packageName = appInfo.packageName;

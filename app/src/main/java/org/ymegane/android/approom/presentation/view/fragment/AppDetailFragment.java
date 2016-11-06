@@ -9,7 +9,6 @@ import org.ymegane.android.approomcommns.domain.model.AppInfo;
 import org.ymegane.android.approomcommns.AppLinkBase;
 import org.ymegane.android.approomcommns.data.repository.QRCodeLoaderSupport;
 import org.ymegane.android.approomcommns.util.CommonUtil;
-import org.ymegane.android.approomcommns.util.MyLog;
 
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -39,6 +38,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.ymegane.android.dlog.DLog;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -251,7 +251,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
         try {
             startActivity(Intent.createChooser(CommonUtil.createShareIntent(appName + ":" + currentUri), getString(R.string.action_mode_title_share)));
         } catch (ActivityNotFoundException e) {
-            MyLog.w(TAG, e);
+            DLog.w(e);
         }
     }
 

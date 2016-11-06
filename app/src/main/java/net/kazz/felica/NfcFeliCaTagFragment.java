@@ -26,9 +26,8 @@ import net.kazzz.nfc.NfcTag;
 import android.annotation.TargetApi;
 import android.nfc.tech.NfcF;
 import android.os.Build;
-import android.support.v4.app.FragmentActivity;
 
-import org.ymegane.android.approomcommns.util.MyLog;
+import com.github.ymegane.android.dlog.DLog;
 
 /**
  * NfcでFeliCa(FeliCa Lite)Tagを読み込むためのフラグメントを提供します
@@ -119,7 +118,7 @@ public class NfcFeliCaTagFragment extends AbstractNfcTagFragment {
                 sb.append("\n");
                 
                 String result = sb.toString();
-                MyLog.d(TAG, result);
+                DLog.d(result);
                 return result;
             }
             
@@ -158,12 +157,12 @@ public class NfcFeliCaTagFragment extends AbstractNfcTagFragment {
             
         } catch (Exception e) {
             String result = sb.toString();
-            MyLog.d(TAG, result);
+            DLog.d(result);
             e.printStackTrace();
             return result;
         }
         String result = sb.toString();
-        MyLog.d(TAG, result);
+        DLog.d(result);
         return result;
     }
     /**
@@ -201,11 +200,11 @@ public class NfcFeliCaTagFragment extends AbstractNfcTagFragment {
             }
 
             String str = sb.toString();
-            MyLog.d(TAG, str);
+            DLog.d(str);
             return str;
         } catch (FeliCaException e) {
             e.printStackTrace();
-            MyLog.e(TAG, "readHistoryData", e);
+            DLog.e("readHistoryData", e);
             throw e;
         }
     }

@@ -9,6 +9,7 @@ import com.felicanetworks.mfc.FelicaEventListener;
 import com.felicanetworks.mfc.FelicaException;
 import com.felicanetworks.mfc.PushIntentSegment;
 import com.felicanetworks.mfc.PushStartBrowserSegment;
+import com.github.ymegane.android.dlog.DLog;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -21,8 +22,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
-
-import org.ymegane.android.approomcommns.util.MyLog;
 
 /**
  * Felica Libraryを利用してPush送信を行うFragment
@@ -101,11 +100,11 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
 
         try {
             String verson = Felica.getMFCVersion(context);
-            MyLog.d(TAG, "MFCVersion = " + verson);
+            DLog.d("MFCVersion = " + verson);
             ret = true;
         } catch (FelicaException e) {
             if(e.getType() == FelicaException.TYPE_MFC_NOT_FOUND) {
-                MyLog.d(TAG, "MFC_NOT_FOUND");
+                DLog.d("MFC_NOT_FOUND");
             }
         }
 
@@ -140,7 +139,7 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
             checkFelica();
 
         } catch (IllegalArgumentException e) {
-            MyLog.w(TAG, "Felica#activateFelica() failed.", e);
+            DLog.w("Felica#activateFelica() failed.", e);
             //requestToDisplay("Felica#activateFelica() failed." + e.getMessage());
             return;
         }
@@ -177,7 +176,7 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
             checkFelica();
 
         } catch (IllegalArgumentException e) {
-            MyLog.w(TAG, "Felica#inactivateFelica() failed", e);
+            DLog.w("Felica#inactivateFelica() failed", e);
             return;
         }
 
@@ -185,7 +184,7 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
             // FeliCaチップの利用終了処理
             // (Felica#activateFelica()の処理結果待ちの場合、利用開始処理をキャンセルする)
             felica.inactivateFelica();
-            MyLog.d(TAG, "Felica#inactivateFelica() succeeded!");
+            DLog.d("Felica#inactivateFelica() succeeded!");
         } catch (FelicaException e) {
             // FelicaExceptionをキャッチした場合
             handleFelicaException(e);
@@ -209,7 +208,7 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
             checkFelica();
 
         } catch (IllegalArgumentException e) {
-            MyLog.w(TAG, "Felica#open() failed.", e);
+            DLog.w("Felica#open() failed.", e);
             return;
         }
 
@@ -218,7 +217,7 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
             felica.open();
             isFelicaOpen = true;
             handler.sendEmptyMessageDelayed(0, 300);
-            MyLog.d(TAG, "Felica#open() succeeded!");
+            DLog.d("Felica#open() succeeded!");
         } catch (FelicaException e) {
             // FelicaExceptionをキャッチした場合
             handleFelicaException(e);
@@ -241,14 +240,14 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
             checkFelica();
 
         } catch (IllegalArgumentException e) {
-            MyLog.w(TAG, "close", e);
+            DLog.w("close", e);
             return;
         }
 
         try {
             // FeliCaチップのクローズ
             felica.close();
-            MyLog.d(TAG, "Felica#close() succeeded!");
+            DLog.d("Felica#close() succeeded!");
         } catch (FelicaException e) {
             // FelicaExceptionをキャッチした場合
             handleFelicaException(e);
@@ -268,7 +267,7 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
             checkFelica();
 
         } catch (IllegalArgumentException e) {
-            MyLog.w(TAG, "Felica#push() (send Intent) failed.", e);
+            DLog.w("Felica#push() (send Intent) failed.", e);
             return;
         }
 
@@ -280,7 +279,7 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
             // Push送信
             felica.push(pushSegment);
 
-            MyLog.d(TAG, "Felica#push() (send Intent) succeeded!");
+            DLog.d("Felica#push() (send Intent) succeeded!");
         } catch (IllegalArgumentException e) {
             // 不正な引数が指定された場合
         } catch (FelicaException e) {
@@ -302,7 +301,7 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
             checkFelica();
 
         } catch (IllegalArgumentException e) {
-            MyLog.w(TAG, "Felica#push() (send Intent) failed.", e);
+            DLog.w("Felica#push() (send Intent) failed.", e);
             return;
         }
 
@@ -314,7 +313,7 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
             // Push送信
             felica.push(pushSegment);
 
-            MyLog.d(TAG, "Felica#push() (send Browser) succeeded!");
+            DLog.d("Felica#push() (send Browser) succeeded!");
         } catch (IllegalArgumentException e) {
             // 不正な引数が指定された場合
         } catch (FelicaException e) {
@@ -336,7 +335,7 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
             checkFelica();
 
         } catch (IllegalArgumentException e) {
-            MyLog.w(TAG, "Felica#getRFSState() failed.", e);
+            DLog.w("Felica#getRFSState() failed.", e);
             return false;
         }
 
@@ -344,7 +343,7 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
 
             // 搬送波の受信状況の取得
             boolean state = felica.getRFSState();
-            MyLog.d(TAG, "Felica#getRFSState() result:" + state);
+            DLog.d("Felica#getRFSState() result:" + state);
             return state;
 
         } catch (FelicaException e) {
@@ -362,7 +361,7 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
             try {
                 felica.close();
             } catch (FelicaException e) {
-                MyLog.w(TAG, e.getMessage());
+                DLog.w(e.getMessage());
             }
         }
     }
@@ -532,7 +531,7 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
             errMsg += additionalMsg;
         }
         //requestToDisplay(errMsg);
-        MyLog.w(TAG, errMsg);
+        DLog.w(errMsg);
 
     }
 
@@ -554,7 +553,7 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
 
         // エラー内容をViewに表示
         //requestToDisplay(e.getMessage());
-        MyLog.w(TAG, "handleUnexpectedException", e);
+        DLog.w("handleUnexpectedException", e);
     }
 
     @Override
@@ -610,12 +609,12 @@ public class MfcManageFragment extends Fragment implements ServiceConnection, Fe
         if (msg != null) {
             result += "\nerror detail:" + msg;
         }
-        MyLog.d(TAG, "errorOccurred#" + result);
+        DLog.d("errorOccurred#" + result);
     }
 
     @Override
     public void finished() {
-        MyLog.d(TAG, "Felica#activateFelica() succeeded!");
+        DLog.d("Felica#activateFelica() succeeded!");
         open();
     }
 }

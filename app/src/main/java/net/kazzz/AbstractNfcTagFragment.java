@@ -31,7 +31,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import org.ymegane.android.approomcommns.util.MyLog;
+import com.github.ymegane.android.dlog.DLog;
 
 /**
  * NFCTagにアクセスするView無しフラグメントクラスのルートを提供します
@@ -97,7 +97,6 @@ public abstract class AbstractNfcTagFragment extends Fragment {
 
     /**
      * デフォルトコンストラクタ
-     * @param activity このフラグメントを管理するアクティビティをセット
      * @param tag このフラグメントを一意の識別するタグ名をセット
      */
     public AbstractNfcTagFragment(String tag) {
@@ -106,7 +105,6 @@ public abstract class AbstractNfcTagFragment extends Fragment {
     }
     /**
      * フラグメントを生成してActivityに登録します
-     * @param activity このフラグメントを管理するアクティビティをセット
      * @param tag フラグメントを識別するタグをセット
      */
     protected void registerFragment( String tag) {
@@ -143,9 +141,9 @@ public abstract class AbstractNfcTagFragment extends Fragment {
      */
     @Override
     public void onPause() {
-        MyLog.d(TAG, "*** AbstractNfcFeliCaTagFragment go Pause");
+        DLog.d("*** AbstractNfcFeliCaTagFragment go Pause");
         if ( this.getActivity().isFinishing() ) {
-            MyLog.d(TAG, "*** AbstractNfcFeliCaTagFragment will finishing");
+            DLog.d("*** AbstractNfcFeliCaTagFragment will finishing");
             NfcAdapter adapter = 
                     NfcAdapter.getDefaultAdapter(this.getActivity());
             adapter.disableForegroundDispatch(this.getActivity());
@@ -158,7 +156,7 @@ public abstract class AbstractNfcTagFragment extends Fragment {
      */
     @Override
     public void onResume() {
-        MyLog.d(TAG, "*** AbstractNfcFeliCaTagFragment go Resume");
+        DLog.d("*** AbstractNfcFeliCaTagFragment go Resume");
         
         //foregrandDispathch
         Activity a = this.getActivity();
@@ -190,7 +188,7 @@ public abstract class AbstractNfcTagFragment extends Fragment {
      */
     public void onNewIntent(Intent intent) {
         String action = intent.getAction();
-        MyLog.d(TAG, "incomming intent action = " + action );
+        DLog.d("incomming intent action = " + action );
 
         //TECHDISCOVERED
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)
@@ -201,7 +199,7 @@ public abstract class AbstractNfcTagFragment extends Fragment {
                 String[] tagTechs = mNfcTag.getTechList();
                 for (String[] filterTechs : mTechList) {
                     if (ArrayUtil.containArray(tagTechs, filterTechs)) {
-                        MyLog.d(TAG, "** nfcTag = " + mNfcTag.toString() );
+                        DLog.d("** nfcTag = " + mNfcTag.toString() );
                         for ( INfcTagListener listener : mListnerList ) {
                             //リスナに通知
                             listener.onTagDiscovered(intent, mNfcTag, this);
@@ -223,7 +221,7 @@ public abstract class AbstractNfcTagFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        MyLog.d(TAG, "onDetach");
+        DLog.d("onDetach");
         mListnerList.clear();
     }
 

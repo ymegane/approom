@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.github.ymegane.android.dlog.DLog;
 import com.squareup.otto.Subscribe;
 
 import org.ymegane.android.approom.events.BusProvider;
@@ -24,13 +25,11 @@ import org.ymegane.android.approom.events.FailureAppInfoRequestEvent;
 import org.ymegane.android.approom.events.SuccessAppInfoReceiveEvent;
 import org.ymegane.android.approom.events.SuccessAppInfoRequestEvent;
 import org.ymegane.android.approomcommns.domain.model.AppInfo;
-import org.ymegane.android.approomcommns.util.MyLog;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends WearableActivity implements WearableListView.ClickListener {
-    private static final String TAG = MainActivity.class.getSimpleName();
 
     private ProgressBar mProgress;
     private WearableListView mListView;
@@ -52,7 +51,6 @@ public class MainActivity extends WearableActivity implements WearableListView.C
         mDismissOverlayView = (DismissOverlayView) findViewById(R.id.dismiss_overlay);
         mGestureDetector = new GestureDetectorCompat(MainActivity.this, new LongPressListener());
 
-        MyLog.setOutputMode(BuildConfig.DEBUG);
         BusProvider.getInstance().register(this);
 
         AppInfoRequestService.startAppInfoRequestService(getApplicationContext());
@@ -107,7 +105,7 @@ public class MainActivity extends WearableActivity implements WearableListView.C
             @Override
             public void run() {
                 //Toast.makeText(MainActivity.this, "アプリ情報を取得中", Toast.LENGTH_SHORT).show();
-                MyLog.d(TAG, "アプリ情報を取得中");
+                DLog.d("アプリ情報を取得中");
             }
         });
     }
