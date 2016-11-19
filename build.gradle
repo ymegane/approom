@@ -33,7 +33,7 @@ subprojects {
 project.ext {
     compileSdkVersion = 25
     buildToolsVersion = '25.0.0'
-    supportLibVersion = '25.0.0'
+    supportLibVersion = '25.0.1'
     playServiceVersion = '9.8.0'
     // see http://tools.android.com/tech-docs/new-build-system/tips#TOC-Improving-Build-Server-performance.
     // CIサーバなどでは -PdisablePreDex をつける。 preDexが省略されてビルドが速くなる
