@@ -2,11 +2,17 @@ package org.ymegane.android.approom.presentation.presenter;
 
 import android.app.Activity;
 
+import org.ymegane.android.approom.databinding.FragmentAppDetailBinding;
+import org.ymegane.android.approom.databinding.FragmentAppListBinding;
 import org.ymegane.android.approom.domain.usecase.GetInstalledAppListUseCase;
+import org.ymegane.android.approomcommns.domain.model.AppModel;
+
+import java.util.List;
 
 public class AppModelsPresenter implements Presenter {
-    private final GetInstalledAppListUseCase mGetInstalledAppListUseCase;
     private Activity mActivity;
+    private FragmentAppListBinding mBinding;
+    private final GetInstalledAppListUseCase mGetInstalledAppListUseCase;
 
     public AppModelsPresenter(GetInstalledAppListUseCase getInstalledAppListUseCase) {
         mGetInstalledAppListUseCase = getInstalledAppListUseCase;
@@ -14,6 +20,10 @@ public class AppModelsPresenter implements Presenter {
 
     public void setActivity(Activity activity) {
         mActivity = activity;
+    }
+
+    public void setView(FragmentAppListBinding binding) {
+        mBinding = binding;
     }
 
     @Override
@@ -27,6 +37,7 @@ public class AppModelsPresenter implements Presenter {
     }
 
     public void loadAppModels() {
+        List<AppModel> list = mGetInstalledAppListUseCase.getAppModels();
 
     }
 

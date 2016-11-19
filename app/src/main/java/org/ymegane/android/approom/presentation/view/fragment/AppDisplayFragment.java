@@ -6,7 +6,7 @@ import org.ymegane.android.approom.data.repository.AppInstallComparator;
 import org.ymegane.android.approom.BuildConfig;
 import org.ymegane.android.approom.data.repository.InstalledAppRepositoryImpl;
 import org.ymegane.android.approom.data.repository.PreferenceSettingsRepository;
-import org.ymegane.android.approom.databinding.FragmentApplistBinding;
+import org.ymegane.android.approom.databinding.FragmentAppListBinding;
 import org.ymegane.android.approom.domain.repository.SettingsRepository;
 import org.ymegane.android.approom.presentation.view.adapter.GridAppsAdapter;
 import org.ymegane.android.approom.R;
@@ -66,7 +66,7 @@ import rx.schedulers.Schedulers;
 public class AppDisplayFragment extends RxFragment implements Toolbar.OnMenuItemClickListener {
     public static final String TAG = "AppDisplayFragment";
 
-    FragmentApplistBinding mBinding;
+    FragmentAppListBinding mBinding;
 
     private GridAppsAdapter adapter;
     //private ListView listAppView;
@@ -99,7 +99,7 @@ public class AppDisplayFragment extends RxFragment implements Toolbar.OnMenuItem
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_applist, container, false);
+        return inflater.inflate(R.layout.fragment_app_list, container, false);
     }
 
     @Override
@@ -117,44 +117,41 @@ public class AppDisplayFragment extends RxFragment implements Toolbar.OnMenuItem
         mBinding.gridAppIcon.setTextFilterEnabled(true);
         mBinding.gridAppIcon.setOnItemClickListener(new ItemClickListener());
         if (!clickListener.isMashroom()) {
-            mBinding.gridAppIcon.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                    ((AppCompatActivity)getActivity()).startSupportActionMode(new android.support.v7.view.ActionMode.Callback() {
-                        @Override
-                        public boolean onCreateActionMode(android.support.v7.view.ActionMode actionMode, Menu menu) {
-                            AppDisplayFragment.this.actionMode = actionMode;
+            mBinding.gridAppIcon.setOnItemLongClickListener((parent, view, position, id) -> {
+                ((AppCompatActivity)getActivity()).startSupportActionMode(new ActionMode.Callback() {
+                    @Override
+                    public boolean onCreateActionMode(ActionMode actionMode1, Menu menu) {
+                        AppDisplayFragment.this.actionMode = actionMode1;
 
-                            actionMode.setTitle(R.string.action_mode_title_share);
+                        actionMode1.setTitle(R.string.action_mode_title_share);
 
-                            shareActionProvider = new ShareActionProvider(getActivity());
-                            MenuItem item = menu.add(getString(R.string.share)).setIcon(R.drawable.ic_share_24dp);
-                            MenuItemCompat.setActionProvider(item, shareActionProvider);
-                            MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
-                            return true;
-                        }
+                        shareActionProvider = new ShareActionProvider(getActivity());
+                        MenuItem item = menu.add(getString(R.string.share)).setIcon(R.drawable.ic_share_24dp);
+                        MenuItemCompat.setActionProvider(item, shareActionProvider);
+                        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+                        return true;
+                    }
 
-                        @Override
-                        public boolean onPrepareActionMode(android.support.v7.view.ActionMode actionMode, Menu menu) {
-                            updateMultipleChoiceState(position);
-                            return true;
-                        }
+                    @Override
+                    public boolean onPrepareActionMode(ActionMode actionMode1, Menu menu) {
+                        updateMultipleChoiceState(position);
+                        return true;
+                    }
 
-                        @Override
-                        public boolean onActionItemClicked(android.support.v7.view.ActionMode actionMode, MenuItem menuItem) {
-                            return false;
-                        }
+                    @Override
+                    public boolean onActionItemClicked(ActionMode actionMode1, MenuItem menuItem) {
+                        return false;
+                    }
 
-                        @Override
-                        public void onDestroyActionMode(android.support.v7.view.ActionMode actionMode) {
-                            AppDisplayFragment.this.actionMode = null;
-                            shareActionProvider = null;
-                            adapter.resetCheckedState();
-                            adapter.notifyDataSetChanged();
-                        }
-                    });
-                    return true;
-                }
+                    @Override
+                    public void onDestroyActionMode(ActionMode actionMode1) {
+                        AppDisplayFragment.this.actionMode = null;
+                        shareActionProvider = null;
+                        adapter.resetCheckedState();
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                return true;
             });
         }
 
@@ -172,7 +169,7 @@ public class AppDisplayFragment extends RxFragment implements Toolbar.OnMenuItem
                     subscriber.onCompleted();
                 }
 
-            }).compose(this.<List<AppModel>>bindToLifecycle())
+            }).compose(this.bindToLifecycle())
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Observer<List<AppModel>>() {
@@ -238,20 +235,14 @@ public class AppDisplayFragment extends RxFragment implements Toolbar.OnMenuItem
                 return true;
             }
         });
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                updateSearchResult(null);
-                return false;
-            }
+        searchView.setOnCloseListener(() -> {
+            updateSearchResult(null);
+            return false;
         });
-        searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                }
+        searchView.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });
     }

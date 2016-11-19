@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.ymegane.android.approom.R;
 import org.ymegane.android.approom.data.repository.PreferenceSettingsRepository;
-import org.ymegane.android.approom.databinding.FragmentAppdetailBinding;
+import org.ymegane.android.approom.databinding.FragmentAppDetailBinding;
 import org.ymegane.android.approom.domain.repository.SettingsRepository;
 import org.ymegane.android.approom.presentation.view.activity.DetailActivity;
 import org.ymegane.android.approomcommns.domain.model.AppModel;
@@ -50,7 +50,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     public static final String KEY_APPINFO = "key_appinfo";
     public static final String KEY_TOUCH_ENABLE = "key_touch";
 
-    private FragmentAppdetailBinding mBinding;
+    private FragmentAppDetailBinding mBinding;
     private SettingsRepository mSettingsRepository;
 
     public interface OnAppDetailEventObserver {
@@ -88,7 +88,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_appdetail, container, false);
+        return inflater.inflate(R.layout.fragment_app_detail, container, false);
     }
 
     @Override
@@ -102,18 +102,15 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
 
         Bundle args = getArguments();
         AppModel appModel = args.getParcelable(KEY_APPINFO);
-        appName = appModel.getAppName().toString();
+        appName = appModel.getAppName();
         packageName = appModel.getPackageName();
 
         mBinding = DataBindingUtil.bind(getView());
         mBinding.setAppModel(appModel);
         mBinding.textAppName.requestFocus();
-        mBinding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickFab();
-            }
-        });
+        mBinding.fab.setOnClickListener(view ->
+            onClickFab()
+        );
 
         ViewCompat.setTransitionName(mBinding.imageIcon, DetailActivity.TRANSITION_ICON);
         ViewCompat.setTransitionName(mBinding.textAppName, DetailActivity.TRANSITION_LABEL);
@@ -121,12 +118,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
         initActionBar();
 
         if(args.getBoolean(KEY_TOUCH_ENABLE)) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    showTouchEnable();
-                }
-            }, 500);
+            new Handler().postDelayed(this::showTouchEnable, 500);
         }
     }
 
@@ -167,23 +159,20 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
                 = new ArrayAdapter<>(actionBar.getThemedContext(),
                 android.R.layout.simple_spinner_item, android.R.id.text1, getResources().getStringArray(R.array.linktype));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        actionBar.setListNavigationCallbacks(adapter, new ActionBar.OnNavigationListener() {
-            @Override
-            public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-                if (getActivity() == null) {
-                    return false;
-                }
-                if(itemPosition < linkList.size()) {
-                    mSettingsRepository.setLinkType(itemPosition);
-                    currentUri = linkList.get(itemPosition);
-                    mBinding.textUri.setText(currentUri);
-                    Bundle arg = new Bundle();
-                    arg.putString("currentUri", currentUri);
-                    getLoaderManager().restartLoader(0, arg, AppDetailFragment.this);
-                    return true;
-                }
+        actionBar.setListNavigationCallbacks(adapter, (itemPosition, itemId) -> {
+            if (getActivity() == null) {
                 return false;
             }
+            if(itemPosition < linkList.size()) {
+                mSettingsRepository.setLinkType(itemPosition);
+                currentUri = linkList.get(itemPosition);
+                mBinding.textUri.setText(currentUri);
+                Bundle arg = new Bundle();
+                arg.putString("currentUri", currentUri);
+                getLoaderManager().restartLoader(0, arg, AppDetailFragment.this);
+                return true;
+            }
+            return false;
         });
         actionBar.setSelectedNavigationItem(mSettingsRepository.getLinkType());
     }
@@ -232,7 +221,7 @@ public class AppDetailFragment extends Fragment implements LoaderManager.LoaderC
     }
 
     private ArrayList<String> createLinkArray() {
-        ArrayList<String> array = new ArrayList<String>(4);
+        ArrayList<String> array = new ArrayList<>(4);
 
         array.add(AppLinkBase.LINK_HTTP_DETAIL + packageName);
         array.add(AppLinkBase.LINK_MARKET_DETAIL + packageName);
