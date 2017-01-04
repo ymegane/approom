@@ -58,62 +58,49 @@ public class InstalledAppRepositoryImpl implements InstalledAppRepository {
         final AppInstallComparator comparator = new AppInstallComparator().setMode(prefs.getSortType());
 
         return Observable.from(installedAppList)
-                .filter(new Func1<ApplicationInfo, Boolean>() {
-                    @Override
-                    public Boolean call(ApplicationInfo applicationInfo) {
-                        return isAdd(applicationInfo, includeSystemApp, includeDisableApp);
+                .filter(applicationInfo -> isAdd(applicationInfo, includeSystemApp, includeDisableApp))
+                .map(appInfo -> {
+                    boolean isStop = false;
+                    long lastMod;
+
+                    // 停止状態のアプリの場合
+                    if ((appInfo.flags & ApplicationInfo.FLAG_STOPPED) == 0) {
+                        // Non-system app
+                        isStop = true;
                     }
+
+                    AppModel appData = new AppModel();
+                    if (!loadPallet) {
+                        appData.setAppInfo(appInfo);
+                    }
+                    lastMod = -1;
+
+                    // Nullの場合があるよう。細かくは分かってない
+                    if (appInfo.publicSourceDir != null) {
+                        File file = new File(appInfo.publicSourceDir);
+
+                        try {
+                            // 最終更新日時
+                            lastMod = file.lastModified();
+                        } catch (SecurityException e) {
+                            DLog.e("Access Error", e);
+                        }
+                    }
+                    appData.setPackageName(appInfo.packageName);
+                    appData.setLastModify(lastMod);
+                    appData.setAppName((String) appInfo.loadLabel(packageMng));
+                    appData.setStoped(isStop);
+                    appData.setIconUrl(Uri.parse("android.resource://" + appInfo.packageName + "/" + appInfo.icon));
+
+                    if (loadPallet) {
+                        Drawable icon = appInfo.loadIcon(packageMng);
+                        Bitmap iconBitmap = ((BitmapDrawable) icon).getBitmap();
+                        Palette palette = Palette.from(iconBitmap).generate();
+                        appData.setPalette(palette.getVibrantColor(ContextCompat.getColor(mContext, R.color.primary)));
+                    }
+                    return appData;
                 })
-                .map(new Func1<ApplicationInfo, AppModel>() {
-                    @Override
-                    public AppModel call(ApplicationInfo appInfo) {
-                        boolean isStop = false;
-                        long lastMod;
-
-                        // 停止状態のアプリの場合
-                        if ((appInfo.flags & ApplicationInfo.FLAG_STOPPED) == 0) {
-                            // Non-system app
-                            isStop = true;
-                        }
-
-                        AppModel appData = new AppModel();
-                        if (!loadPallet) {
-                            appData.setAppInfo(appInfo);
-                        }
-                        lastMod = -1;
-
-                        // Nullの場合があるよう。細かくは分かってない
-                        if (appInfo.publicSourceDir != null) {
-                            File file = new File(appInfo.publicSourceDir);
-
-                            try {
-                                // 最終更新日時
-                                lastMod = file.lastModified();
-                            } catch (SecurityException e) {
-                                DLog.e("Access Error", e);
-                            }
-                        }
-                        appData.setPackageName(appInfo.packageName);
-                        appData.setLastModify(lastMod);
-                        appData.setAppName((String) appInfo.loadLabel(packageMng));
-                        appData.setStoped(isStop);
-                        appData.setIconUrl(Uri.parse("android.resource://" + appInfo.packageName + "/" + appInfo.icon));
-
-                        if (loadPallet) {
-                            Drawable icon = appInfo.loadIcon(packageMng);
-                            Bitmap iconBitmap = ((BitmapDrawable) icon).getBitmap();
-                            Palette palette = Palette.from(iconBitmap).generate();
-                            appData.setPalette(palette.getVibrantColor(ContextCompat.getColor(mContext, R.color.primary)));
-                        }
-                        return appData;
-                    }
-                })
-                .toSortedList(new Func2<AppModel, AppModel, Integer>() {
-                    @Override
-                    public Integer call(AppModel appModel, AppModel appModel2) {
-                        return comparator.compare(appModel, appModel2);
-                    }
-                }).toBlocking().single();
+                .toSortedList(comparator::compare).toBlocking().single();
     }
 
     private static boolean isAdd(ApplicationInfo appInfo, boolean includeSystemApp, boolean includeDisableApp) {
